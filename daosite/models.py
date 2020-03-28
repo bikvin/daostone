@@ -323,3 +323,13 @@ class Rate(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(3), nullable=False, unique=True)
     value = db.Column(db.Float, nullable=False)
+
+class Slider(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    button_title = db.Column(db.String(100), nullable=True)
+    button_url = db.Column(db.String(100), nullable=True)
+    order_id = db.Column(db.Integer, nullable=False)
+    image_file_path = db.Column(db.String(500), nullable=True)
+    active = db.Column(db.Boolean, default=False, nullable=False)

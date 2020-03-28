@@ -7,66 +7,31 @@
                 <div class="slider-content">
                     <div class="row">
                         <div class="active-slider-1 slick-arrow-1 slick-dots-1">
-                            <!-- layer-1 Start -->
+
+                            {% for slide in slider %}
                             <div class="col-md-12">
                                 <div class="layer-1">
+                                    {% if slide.image_file_path %}
                                     <div class="slider-img">
-                                        <img src="{{ url_for('static',filename='slider_pics/1.jpg') }}" alt="">
+                                        <img src="{{ url_for('static',filename=slide.image_file_path) }}" alt="">
                                     </div>
+                                    {% endif %}
                                     <div class="slider-info gray-bg">
                                         <div class="slider-info-inner">
-                                            <h1 class="slider-title-1 text-uppercase text-black-1">Мозаика в интерьере</h1>
+                                            <h1 class="slider-title-1 text-uppercase text-black-1">{{slide.title}}</h1>
                                             <div class="slider-brief text-black-2">
-                                                <p>Использование мозаики сделает ваш интерьер интересным и неповторимым. Стены покрытые мозаикой приобретают уникальную и сложную текстуру которая наверняка добавит много очков к восприятию вашего интерьера.</p>
+                                                <p>{{slide.description}}</p>
+
                                             </div>
-                                            <a href="{{url_for('main.mosaic')}}" class="button extra-small button-black">
-                                                <span class="text-uppercase">Перейти в каталог</span>
+                                            <a href="{{slide.button_url}}" class="button extra-small button-black">
+                                                <span class="text-uppercase">{{slide.button_title}}</span>
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- layer-1 end -->
-                            <!-- layer-1 Start -->
-                            <div class="col-md-12">
-                                <div class="layer-1">
-                                    <div class="slider-img">
-                                        <img src="{{ url_for('static',filename='slider_pics/2.jpg') }}" alt="">
-                                    </div>
-                                    <div class="slider-info gray-bg">
-                                        <div class="slider-info-inner">
-                                            <h1 class="slider-title-1 text-uppercase text-black-1">Мозаика в гостиной</h1>
-                                            <div class="slider-brief text-black-2">
-                                                <p>Чаще всего мозаика используется в ванной комнате или на кухне. Однако не стоит ограничиваться лишь этим. Существует огромное количество видов мозаики созданных специально для спален, гостиных, прихожих и других комнат. Они сделают ваш интерьер по настоящему неповторимым.</p>
-                                            </div>
-                                            <a href="{{url_for('main.mosaic_selected',select_category='use',selection='gostinaya')}}" class="button extra-small button-black">
-                                                <span class="text-uppercase">Смотреть мозаику для гостиных</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- layer-1 end -->
-                            <!-- layer-1 Start -->
-                            <div class="col-md-12">
-                                <div class="layer-1">
-                                    <div class="slider-img">
-                                        <img src="{{ url_for('static',filename='slider_pics/3.jpg') }}" alt="">
-                                    </div>
-                                    <div class="slider-info gray-bg">
-                                        <div class="slider-info-inner">
-                                            <h1 class="slider-title-1 text-uppercase text-black-1">Мозаика в ванной</h1>
-                                            <div class="slider-brief text-black-2">
-                                                <p>Мозаика идеально подходит для использования в ванных комнатах и душевых. Здесь ее можно использовать как отдельно, так и в сочетании с керамической плиткой, добиваясь наиболее интересных сочетаний. </p>
-                                            </div>
-                                            <a href="{{url_for('main.mosaic_selected',select_category='use',selection='vannaya')}}" class="button extra-small button-black">
-                                                <span class="text-uppercase">Смотреть мозаику для ванных</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- layer-1 end -->
+                            {% endfor %}
+                            
                         </div>
                     </div>
                 </div>

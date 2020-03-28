@@ -1,0 +1,164 @@
+{% extends 'layout_admin.html' %}
+{% block content %}
+
+    <div class="content-section">
+
+        <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">{{ legend }}</legend>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            {{ form.title.label(class="form-control-label") }}
+                            {% if form.title.errors %}
+                                {{ form.title(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.title.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.title(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form.description.label(class="form-control-label") }}
+                    {% if form.description.errors %}
+                        {{ form.description(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.description.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.description(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            {{ form.button_title.label(class="form-control-label") }}
+                            {% if form.button_title.errors %}
+                                {{ form.button_title(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.button_title.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.button_title(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            {{ form.button_url.label(class="form-control-label") }}
+                            {% if form.button_url.errors %}
+                                {{ form.button_url(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.button_url.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.button_url(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            {{ form.order_id.label(class="form-control-label") }}
+                            {% if form.order_id.errors %}
+                                {{ form.order_id(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.order_id.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.order_id(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group image-upload-group rounded">
+                    
+                    {{ form.image.label() }}
+                    <div class="row">
+                        <div class="col">
+                    {% if form.image_file_path %}
+                        <div>
+                            <img  class="rounded" src="{{ url_for('static',filename=form.image_file_path) }}" width="100" height="100">
+                        </div>
+                    {% endif %}
+                        </div>
+                        <div class="col">
+                            {% if form.image_file_path %}
+                                <p>Заменить:</p>
+                            {% else %}
+                                 <p>Загрузить:</p>
+                            {% endif %}
+
+                            {{ form.image(class="form-control-file") }}
+                            {% if form.image.errors %}
+                                {% for error in form.image.errors %}
+                                    <span class="text-danger">{{ error }}</span></br>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="col">
+                            {% if form.image_file_path %}
+                                {{ form.delete_image.label(class="form-control-label") }}
+                                    {% if form.delete_image.errors %}
+                                {{ form.delete_image(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.delete_image.errors %}
+                                         <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                 {{ form.delete_image(class="form-control form-control-lg") }}
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form.active.label(class="form-control-label") }}
+                    {% if form.active.errors %}
+                        {{ form.active(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.active.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.active(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary") }}
+                <a class="btn btn-outline-info btn-sm" href="{{url_for('slider.slider_list')}}" role="button">Отменить</a>
+            </div>
+        </form>
+
+    </div>
+
+{% endblock content %}

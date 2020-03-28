@@ -12,17 +12,18 @@ from daosite.main.forms import OrderForm, SearchForm
 from daosite.main.utils import (add_to_cart_session, get_rates,
                                 send_admin_email, send_user_email)
 from daosite.models import (Brand, Category, Color, Interior, Material,
-                            Online_order, Ordered_item, Product, Rate, Use)
+                            Online_order, Ordered_item, Product, Rate, Use, Slider)
 
 main = Blueprint('main', __name__)
 
 
 @main.route("/")
 def home():
-    popular_products = Product.query.filter(Product.popular == True)
+    slider = Slider.query.filter(Slider.active == True).order_by(Slider.order_id.asc())
+    popular_products = Product.query.filter(Product.popular == True, Product.active == True)
     discount_products = Product.query.filter(Product.discount > 0, Product.active == True).order_by(Product.id.desc()).limit(8)
     header_title = "Daostone.ru - магазин мозаики для отделки. Лучшая мозаика для вашего интерьера."
-    return render_template('home.html', popular_products=popular_products, discount_products=discount_products, header_title=header_title)
+    return render_template('home.html', popular_products=popular_products, discount_products=discount_products, header_title=header_title, slider=slider)
 
 
 @main.route("/mosaic")

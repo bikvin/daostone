@@ -42,12 +42,12 @@ def create_app(config_class=Config):
     from daosite.colors.routes import colors
     from daosite.interiors.routes import interiors
     from daosite.rates.routes import rates
-
     from daosite.uses.routes import uses
     from daosite.materials.routes import materials
     from daosite.chipsizes.routes import chipsizes
     from daosite.surfaces.routes import surfaces
     from daosite.admin.routes import admin
+    from daosite.slider.routes import slider
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(main)
@@ -63,5 +63,6 @@ def create_app(config_class=Config):
     app.register_blueprint(admin)
     app.register_blueprint(interiors)
     app.register_blueprint(rates)
+    app.register_blueprint(slider)
 
     return app
