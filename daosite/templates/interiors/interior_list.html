@@ -1,0 +1,114 @@
+{% extends 'layout_admin.html' %}
+{% block content %}
+
+
+
+
+
+
+
+	<h1>Интерьеры</h1>
+	
+
+	<table class="table table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">id</th>
+		      
+		      <th scope="col">Название</th>
+		      <th scope="col">Описание</th>
+			  <th scope="col"></th>
+			  <th scope="col"></th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    
+		{% for interior in interiors.items %}
+			
+			<tr>
+		      <th scope="row">{{ interior.id }}</th>
+		      
+		      
+		      <td>{{ interior.name }}</td>
+
+		      <td>{{ interior.description }}</td>
+		      
+		      <td><a href="{{ url_for('interiors.edit_interior', interior_id=interior.id) }}" class="badge badge-secondary">Изменить</a></td>
+		      
+		      
+		      {% if current_user.status == 'admin' %}
+			      <td>
+			      	<button type="button" class="badge badge-danger" data-toggle="modal" data-target="#deleteModal" data-interior-id={{ interior.id }}>Удалить</button>
+			      </td>
+		      {% endif %}
+
+		    </tr>
+
+			
+
+		{% endfor %}
+		</tbody>
+	</table>
+
+	<div class="text-center">
+		{% for page_num in interiors.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+			{% if page_num %}
+				{% if interiors.page == page_num %}
+				<a class="btn btn-info mb-4" href="{{ url_for('interiors.interior_list', page=page_num) }}">{{ page_num }}</a>
+				{% else %}
+				<a class="btn btn-outline-info mb-4" href="{{ url_for('interiors.interior_list', page=page_num) }}">{{ page_num }}</a>
+				{% endif %}
+			{% else %}
+				...
+			{% endif %}
+		{% endfor %}
+    </div>
+	
+	<a class="btn btn-primary" href="{{url_for('interiors.new_interior')}}" role="button">Создать новый интерьер</a>
+	
+
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="deleteModalLabel">Удалить интерьер? Точно?</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	   
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+	       
+	        	<form id="deleteForm" action="" method="POST">
+	        	<input class="btn btn-danger" type="submit" value="Удалить">
+	        </form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<script>
+		
+
+
+		//triggered when modal is about to be shown
+		$('#deleteModal').on('show.bs.modal', function(e) {
+			
+	    //get data-id attribute of the clicked element
+	    var interiorId = $(e.relatedTarget).data('interior-id');
+	    
+
+	    $('#deleteForm').attr('action', '/interior/'+interiorId+'/delete');
+
+		});
+
+	</script>
+	
+
+{% endblock content %}
+
+

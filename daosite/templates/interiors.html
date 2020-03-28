@@ -1,0 +1,101 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<section id="page-content" class="page-wrapper">
+
+            <!-- This is single section start-->
+            <div class="address-section mb-80">
+                <div class="container">
+                    
+                    <div class="row">
+                        <div class="col-md-9 col-xs-12">
+                            <h1>Интерьеры с мозаикой</h1>
+                            <p>В этом разделе представлены некоторые интерьеры с использованием мозаики</p>
+
+                        
+                            {% for interior in interiors.items %}
+                                <div class='interior-block'>
+                                    {% for image in interior.images %}
+                                        {% if loop.index0 == 0 %}
+                                            <img class='interior-photo' src="{{url_for('static', filename=image.path)}}" alt="интерьер с мозаикой"/>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <div class='interior-thumbnail-block'>
+                                        {% for image in interior.images %}
+                                            {% if loop.index0 != 0 %}
+                                                    <a href=''>
+                                                        <img class='interior-thumbnail' src="{{url_for('static', filename=image.path)}}" alt="интерьер с мозаикой"/>
+                                                    </a>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+
+                                    <h3>{{ interior.name }}</h3>
+                                    <p>{{ interior.description }}</p>
+                                    <p>
+                                        Аналогичные виды мозаики:
+                                        {% for product in interior.products %}
+                                            <a href="{{url_for('main.single_mosaic', mosaic_id=product.id)}}">
+                                                {{ product.name[0]|upper}}{{product.name[1:] }}
+                                            </a>
+                                            {% if not loop.last %},{% endif %}
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                            {% endfor %}
+                            <ul class="shop-pagination box-shadow text-center ptblr-10-30">
+                                {% for page_num in interiors.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                                  {% if page_num %}
+                                    {% if interiors.page == page_num %}
+                                        <li class='active'>
+                                            <a href="">{{ page_num }}</a>
+                                        </li>
+                                    {% else %}
+                                        <li>
+                                            {% if page_num == 1 %}
+                                                <a href="{{ url_for('main.interiors') }}">{{ page_num }}</a>
+                                            {% else %}
+                                                <a href="{{ url_for('main.interiors', page=page_num) }}">{{ page_num }}</a>
+                                            {% endif %}
+                                        </li>
+                                    {% endif %}
+                                  {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="col-md-3 col-xs-12">
+                            {% include 'side-menu.html' %}
+                        </div>
+                    </div>
+                 
+                </div>
+            </div>
+            <!-- This is single section end-->
+        </section>
+
+        <script type=text/javascript>
+            $(function() {
+
+
+                
+                $(document).on('click','img.interior-thumbnail',function(e){
+                    //your code here
+                    //alert($(this).val());
+
+                    var path=$(this).attr( 'src' );
+                    var new_path=path.replace("thumbs/", "");
+
+                    //alert(path);
+                    //alert(new_path);
+
+                    $(this).parent().parent().prev('img').attr("src",new_path);
+
+                    e.preventDefault();
+
+                    //delete_item($(this));
+                });
+            });
+        </script>
+
+
+{% endblock content %}

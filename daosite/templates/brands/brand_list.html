@@ -1,0 +1,98 @@
+{% extends 'layout_admin.html' %}
+{% block content %}
+
+
+
+
+
+
+
+	<h1>Бренды</h1>
+	
+
+	<table class="table table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">id</th>
+		      <th scope="col">Название бренда</th>
+		      <th scope="col">URL Название бренда</th>
+		      <th scope="col">Инфо</th>
+		      <th scope="col">Директория для файлов</th>
+		      <th scope="col"></th>
+		      <th scope="col"></th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    
+		{% for brand in brands %}
+			
+			<tr>
+		      <th scope="row">{{ brand.id }}</th>
+		      <td>{{ brand.name }}</td>
+		      <td>{{ brand.url_name }}</td>
+		      <td>{{ brand.info }}</td>
+		      <td>{{ brand.files_directory }}</td>
+		      <td><a href="{{ url_for('brands.edit_brand', brand_id=brand.id) }}" class="badge badge-secondary">Изменить</a></td>
+		      {% if current_user.status == 'admin' %}
+		      <td>
+		      	<button type="button" class="badge badge-danger" data-toggle="modal" data-target="#deleteModal" data-brand-id={{ brand.id }}>Удалить</button>
+
+		      	
+		      </td>
+		      {% endif %}
+
+		    </tr>
+
+			
+
+		{% endfor %}
+		</tbody>
+	</table>
+
+	
+	<a class="btn btn-primary" href="{{url_for('brands.new_brand')}}" role="button">Создать бренд</a>
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="deleteModalLabel">Удалить бренд? Точно?</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	   
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+	       
+	        	<form id="deleteForm" action="" method="POST">
+	        	<input class="btn btn-danger" type="submit" value="Удалить">
+	        </form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<script>
+		
+
+
+		//triggered when modal is about to be shown
+		$('#deleteModal').on('show.bs.modal', function(e) {
+			
+	    //get data-id attribute of the clicked element
+	    var brandId = $(e.relatedTarget).data('brand-id');
+	    
+
+	    $('#deleteForm').attr('action', '/brand/'+brandId+'/delete');
+
+		});
+
+	</script>
+	
+
+{% endblock content %}
+
+

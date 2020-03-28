@@ -1,0 +1,47 @@
+<aside class="widget shop-filter box-shadow mb-30">
+    <form method="get" action="{{url_for('main.mosaic')}}">
+        <div class='mb-20'>
+            <h6 class="widget-title border-left">Цена</h6>
+            <div class="price_filter">
+                <div class="price_slider_amount">
+                    <input type="text" id="price_min" name="price_min"  placeholder="Введите цену" value='{{ filter_form.price_min.data }}' />
+                    <input type="text" id="price_max" name="price_max"  placeholder="Введите цену" value='{{ filter_form.price_max.data }}' />
+                </div>
+                <div id="slider-range"></div>
+            </div>
+        </div>
+
+        <h6 class="widget-title border-left">Материал</h6>
+        <div class="product-filter mb-20">
+            {{ filter_form.materials }}
+        </div>
+
+        <h6 class="widget-title border-left">Производитель</h6>
+        <div class="product-filter mb-20">
+            {{ filter_form.manufacturers }}
+        </div>
+
+        <h6 class="widget-title border-left≈">Применение</h6>
+        <div class="product-filter mb-20">
+            {{ filter_form.applications }}
+        </div>
+
+        <h6 class="widget-title border-left">Цвет</h6>
+        <div class="product-filter mb-20">
+            {{ filter_form.colors }}
+        </div>
+
+        <h6 class="widget-title border-left">Размер элементов</h6>
+        <div class="product-filter mb-20">
+            {{ filter_form.sizes }}
+        </div>
+
+        <h6 class="widget-title border-left">Поверхность</h6>
+        <div class="product-filter mb-20">
+            {{ filter_form.surfaces }}
+        </div>
+        <div class="mt-20">
+            <button class="submit-btn-1 mt-20 btn-hover-1" type="submit">Применить</button>
+        </div>
+    </form>
+</aside>

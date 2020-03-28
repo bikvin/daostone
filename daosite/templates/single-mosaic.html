@@ -1,0 +1,330 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<!-- Start page content -->
+<section id="page-content" class="page-wrapper">
+
+    <!-- SHOP SECTION START -->
+    <div class="shop-section mb-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9 col-xs-12">
+                    <!-- single-product-area start -->
+                    <div class="single-product-area mb-80">
+                        <div class="row">
+                            <!-- imgs-zoom-area start -->
+                            <div class="col-md-5 col-sm-5 col-xs-12">
+                                <div class="imgs-zoom-area">
+                                    <img id="zoom_03" src="{{url_for('static', filename=mosaic.thumb270_1_file_path)}}" data-zoom-image="{{url_for('static', filename=mosaic.image_1_file_path)}}" alt="">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div id="gallery_01" class="carousel-btn slick-arrow-3 mt-30">
+                                                {% if mosaic.image_1_file_path %}
+                                                <div class="p-c">
+                                                    <a href="#" data-image="{{url_for('static', filename=mosaic.image_1_file_path)}}" data-zoom-image="{{url_for('static', filename=mosaic.image_1_file_path)}}">
+                                                        <img class="zoom_03" src="{{url_for('static', filename=mosaic.image_1_file_path)}}" alt="">
+                                                    </a>
+                                                </div>
+                                                {% endif %}
+                                                {% if mosaic.image_2_file_path %}
+                                                <div class="p-c">
+                                                    <a href="#" data-image="{{url_for('static', filename=mosaic.image_2_file_path)}}" data-zoom-image="{{url_for('static', filename=mosaic.image_2_file_path)}}">
+                                                        <img class="zoom_03" src="{{url_for('static', filename=mosaic.image_2_file_path)}}" alt="">
+                                                    </a>
+                                                </div>
+                                                {% endif %}
+                                                {% if mosaic.image_3_file_path %}
+                                                <div class="p-c">
+                                                    <a href="#" data-image="{{url_for('static', filename=mosaic.image_3_file_path)}}" data-zoom-image="{{url_for('static', filename=mosaic.image_3_file_path)}}">
+                                                        <img class="zoom_03" src="{{url_for('static', filename=mosaic.image_3_file_path)}}" alt="">
+                                                    </a>
+                                                </div>
+                                                {% endif %}
+                                                {% if mosaic.image_4_file_path %}
+                                                <div class="p-c">
+                                                    <a href="#" data-image="{{url_for('static', filename=mosaic.image_4_file_path)}}" data-zoom-image="{{url_for('static', filename=mosaic.image_4_file_path)}}">
+                                                        <img class="zoom_03" src="{{url_for('static', filename=mosaic.image_4_file_path)}}" alt="">
+                                                    </a>
+                                                </div>
+                                                {% endif %}
+                                                {% if mosaic.image_5_file_path %}
+                                                <div class="p-c">
+                                                    <a href="#" data-image="{{url_for('static', filename=mosaic.image_5_file_path)}}" data-zoom-image="{{url_for('static', filename=mosaic.image_5_file_path)}}">
+                                                        <img class="zoom_03" src="{{url_for('static', filename=mosaic.image_5_file_path)}}" alt="">
+                                                    </a>
+                                                </div>
+                                                {% endif %}
+
+
+                                                
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- imgs-zoom-area end -->
+                            <!-- single-product-info start -->
+                            <div class="col-md-7 col-sm-7 col-xs-12"> 
+                                <div class="single-product-info">
+                                    <h3 class="text-black-1">{{mosaic.category.name }} {{mosaic.name }} 
+
+                                	</h3>
+                                    <h6 class="brand-name-2">{% if mosaic.subname %}
+                                    	{{mosaic.subname}}
+                                    {% endif %}</h6>
+                                    <!--  hr -->
+                                    <hr>
+                                    {% if mosaic.materials %}
+	                                    <h5>Материал:
+	                                    	{% for material in mosaic.materials[:-1]: %}
+	                                    		{{material.name}},
+	                                    	{% endfor %}
+	                                    	{{ mosaic.materials[-1].name }}
+	                                    </h5>
+                                    {% endif %}
+                                    {% if mosaic.brand %}
+                                    	<h5>Производитель:
+                                    		{{mosaic.brand.name}}
+                                    	</h5>
+                                    {% endif %}
+                                    {% if mosaic.chipsizes %}
+	                                    <h5>Размер элементов:
+	                                    	{% for chipsize in mosaic.chipsizes[:-1]: %}
+	                                    		{{chipsize.name}},
+	                                    	{% endfor %}
+	                                    	{{ mosaic.chipsizes[-1].name }}
+	                                    </h5>
+                                    {% endif %}
+                                    
+
+                                    {% if mosaic.colors %}
+	                                    <h5>Цвет:
+	                                    	{% for color in mosaic.colors[:-1]: %}
+	                                    		{{color.name}},
+	                                    	{% endfor %}
+	                                    	{{ mosaic.colors[-1].name }}
+	                                    </h5>
+                                    {% endif %}
+
+                                    {% if mosaic.surfaces %}
+	                                    <h5>Поверхность:
+	                                    	{% for surface in mosaic.surfaces[:-1]: %}
+	                                    		{{surface.name}},
+	                                    	{% endfor %}
+	                                    	{{ mosaic.surfaces[-1].name }}
+	                                    </h5>
+                                    {% endif %}
+
+                                    {% if mosaic.width_mm and mosaic.length_mm %}
+                                    	<h5>Размеры листа (ДхШ):
+                                    		{{mosaic.length_mm}}x{{mosaic.width_mm}}мм
+
+                                    	</h5>
+                                    {% endif %}
+
+                                    {% if mosaic.height_mm%}
+                                    	<h5>Толщина:
+                                    		{{mosaic.height_mm}}мм
+                                    	</h5>
+                                    {% endif %}
+
+                                    <!-- hr -->
+									<hr>
+                                    <!-- single-product-price -->
+                                    {% if mosaic.price_currency == 'rur' %}
+                                        {% set price = mosaic.get_price %}
+                                        {% set actual_price = mosaic.get_actual_price %}
+                                        {% set unit_price = mosaic.get_unit_actual_price %}
+                                        {% set m2_price = mosaic.get_m2_actual_price %}
+                                    {% elif mosaic.price_currency == 'usd' %}
+                                        {% set price = mosaic.get_price * rates.usd %}
+                                        {% set actual_price = mosaic.get_actual_price * rates.usd %}
+                                        {% set unit_price = mosaic.get_unit_actual_price * rates.usd %}
+                                        {% set m2_price = mosaic.get_m2_actual_price * rates.usd %}
+                                    {% elif mosaic.price_currency == 'eur' %}
+                                        {% set price = mosaic.get_price * rates.eur %}
+                                        {% set actual_price = mosaic.get_actual_price * rates.eur %}
+                                        {% set unit_price = mosaic.get_unit_actual_price * rates.eur %}
+                                        {% set m2_price = mosaic.get_m2_actual_price * rates.eur %}
+                                    {% endif %}
+                                    
+                                    {% if price %}
+                                        <h3 class="pro-price">
+                                            Цена: 
+                                            {% if mosaic.discount %}
+                                                <del class='previous-price'>
+                                                    <span class='previous-price-amount'>
+                                                        {{"%.0f"|format(price)}} &#8381
+                                                    </span>
+                                                </del>
+                                            {% endif %}
+                                            {{"%.0f"|format(m2_price)}} &#8381 за м2
+                                        </h3>
+                                        <p>
+                                            {{"%.0f"|format(unit_price)}} &#8381 за 1 лист
+                                        </p>
+                                    {% endif %}
+                                    
+                                    <!--  hr -->
+                                    <hr>
+                                    <!-- plus-minus-pro-action -->
+                                    <div class="plus-minus-pro-action clearfix">
+                                        <div class="sin-plus-minus f-left clearfix">
+                                            <p class="color-title f-left">Количество</p>
+
+                                            <div class="cart-plus-minus f-left">
+                                            	<div class="dec qtybutton">-</div>
+                                                	<input type="text" value="" name="qtybutton" class="cart-plus-minus-box">
+                                                <div class="inc qtybutton">+</div>
+                                            </div>
+                                            <p class="mosaic_sheets_label f-left">листов </p>
+
+                                            <h5 class="mosaic_quantity_label pro-price f-left">&nbsp=&nbsp<b> </b>&nbspм2</h5>
+ 
+                                        </div>
+                                        
+                                    </div>
+                                    <!-- plus-minus-pro-action end -->
+                                    <!-- hr -->
+                                    
+                                    <hr>
+                                    <div>
+                                        <span id='buy_now_button_container'>
+                                            <a href="" id='buy_now_button' class="button extra-small button-black" tabindex="-1">
+                                                <span class="text-uppercase">Купить сейчас</span>
+                                            </a>
+                                        </span>
+                                        <a href="" id='add_to_cart_button' class="button extra-small button-black" tabindex="-1">
+                                            <span class="text-uppercase">Добавить в корзину</span>
+                                        </a>
+                                        <p id='add_to_cart_result'></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- single-product-info end -->
+                        </div>
+                        <!-- single-product-tab -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- hr -->
+                                <hr>
+                                <div class="single-product-tab">
+                                    <ul class="reviews-tab mb-20">
+                                        <li  class="active"><a href="" data-toggle="tab">описание</a></li>
+                                       
+                                        
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane active" id="description">
+
+                                        	{% if mosaic.surfaces %}
+			                                    <p>Применение мозаики:</p>
+			                                    <ul>
+			                                    	{% for use in mosaic.uses: %}
+			                                    		<li>- {{use.name}}</li>
+			                                    	{% endfor %}
+			                                    </ul>			                                    				                                    
+		                                    {% endif %}
+		                                    <br>
+
+                                            {% if mosaic.description %}
+		                                    	<p>		                                    		{{mosaic.description|safe}}
+
+		                                    	</p>
+		                                    {% endif %}
+                                           
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                <!--  hr -->
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- single-product-area end -->
+                    
+                </div>
+                <div class="col-md-3 col-xs-12">
+                  
+                    <!-- widget-categories -->
+                	{% include 'side-menu.html' %}
+                   
+               
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- SHOP SECTION END -->             
+
+</section>
+<!-- End page content -->
+
+<script type="text/javascript">
+	
+
+	$( ".cart-plus-minus" ).find("input").keyup(function(){
+  		 		
+  		var value=$(this).val();
+  		update_m2(value);
+  		
+	});
+
+	$(function() {
+	
+		start_quatity=11;
+		$( ".cart-plus-minus" ).find("input").val(start_quatity);
+		update_m2(start_quatity);
+  		
+	});
+
+	function update_m2(value) {
+    	var m2_value=(value)*({{mosaic.width_mm}}*{{mosaic.length_mm}}/1000000);
+  		
+  		var m2_string = m2_value.toFixed(2);
+  		$( ".mosaic_quantity_label" ).find( "b" ).text(m2_string);
+	}
+
+</script>
+
+<script type=text/javascript>
+			$(function() {
+
+			  $('a#add_to_cart_button').bind('click', function() {
+				$.getJSON('/_add_to_cart', {
+				  quantity: $('input[name="qtybutton"]').val(),
+				  id: {{mosaic.id}},
+				}, function(data) {
+  					update_cart_info(data);
+				    // the function is in layout
+				});
+				
+				return false;
+			  });
+
+              $('a#buy_now_button').bind('click', function() {
+                
+                $.getJSON('/_add_to_cart', {
+                  quantity: $('input[name="qtybutton"]').val(),
+                  id: {{mosaic.id}},
+                }, function(data) {
+                    window.location.href = "{{url_for('main.cart')}}";
+                  
+                });
+                
+                return false;
+              });
+
+              
+
+
+			});
+
+			
+
+
+</script>
+
+{% endblock content %}

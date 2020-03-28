@@ -1,0 +1,107 @@
+/*--------------------------------------------------------------
+
+  Template Name: Subash Ecommerce Responsive Bootstrap Template
+  Description: This is html5 template
+  Author: codecarnival
+  Version: 1.0
+  Design and Developed by: codecarnival
+
+Note: This is the file where you can add your custom styles to change the look of the theme. But don't modify "style.css" file.
+
+---------------------------------------------------------------*/
+
+/* ----------------------------------------------------
+	You can put your custom css code here: 
+-------------------------------------------------------*/
+.brand-title {
+	font-weight: 900;
+}
+
+
+@media (min-width: 768px) {
+    .product-col-height {
+        height: 380px /* Or whatever */
+    }
+}
+
+.product_list_header{
+  margin-left:15px;
+  margin-right:15px;
+  margin-bottom: 30px;
+  border-bottom:1px solid #F6F6F6;
+  font-weight: 500;
+}
+
+
+.mosaic_sheets_label {
+  color: #575757;
+  line-height: 25px;
+  margin-bottom: 0;
+  text-transform: uppercase;
+  //width: 90px;
+}
+
+.mosaic_quantity_label{
+  line-height: 25px;
+}
+
+#add_to_cart_result{
+  color: #9AC69E;
+  font-weight: bold;
+}
+
+
+.table-content table, .table-content table th, .table-content table td {
+  border: 1px solid #eee;
+  border-collapse: collapse;
+  border-right-style: none;
+  border-left-style: none;
+}
+
+#delivery-selection{
+  text-align: left;
+  padding-left: 150px;
+}
+
+.product-title-2{
+  margin-top: 20px;
+}
+
+.cart-qty-box{
+  width:40px;
+}
+
+input.cart-qty-input{
+  width:100%;
+}
+
+p, .product-cat .treeview > li > ul > li > a, .single-mega-item li a, input, label, ::placeholder, h1, h2, h3, h4, h5, h6, .main-menu > li > a,.single-mega-item .menu-title, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a  {
+  color:#303030;
+  /*color:green;*/
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */ 
+    color:#303030; 
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */ 
+    color:#303030; 
+} 
+
+.contact-address{
+  min-height: 320px;
+}
+
+.google-map-section{
+  margin-top:50px;
+  text-align: center;
+}
+
+.product-item{
+  min-height: 350px;
+  
+}
+
+
+
+

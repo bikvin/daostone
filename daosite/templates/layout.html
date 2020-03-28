@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    {% if header_title %}
+      <title>{{ header_title }}</title>
+    {% else %}
+      <title>DAO красивая мозаика</title>
+    {% endif %}
+    <meta name="description" content="{{meta_description}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static',filename='subas/img/icon/favicon.png') }}">
+
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KG4B3QW');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- All CSS Files -->
+    <!-- Bootstrap fremwork main css -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='subas/css/bootstrap.min.css') }}">
+    <!-- Nivo-slider css -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='subas/lib/css/nivo-slider.css') }}">
+    <!-- This core.css file contents all plugings css file. -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='subas/css/core.css') }}">
+    <!-- Theme shortcodes/elements style -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='subas/css/shortcode/shortcodes.css') }}">
+    <!-- Theme main style -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='subas/style.css') }}">
+    <!-- Responsive css -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='subas/css/responsive.css') }}">
+    <!-- Template color css -->
+    <link href="{{ url_for('static',filename='subas/css/color/color-core.css') }}" data-style="styles" rel="stylesheet">
+    <!-- User style -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='subas/css/custom.css') }}">
+    
+
+    <!-- Modernizr JS -->
+    <script src="{{ url_for('static',filename='subas/js/vendor/modernizr-2.8.3.min.js') }}"></script>
+
+     <!-- jquery latest version -->
+    <script src="{{ url_for('static',filename='subas/js/vendor/jquery-3.1.1.min.js') }}"></script>
+    <meta name="yandex-verification" content="6fce9358e57c088c" />
+</head>
+
+
+<body>
+    <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KG4B3QW" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+  <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+  <div class="wrapper">
+
+    <header class="header-area header-wrapper">
+      <div class="header-top-bar plr-185">
+          <div class="container-fluid">
+              <div class="row">
+                  <div class="col-md-3 col-sm-3 col-xs-12">
+                      <div class="call-us text-center">
+                          <p class=" mb-0 roboto">+7 (985) 513-27-44</p>
+                         
+                      </div>
+
+                  </div>
+                  <div class="col-md-3 col-sm-3 col-xs-12">
+                      <div class="call-us text-center">
+                          
+                          <p class=" mb-0 roboto">stone.dao@gmail.com</p>
+                      </div>
+
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                      <div class="call-us text-center">
+                          <p class=" mb-0 roboto">Шоу-рум: г. Москва, ул. Крылатские холмы, д.7к2</p>
+                      </div>
+
+                  </div>
+
+              </div>
+          </div>
+      </div>
+
+      <!-- header-middle-area -->
+      <div id="sticky-header" class="header-middle-area plr-185">
+        <div class="container-fluid">
+          <div class="full-width-mega-dropdown">
+            <div class="row">
+
+              <!-- logo -->
+              <div class="col-md-2 col-sm-6 col-xs-12">
+                  <div class="logo">
+                      <a href="{{url_for('main.home')}}">
+                          <img src="{{ url_for('static',filename='logo.png') }}" alt="main logo">
+                      </a>
+                  </div>
+              </div>
+
+              <!-- primary-menu -->
+              <div class="col-md-8 hidden-sm hidden-xs">
+                <nav id="primary-menu">
+                  <ul class="main-menu text-center">
+                   
+                    <li class="mega-parent"><a href="{{url_for('main.mosaic')}}">Мозаика{{key}}</a>
+                        <div class="mega-menu-area clearfix">
+                            <div class="mega-menu-link mega-menu-link-4  f-left">
+                                <ul class="single-mega-item">
+                                    <li class="menu-title">Материал</li>
+                                    {% for material in materials %}
+                                        <li>
+                                            <a href="{{url_for('main.mosaic_selected',select_category='material',selection=material.url_name)}}">{{material.name}}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <ul class="single-mega-item">
+                                    <li class="menu-title">Производитель</li>
+                                    {% for brand in brands %}
+                                        <li>
+                                            <a href="{{url_for('main.mosaic_selected',select_category='brand',selection=brand.url_name)}}">{{brand.name}}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <ul class="single-mega-item">
+                                    <li class="menu-title">Применение</li>
+                                    {% for use in uses %}
+                                        <li>
+                                            <a href="{{url_for('main.mosaic_selected',select_category='use',selection=use.url_name)}}">{{use.name}}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <ul class="single-mega-item">
+                                    <li class="menu-title">Цвет</li>
+                                    {% for color in colors %}
+                                        <li>
+                                            <a href="{{url_for('main.mosaic_selected',select_category='color',selection=color.url_name)}}">{{color.name}}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{{url_for('main.mosaic_discount')}}">Акции</a>
+                    </li>
+                    <li>
+                        <a href="{{url_for('main.interiors')}}">Интерьеры</a>
+                    </li>
+                    <li>
+                        <a href="{{url_for('main.delivery')}}">Доставка и самовывоз</a>
+                    </li>
+                    <li>
+                        <a href="{{url_for('main.contacts')}}">Контакты</a>
+                    </li>
+                    <li>
+                        <a href="{{url_for('main.about')}}">О нас</a>
+                    </li>
+               </ul>
+              </nav>
+
+            </div>
+            <div class="col-md-2 col-sm-6 col-xs-12">
+              <div class="search-top-cart  f-right">
+                <!-- header-search -->
+                <div class="header-search f-left">
+                    <div class="header-search-inner">
+                       <button class="search-toggle">
+                        <i class="zmdi zmdi-search"></i>
+                       </button>
+                        <form action="{{url_for('main.search_products')}}" method='get'>
+                            <div class="top-search-box">
+                                <input type="text" name='q' placeholder="Поиск по продуктам...">
+                                <button type="submit">
+                                    <i class="zmdi zmdi-search"></i>
+                                </button>
+                            </div>
+                        </form> 
+                    </div>
+                </div>
+                <!-- total-cart -->
+                <div class="total-cart f-left">
+                    <div class="total-cart-in">
+                        <div class="cart-toggler">
+                            <a href="{{url_for('main.cart')}}">
+                                <span class="cart-quantity">{{session['cart_items']|length}}</span><br>
+                                <span class="cart-icon">
+                                    <i class="zmdi zmdi-shopping-cart-plus"></i>
+                                </span>
+                            </a>                            
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="top-cart-inner your-cart">
+                                    <h5 class="text-capitalize">Корзина</h5>
+                                </div>
+                            </li>
+                            <li>
+                                
+                                <div class="total-cart-pro">
+
+                                    {% if not session['cart_items'] %}
+                                        <div class="top-cart-inner your-cart">                                Ваша корзина пуста
+                                       </div>
+                                    {% else %}
+
+                                    {% for item in session['cart_items'] %}
+                                    <div class="single-cart clearfix">
+
+                                        <div class="cart-img f-left">
+                                            <a href="{{url_for('main.single_mosaic', mosaic_id=item['id'])}}">
+                                                <img src="{{item['thumb_path']}}" alt="Cart Product" />
+                                            </a>
+                                        </div>
+                                        <div class="cart-info f-left">\
+                                            <h6 class="text-capitalize">
+                                                <a href="{{url_for('main.single_mosaic', mosaic_id=item['id'])}}">{{item['name']}}</a>
+                                            </h6>
+                                            <p>
+                                                <span>{{item['qty']}} шт.<strong></strong></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    {% endif %}
+                                    
+                                </div>
+                                
+                            </li>
+                            
+                            
+                            <li>
+                                <div class="top-cart-inner check-out">
+                                    <h4 class="text-uppercase">
+                                        <a href="{{url_for('main.cart')}}">Оформить заказ</a>
+                                    </h4>
+                                </div>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </header>
+        <!-- END HEADER AREA -->
+  
+
+    <!-- START MOBILE MENU AREA -->
+        <div class="mobile-menu-area hidden-lg hidden-md">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="mobile-menu">
+                            <nav id="dropdown">
+                                <ul>
+                                    <li><a href="{{url_for('main.home')}}">Главная страница</a>
+                                        
+                                    </li>
+                                    
+                                    <li><a href="">Материалы мозаики</a>
+                                        <ul>
+                                            <li>
+                                                {% for material in materials %}
+                                                <a href="{{url_for('main.mosaic_selected',select_category='material',selection=material.url_name)}}">{{material.name}}</a>
+                                                
+                                                {% endfor %}
+                                            </li>
+                                            
+                                        </ul>
+                                    </li>
+                                    <li><p>Производители мозаики</p>
+                                        <ul>
+                                            <li>
+                                                {% for brand in brands %}
+                                                <a href="{{url_for('main.mosaic_selected',select_category='brand',selection=brand.url_name)}}">{{brand.name}}</a>
+                                                
+                                                {% endfor %}
+                                            </li>
+                                            
+                                        </ul>
+                                    </li>
+                                    <li><p>Применение мозаики</p>
+                                        <ul>
+                                            <li>
+                                                {% for use in uses %}
+                                                <a href="{{url_for('main.mosaic_selected',select_category='use',selection=use.url_name)}}">{{use.name}}</a>
+                                                
+                                                {% endfor %}
+                                            </li>
+                                            
+                                        </ul>
+                                    </li>
+                                    <li><p>Цвета мозаики</p>
+                                        <ul>
+                                            <li>
+                                                {% for color in colors %}
+                                                <a href="{{url_for('main.mosaic_selected',select_category='color',selection=color.url_name)}}">{{color.name}}</a>
+                                                
+                                                {% endfor %}
+                                            </li>
+                                            
+                                        </ul>
+                                    </li>
+                                    
+                                    <li>
+                                        <a href="{{url_for('main.delivery')}}">Доставка</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{url_for('main.contacts')}}">Контакты</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{url_for('main.about')}}">О нас</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END MOBILE MENU AREA -->
+
+{% block content %}{% endblock %}
+ 
+  <!-- START FOOTER AREA -->
+        <footer id="footer" class="footer-area">
+            <div class="footer-top">
+                <div class="container-fluid">
+                    <div class="plr-185">
+                        <div class="footer-top-inner gray-bg">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <ul>
+                                        {% for material in materials %}
+
+                                            <li>
+                                                <a href="{{url_for('main.mosaic_selected',select_category='material',selection=material.url_name)}}">{{material.page_title}}</a>
+                                            </li>
+
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    {% for use in uses %}
+
+                                        <li>
+                                            <a href="{{url_for('main.mosaic_selected',select_category='use',selection=use.url_name)}}">{{use.page_title}}</a>
+                                        </li>
+
+                                    {% endfor %}
+                                    
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <ul>
+                                        <li>
+                                            <a href="{{url_for('main.delivery')}}">Доставка и самовывоз</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{url_for('main.contacts')}}">Контакты</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{url_for('main.about')}}">О нас</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom black-bg">
+                <div class="container-fluid">
+                    <div class="plr-185">
+                        <div class="copyright">
+                            <div class="row">
+                                <div class="col-sm-6 col-xs-12">
+                                    <div class="copyright-text">
+                                        <p>&copy;DAO красивая мозаика</p>
+                                         <p>+7 (985) 513-27-44</p>
+                                            
+                                            <p>г. Москва, ул. Крылатские холмы, д.7, к.2.</p>
+                                    </div>
+                                </div>
+
+                                
+
+                                
+
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <a class='exchange_rates_link' href="https://www.cbr-xml-daily.ru/">Курсы ЦБ РФ в XML и JSON, API</a>
+                </div>
+            </div>
+
+        </footer>
+        <!-- END FOOTER AREA -->
+
+  </div>
+    <!-- Body main wrapper end -->
+
+	<!-- Placed JS at the end of the document so the pages load faster -->
+    <script type=text/javascript>
+            function update_cart_info(data){
+                //var str = JSON.stringify(data, null, 2); // spacing level = 2
+                var items_in_session=0;
+                //$("#result").append(str);
+                $("#add_to_cart_result").append('Товар добавлен в корзину');
+                $(".total-cart-pro").html('');
+                $.each(data, function(k, v) {
+                    //alert(v['id']);
+
+                    items_in_session=items_in_session+1;
+                    //$("#result").append('id:' + v['id'] + ' qty:' + v['qty'] + ' name:' + v['name'] + ' thumb_path:' + v['thumb_path']+"<br>");
+                    
+                    
+                    $(".total-cart-pro").append('\
+                        <div class="single-cart clearfix">\
+                            <div class="cart-img f-left">\
+                                <a href="#">\
+                                    <img src=" '+ v['thumb_path'] +' " alt="Cart Product" />\
+                                </a>\
+                            </div>\
+                            <div class="cart-info f-left">\
+                                <h6 class="text-capitalize">\
+                                    <a href="#">' + v['name'] + '</a>\
+                                </h6>\
+                                <p>\
+                                    <span>'+ v['qty'] +' шт. <strong></strong></span>\
+                                </p>\
+                            </div>\
+                        </div>');
+                    });
+                $(".cart-quantity").html(items_in_session);
+                $("#buy_now_button_container").html('<a href="{{url_for('main.cart')}}" id="" class="button extra-small button-black" tabindex="-1">\
+                                            <span class="text-uppercase">Оформить заказ</span>\
+                                        </a>');
+                
+                
+            }
+
+    </script>
+
+   
+    <!-- Bootstrap framework js -->
+    <script src="{{ url_for('static',filename='subas/js/bootstrap.min.js') }}"></script>
+    <!-- jquery.nivo.slider js -->
+    <script src="{{ url_for('static',filename='subas/lib/js/jquery.nivo.slider.js') }}"></script>
+    <!-- All js plugins included in this file. -->
+    <script src="{{ url_for('static',filename='subas/js/plugins.js') }}"></script>
+    <!-- Main js file that contents all jQuery plugins activation. -->
+    <script src="{{ url_for('static',filename='subas/js/main.js') }}"></script>
+    {% block script %}
+    {% endblock script %}
+</body>
+</html>

@@ -1,0 +1,30 @@
+{% extends 'layout_admin.html' %}
+{% block content %}
+	<div class="content-section">
+        <h3>{{ rate.name }}</h3>
+        <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">{{ legend }}</legend>
+                <div class="form-group">
+                    {{ form.value.label(class="form-control-label") }}
+                    {% if form.value.errors %}
+                        {{ form.value(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.value.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.value(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary") }}
+                <a class="btn btn-outline-info btn-sm" href="{{url_for('rates.rates_list')}}" role="button">Отменить</a>
+            </div>
+        </form>
+    </div>
+{% endblock content %}
+

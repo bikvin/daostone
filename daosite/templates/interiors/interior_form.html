@@ -1,0 +1,93 @@
+{% extends 'layout_admin.html' %}
+{% block content %}
+	<div class="content-section">
+        <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">{{ legend }}</legend>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            {{ form.name.label(class="form-control-label") }}
+                            {% if form.name.errors %}
+                                {{ form.name(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.name.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.name(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form.description.label(class="form-control-label") }}
+                    {% if form.description.errors %}
+                        {{ form.description(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.description.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.description(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            {{ form.products.label(class="form-control-label") }}
+                            {% if form.products.errors %}
+                                {{ form.products(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.products.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.products(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form.images.label(class="form-control-label") }}
+                    {% if form.images.errors %}
+                        {{ form.images(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.images.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.images(class="form-control form-control-lg", multiple="multiple", value=interior.images) }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary") }}
+                <a class="btn btn-outline-info btn-sm" href="{{url_for('interiors.interior_list')}}" role="button">Отменить</a>
+            </div>
+        </form>
+            {% if interior.images %}
+                <h3>Изображения интерьера</h3>
+                {% for image in interior.images %}
+                    <form action="{{url_for('interiors.delete_image', interior_id=interior.id, image_id=image.id)}}" method="post">
+                        <div class="d-flex justify-content-start align-items-center">
+                            <a href="{{ url_for('static', filename=image.path) }}" target="_blank">
+                                <img class="rounded" style="width: 256px; margin-top: 1rem; margin-left: 20px" src="{{ url_for('static', filename=image.path) }}">
+                            </a>
+                        </div>
+                        <div class="d-flex justify-content-end align-items-center">
+                            <button class="btn btn-warning btn-sm">Удалить изображение</button>
+                        </div>
+                    </form>
+                    <hr>
+                {% endfor %}
+            {% endif %}
+    </div>
+{% endblock content %}
+

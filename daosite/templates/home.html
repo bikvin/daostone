@@ -1,0 +1,350 @@
+{% extends 'layout.html' %}
+{% block content %}
+	
+  <!-- START SLIDER AREA -->
+        <div class="slider-area  plr-185  mb-80">
+            <div class="container-fluid">
+                <div class="slider-content">
+                    <div class="row">
+                        <div class="active-slider-1 slick-arrow-1 slick-dots-1">
+                            <!-- layer-1 Start -->
+                            <div class="col-md-12">
+                                <div class="layer-1">
+                                    <div class="slider-img">
+                                        <img src="{{ url_for('static',filename='slider_pics/1.jpg') }}" alt="">
+                                    </div>
+                                    <div class="slider-info gray-bg">
+                                        <div class="slider-info-inner">
+                                            <h1 class="slider-title-1 text-uppercase text-black-1">Мозаика в интерьере</h1>
+                                            <div class="slider-brief text-black-2">
+                                                <p>Использование мозаики сделает ваш интерьер интересным и неповторимым. Стены покрытые мозаикой приобретают уникальную и сложную текстуру которая наверняка добавит много очков к восприятию вашего интерьера.</p>
+                                            </div>
+                                            <a href="{{url_for('main.mosaic')}}" class="button extra-small button-black">
+                                                <span class="text-uppercase">Перейти в каталог</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- layer-1 end -->
+                            <!-- layer-1 Start -->
+                            <div class="col-md-12">
+                                <div class="layer-1">
+                                    <div class="slider-img">
+                                        <img src="{{ url_for('static',filename='slider_pics/2.jpg') }}" alt="">
+                                    </div>
+                                    <div class="slider-info gray-bg">
+                                        <div class="slider-info-inner">
+                                            <h1 class="slider-title-1 text-uppercase text-black-1">Мозаика в гостиной</h1>
+                                            <div class="slider-brief text-black-2">
+                                                <p>Чаще всего мозаика используется в ванной комнате или на кухне. Однако не стоит ограничиваться лишь этим. Существует огромное количество видов мозаики созданных специально для спален, гостиных, прихожих и других комнат. Они сделают ваш интерьер по настоящему неповторимым.</p>
+                                            </div>
+                                            <a href="{{url_for('main.mosaic_selected',select_category='use',selection='gostinaya')}}" class="button extra-small button-black">
+                                                <span class="text-uppercase">Смотреть мозаику для гостиных</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- layer-1 end -->
+                            <!-- layer-1 Start -->
+                            <div class="col-md-12">
+                                <div class="layer-1">
+                                    <div class="slider-img">
+                                        <img src="{{ url_for('static',filename='slider_pics/3.jpg') }}" alt="">
+                                    </div>
+                                    <div class="slider-info gray-bg">
+                                        <div class="slider-info-inner">
+                                            <h1 class="slider-title-1 text-uppercase text-black-1">Мозаика в ванной</h1>
+                                            <div class="slider-brief text-black-2">
+                                                <p>Мозаика идеально подходит для использования в ванных комнатах и душевых. Здесь ее можно использовать как отдельно, так и в сочетании с керамической плиткой, добиваясь наиболее интересных сочетаний. </p>
+                                            </div>
+                                            <a href="{{url_for('main.mosaic_selected',select_category='use',selection='vannaya')}}" class="button extra-small button-black">
+                                                <span class="text-uppercase">Смотреть мозаику для ванных</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- layer-1 end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END SLIDER AREA -->
+         <section id="page-content" class="page-wrapper">
+          <!-- Применение BY BRAND SECTION START-->
+            <div class="by-brand-section mb-80">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section-title text-left mb-40">
+                                <h2 class="uppercase">Применение</h2>
+                                <h6>Мозаика может использоваться практически в любой части вашего интерьера,</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="by-brand-product">
+                        <div class="row active-by-brand slick-arrow-2">
+                            <!-- single-brand-product start -->
+                            <div class="col-xs-12">
+                                <div class="single-brand-product">
+                                    <a href="{{url_for('main.mosaic_selected',select_category='use',selection='vannaya')}}"><img src="{{ url_for('static',filename='subas/img/usages/vannaya.jpg') }}" alt=""></a>
+                                    <h3 class="brand-title text-white">
+                                        <a href="{{url_for('main.mosaic_selected',select_category='use',selection='vannaya')}}">Мозаика для ванной</a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="single-brand-product">
+                                    <a href="{{url_for('main.mosaic_selected',select_category='use',selection='banya-sauna-hamam')}}"><img src="{{ url_for('static',filename='subas/img/usages/sauna.jpg') }}" alt=""></a>
+                                    <h3 class="brand-title text-gray">
+                                        <a href="{{url_for('main.mosaic_selected',select_category='use',selection='banya-sauna-hamam')}}">Для бани, сауны, хамама</a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <!-- single-brand-product end -->
+                            <!-- single-brand-product start -->
+                            <div class="col-xs-12">
+                                <div class="single-brand-product">
+                                    <a href="{{url_for('main.mosaic_selected',select_category='use',selection='kuhnya')}}"><img src="{{ url_for('static',filename='subas/img/usages/kuhnya.jpg') }}" alt=""></a>
+                                    <h3 class="brand-title text-white">
+                                        <a href="{{url_for('main.mosaic_selected',select_category='use',selection='kuhnya')}}">Мозаика для кухни</a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <!-- single-brand-product end -->
+                            <!-- single-brand-product start -->
+                            <div class="col-xs-12">
+                                <div class="single-brand-product">
+                                    <a href="{{url_for('main.mosaic_selected',select_category='use',selection='gostinaya')}}"><img src="{{ url_for('static',filename='subas/img/usages/gostinaya.jpg') }}" alt=""></a>
+                                    <h3 class="brand-title text-white">
+                                        <a href="{{url_for('main.mosaic_selected',select_category='use',selection='gostinaya')}}">Мозаика для гостиной</a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <!-- single-brand-product end -->
+                            <!-- single-brand-product start -->
+                            <div class="col-xs-12">
+                                <div class="single-brand-product">
+                                    <a href="{{url_for('main.mosaic_selected',select_category='use',selection='basseyn')}}"><img src="{{ url_for('static',filename='subas/img/usages/basseyn.jpg') }}" alt=""></a>
+                                    <h3 class="brand-title text-white">
+                                        <a href="{{url_for('main.mosaic_selected',select_category='use',selection='basseyn')}}">Мозаика для бассейна</a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <!-- single-brand-product end -->
+                            <!-- single-brand-product start -->
+                            
+                            
+                            <div class="col-xs-12">
+                                <div class="single-brand-product">
+                                    <a href="{{url_for('main.mosaic_selected',select_category='use',selection='dushevaya')}}"><img src="{{ url_for('static',filename='subas/img/usages/dushevaya.jpg') }}" alt=""></a>
+                                    <h3 class="brand-title text-white">
+                                        <a href="{{url_for('main.mosaic_selected',select_category='use',selection='dushevaya')}}">Мозаика для душевой</a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="single-brand-product">
+                                    <a href="{{url_for('main.mosaic_selected',select_category='use',selection='pol')}}"><img src="{{ url_for('static',filename='subas/img/usages/pol.jpg') }}" alt=""></a>
+                                    <h3 class="brand-title text-white">
+                                        <a href="{{url_for('main.mosaic_selected',select_category='use',selection='pol')}}">Мозаика для пола</a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="single-brand-product">
+                                    <a href="{{url_for('main.mosaic_selected',select_category='use',selection='spalnya')}}"><img src="{{ url_for('static',filename='subas/img/usages/spalnya.jpg') }}" alt=""></a>
+                                    <h3 class="brand-title text-white">
+                                        <a href="{{url_for('main.mosaic_selected',select_category='use',selection='spalnya')}}">Мозаика для спальни</a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <!-- single-brand-product end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- BY BRAND SECTION END -->
+
+            <!-- Материал BY BRAND SECTION START-->
+            <div class="by-brand-section mb-80">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section-title text-left mb-40">
+                                <h2 class="uppercase">Материалы</h2>
+                                <h6>Обычно мозаику делают из стекла или натурального мрамора. Но есть и другие варианты...,</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="by-brand-product">
+                        <div class="row active-by-brand slick-arrow-2">
+                            <!-- single-brand-product start -->
+                            <div class="col-xs-12">
+                                <div class="single-brand-product">
+                                    <a href="{{url_for('main.mosaic_selected',select_category='material',selection='stone')}}"><img src="{{ url_for('static',filename='subas/img/materials/kamen.jpg') }}" alt=""></a>
+                                    <h3 class="brand-title text-white">
+                                        <a href="{{url_for('main.mosaic_selected',select_category='material',selection='stone')}}">Мозаика из камня</a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="single-brand-product">
+                                    <a href="{{url_for('main.mosaic_selected',select_category='material',selection='glass')}}"><img src="{{ url_for('static',filename='subas/img/materials/steklo.jpg') }}" alt=""></a>
+                                    <h3 class="brand-title text-white">
+                                        <a href="{{url_for('main.mosaic_selected',select_category='material',selection='glass')}}">Стеклянная мозаика</a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <!-- single-brand-product end -->
+                            <!-- single-brand-product start -->
+                            <div class="col-xs-12">
+                                <div class="single-brand-product">
+                                    <a href="{{url_for('main.mosaic_selected',select_category='material',selection='glass-stone-mix')}}"><img src="{{ url_for('static',filename='subas/img/materials/smesi.jpg') }}" alt=""></a>
+                                    <h3 class="brand-title text-white">
+                                        <a href="{{url_for('main.mosaic_selected',select_category='material',selection='glass-stone-mix')}}">Смеси из стекла и камня</a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <!-- single-brand-product end -->
+                            <!-- single-brand-product start -->
+                            <div class="col-xs-12">
+                                <div class="single-brand-product">
+                                    <a href="{{url_for('main.mosaic_selected',select_category='material',selection='avanturine')}}"><img src="{{ url_for('static',filename='subas/img/materials/avanturine.jpg') }}" alt=""></a>
+                                    <h3 class="brand-title text-white">
+                                        <a href="{{url_for('main.mosaic_selected',select_category='material',selection='avanturine')}}">Мозаика с авантюрином</a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <!-- single-brand-product end -->
+                            <!-- single-brand-product start -->
+                            <div class="col-xs-12">
+                                <div class="single-brand-product">
+                                    <a href="{{url_for('main.mosaic_selected',select_category='material',selection='ceramic')}}"><img src="{{ url_for('static',filename='subas/img/materials/keramika.jpg') }}" alt=""></a>
+                                    <h3 class="brand-title text-white">
+                                        <a href="{{url_for('main.mosaic_selected',select_category='material',selection='ceramic')}}">Керамическая мозаика</a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="single-brand-product">
+                                    <a href="{{url_for('main.mosaic_selected',select_category='material',selection='shell')}}"><img src="{{ url_for('static',filename='subas/img/materials/rakushka.jpg') }}" alt=""></a>
+                                    <h3 class="brand-title text-white">
+                                        <a href="{{url_for('main.mosaic_selected',select_category='material',selection='shell')}}">Мозаика из ракушки</a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="single-brand-product">
+                                    <a href="{{url_for('main.mosaic_selected',select_category='material',selection='metall')}}"><img src="{{ url_for('static',filename='subas/img/materials/metal.jpg') }}" alt=""></a>
+                                    <h3 class="brand-title text-white">
+                                        <a href="{{url_for('main.mosaic_selected',select_category='material',selection='metall')}}">Мозаика с металлом</a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <!-- single-brand-product end -->
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- BY BRAND SECTION END -->
+    
+
+<!-- PRODUCT TAB SECTION START -->
+            <div class="product-tab-section mb-50">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="section-title text-left mb-40">
+                                <h2 class="uppercase">Популярная мозаика</h2>
+                                <h6>Эти виды мозаики полюбились наибольшему количеству наших клиентов</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                                                  
+                        </div>
+                    </div>
+                    <div class="product-tab">
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                           
+                            <!-- popular-product start -->
+                            <div class="tab-pane active" id="popular-product">
+                                <div class="row">
+                                    
+                                    
+                                    {% for product in popular_products %}
+                                    <!-- product-item start -->
+                                    <div class="col-md-3 col-sm-4 col-xs-12">
+                                        <div class="product-item">
+                                            <div class="product-img">
+                                                <a href="{{url_for('main.single_mosaic', mosaic_id=product.id)}}">
+                                                    <img src="{{url_for('static', filename=product.thumb270_1_file_path)}}" alt="{{ product.category.name}} {{ product.name}}"/>
+                                                </a>
+                                            </div>
+                                            <div class="product-info">
+                                                <h6 class="product-title">
+                                                    <a href="{{url_for('main.single_mosaic', mosaic_id=product.id)}}">{{ product.name }}</a>
+                                                </h6>
+
+                                                {% if product.price_currency == 'rur' %}
+                                                    {% set price = product.get_price %}
+                                                    {% set actual_price = product.get_actual_price %}
+                                                    {% set unit_price = product.get_unit_actual_price %}
+                                                    {% set m2_price = product.get_m2_actual_price %}
+                                                {% elif product.price_currency == 'usd' %}
+                                                    {% set price = product.get_price * rates.usd %}
+                                                    {% set actual_price = product.get_actual_price * rates.usd %}
+                                                    {% set unit_price = product.get_unit_actual_price * rates.usd %}
+                                                    {% set m2_price = product.get_m2_actual_price * rates.usd %}
+                                                {% elif product.price_currency == 'eur' %}
+                                                    {% set price = product.get_price * rates.eur %}
+                                                    {% set actual_price = product.get_actual_price * rates.eur %}
+                                                    {% set unit_price = product.get_unit_actual_price * rates.eur %}
+                                                    {% set m2_price = product.get_m2_actual_price * rates.eur %}
+                                                {% endif %}
+                                                
+                                                {% if price %}
+                                                    <h3 class="pro-price">
+                                                        {% if product.discount %}
+                                                            <del class='previous-price'>
+                                                                <span class='previous-price-amount'>
+                                                                    {{"%.0f"|format(price)}} &#8381
+                                                                </span>
+                                                            </del>
+                                                        {% endif %}
+                                                        {{"%.0f"|format(m2_price)}} &#8381/м2
+                                                    </h3>
+                                                {% endif %}
+                                                
+                                                <ul class="action-button">    
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- product-item end -->
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <!-- popular-product end -->
+                            
+                           
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- PRODUCT TAB SECTION END -->
+
+          <div class="text-center">
+            <a class="button large button-black mb-20" href="{{url_for('main.mosaic')}}"><span>Перейти в каталог</span> </a>
+          </section>
+          </div>
+
+{% endblock content %}
