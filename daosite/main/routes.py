@@ -20,8 +20,9 @@ main = Blueprint('main', __name__)
 @main.route("/")
 def home():
     popular_products = Product.query.filter(Product.popular == True)
+    discount_products = Product.query.filter(Product.discount > 0, Product.active == True).order_by(Product.id.desc()).limit(8)
     header_title = "Daostone.ru - магазин мозаики для отделки. Лучшая мозаика для вашего интерьера."
-    return render_template('home.html', popular_products=popular_products, header_title=header_title)
+    return render_template('home.html', popular_products=popular_products, discount_products=discount_products, header_title=header_title)
 
 
 @main.route("/mosaic")

@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block content %}
 	
-  <!-- START SLIDER AREA -->
+        <!-- START SLIDER AREA -->
         <div class="slider-area  plr-185  mb-80">
             <div class="container-fluid">
                 <div class="slider-content">
@@ -74,6 +74,97 @@
         </div>
         <!-- END SLIDER AREA -->
          <section id="page-content" class="page-wrapper">
+
+            <!-- DISCOUNTS PRODUCT TAB SECTION START -->
+            <div class="discount-product-tab-section mb-50">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="section-title text-left mb-40">
+                                <h2 class="uppercase">Акции</h2>
+                                <!--<h6></h6>-->
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                                                  
+                        </div>
+                    </div>
+                    <div class="product-tab">
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                           
+                            <!-- discount-product start -->
+                            <div class="tab-pane active" id="discount-product">
+                                <div class="row">
+                                    
+                                    
+                                    {% for product in discount_products %}
+                                    <!-- product-item start -->
+                                    <div class="col-md-3 col-sm-4 col-xs-12">
+                                        <div class="product-item">
+                                            <div class="product-img">
+                                                <a href="{{url_for('main.single_mosaic', mosaic_id=product.id)}}">
+                                                    <img src="{{url_for('static', filename=product.thumb270_1_file_path)}}" alt="{{ product.category.name}} {{ product.name}}"/>
+                                                </a>
+                                            </div>
+                                            <div class="product-info">
+                                                <h6 class="product-title">
+                                                    <a href="{{url_for('main.single_mosaic', mosaic_id=product.id)}}">{{ product.name }}</a>
+                                                </h6>
+
+                                                {% if product.price_currency == 'rur' %}
+                                                    {% set price = product.get_price %}
+                                                    {% set actual_price = product.get_actual_price %}
+                                                    {% set unit_price = product.get_unit_actual_price %}
+                                                    {% set m2_price = product.get_m2_actual_price %}
+                                                {% elif product.price_currency == 'usd' %}
+                                                    {% set price = product.get_price * rates.usd %}
+                                                    {% set actual_price = product.get_actual_price * rates.usd %}
+                                                    {% set unit_price = product.get_unit_actual_price * rates.usd %}
+                                                    {% set m2_price = product.get_m2_actual_price * rates.usd %}
+                                                {% elif product.price_currency == 'eur' %}
+                                                    {% set price = product.get_price * rates.eur %}
+                                                    {% set actual_price = product.get_actual_price * rates.eur %}
+                                                    {% set unit_price = product.get_unit_actual_price * rates.eur %}
+                                                    {% set m2_price = product.get_m2_actual_price * rates.eur %}
+                                                {% endif %}
+                                                
+                                                {% if price %}
+                                                    <h3 class="pro-price">
+                                                        {% if product.discount %}
+                                                            <del class='previous-price'>
+                                                                <span class='previous-price-amount'>
+                                                                    {{"%.0f"|format(price)}} &#8381
+                                                                </span>
+                                                            </del>
+                                                        {% endif %}
+                                                        {{"%.0f"|format(m2_price)}} &#8381/м2
+                                                    </h3>
+                                                {% endif %}
+                                                
+                                                <ul class="action-button">    
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- product-item end -->
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <!-- discount-product end -->
+                            
+                           
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <a class="button large button-black mb-20" href="{{url_for('main.mosaic_discount')}}"><span>Смотреть все акции</span> </a>
+            </div>
+            <!-- DISCOUNTS PRODUCT TAB SECTION END -->
+
           <!-- Применение BY BRAND SECTION START-->
             <div class="by-brand-section mb-80">
                 <div class="container">
@@ -256,7 +347,7 @@
             <!-- BY BRAND SECTION END -->
     
 
-<!-- PRODUCT TAB SECTION START -->
+            <!-- PRODUCT TAB SECTION START -->
             <div class="product-tab-section mb-50">
                 <div class="container">
                     <div class="row">
@@ -342,9 +433,10 @@
             </div>
             <!-- PRODUCT TAB SECTION END -->
 
-          <div class="text-center">
-            <a class="button large button-black mb-20" href="{{url_for('main.mosaic')}}"><span>Перейти в каталог</span> </a>
+            <div class="text-center">
+                <a class="button large button-black mb-20" href="{{url_for('main.mosaic')}}"><span>Перейти в каталог</span> </a>
+            </div>
           </section>
-          </div>
+          
 
 {% endblock content %}
