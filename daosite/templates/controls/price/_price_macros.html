@@ -1,0 +1,3 @@
+{% macro price_ctl(price, rates, price_currency='rur') -%}
+    {{"%.0f"|format(price|currency_price(rates, price_currency))}}
+{%- endmacro %}

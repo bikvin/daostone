@@ -1,0 +1,13 @@
+{% from 'controls/price/_price_macros.html' import price_ctl as price_ctl  %}
+{% if price %}
+    <h3 class="pro-price">
+        {% if product.discount %}
+            <del class='previous-price'>
+                <span class='previous-price-amount'>
+                    {{ price_ctl(price, rates, product.price_currency) }} &#8381
+                </span>
+            </del>
+        {% endif %}
+        {{ price_ctl(get_m2_actual_price(product, price), rates, product.price_currency) }} &#8381/м2
+    </h3>
+{% endif %}

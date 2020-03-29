@@ -77,35 +77,11 @@
                                                     <a href="{{url_for('main.single_mosaic', mosaic_id=product.id)}}">{{ product.name }}</a>
                                                 </h6>
 
-                                                {% if product.price_currency == 'rur' %}
-                                                    {% set price = product.get_price %}
-                                                    {% set actual_price = product.get_actual_price %}
-                                                    {% set unit_price = product.get_unit_actual_price %}
-                                                    {% set m2_price = product.get_m2_actual_price %}
-                                                {% elif product.price_currency == 'usd' %}
-                                                    {% set price = product.get_price * rates.usd %}
-                                                    {% set actual_price = product.get_actual_price * rates.usd %}
-                                                    {% set unit_price = product.get_unit_actual_price * rates.usd %}
-                                                    {% set m2_price = product.get_m2_actual_price * rates.usd %}
-                                                {% elif product.price_currency == 'eur' %}
-                                                    {% set price = product.get_price * rates.eur %}
-                                                    {% set actual_price = product.get_actual_price * rates.eur %}
-                                                    {% set unit_price = product.get_unit_actual_price * rates.eur %}
-                                                    {% set m2_price = product.get_m2_actual_price * rates.eur %}
-                                                {% endif %}
-                                                
-                                                {% if price %}
-                                                    <h3 class="pro-price">
-                                                        {% if product.discount %}
-                                                            <del class='previous-price'>
-                                                                <span class='previous-price-amount'>
-                                                                    {{"%.0f"|format(price)}} &#8381
-                                                                </span>
-                                                            </del>
-                                                        {% endif %}
-                                                        {{"%.0f"|format(m2_price)}} &#8381/м2
-                                                    </h3>
-                                                {% endif %}
+                                                {% with 
+                                                price = product.get_price_with_brand_discount, 
+                                                product = product %}
+                                                    {% include 'controls/price/_price.html' ignore missing %}
+                                                {% endwith %}
                                                 
                                                 <ul class="action-button">    
                                                 </ul>
@@ -349,35 +325,11 @@
                                                     <a href="{{url_for('main.single_mosaic', mosaic_id=product.id)}}">{{ product.name }}</a>
                                                 </h6>
 
-                                                {% if product.price_currency == 'rur' %}
-                                                    {% set price = product.get_price %}
-                                                    {% set actual_price = product.get_actual_price %}
-                                                    {% set unit_price = product.get_unit_actual_price %}
-                                                    {% set m2_price = product.get_m2_actual_price %}
-                                                {% elif product.price_currency == 'usd' %}
-                                                    {% set price = product.get_price * rates.usd %}
-                                                    {% set actual_price = product.get_actual_price * rates.usd %}
-                                                    {% set unit_price = product.get_unit_actual_price * rates.usd %}
-                                                    {% set m2_price = product.get_m2_actual_price * rates.usd %}
-                                                {% elif product.price_currency == 'eur' %}
-                                                    {% set price = product.get_price * rates.eur %}
-                                                    {% set actual_price = product.get_actual_price * rates.eur %}
-                                                    {% set unit_price = product.get_unit_actual_price * rates.eur %}
-                                                    {% set m2_price = product.get_m2_actual_price * rates.eur %}
-                                                {% endif %}
-                                                
-                                                {% if price %}
-                                                    <h3 class="pro-price">
-                                                        {% if product.discount %}
-                                                            <del class='previous-price'>
-                                                                <span class='previous-price-amount'>
-                                                                    {{"%.0f"|format(price)}} &#8381
-                                                                </span>
-                                                            </del>
-                                                        {% endif %}
-                                                        {{"%.0f"|format(m2_price)}} &#8381/м2
-                                                    </h3>
-                                                {% endif %}
+                                                {% with 
+                                                price = product.get_price_with_brand_discount, 
+                                                product = product %}
+                                                    {% include 'controls/price/_price.html' ignore missing %}
+                                                {% endwith %}
                                                 
                                                 <ul class="action-button">    
                                                 </ul>

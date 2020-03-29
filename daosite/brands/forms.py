@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField
+from wtforms import StringField, SubmitField, TextAreaField, DecimalField
 from wtforms.validators import DataRequired
 
 
@@ -13,3 +13,4 @@ class BrandForm(FlaskForm):
     description = TextAreaField('Описание')
     submit = SubmitField('Сохранить')
     url_name = StringField('URL Название бренда (только латинские буквы)', validators=[DataRequired()])
+    discount = DecimalField('Скидка в %')

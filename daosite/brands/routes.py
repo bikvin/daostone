@@ -23,7 +23,8 @@ def new_brand():
                       page_title=form.page_title.data,
                       header_title=form.header_title.data,
                       meta_description=form.meta_description.data,
-                      description=form.description.data)
+                      description=form.description.data,
+                      discount=form.discount.data)
         db.session.add(brand)
         db.session.commit()
         flash('Бренд создан', 'success')
@@ -56,6 +57,7 @@ def edit_brand(brand_id):
         brand.description = form.description.data
         brand.info = form.info.data
         brand.files_directory = form.files_directory.data
+        brand.discount=form.discount.data
         db.session.commit()
         flash('Бренд обновлен', 'success')
         return redirect(url_for('brands.brand_list'))
@@ -68,6 +70,7 @@ def edit_brand(brand_id):
         form.description.data = brand.description
         form.info.data = brand.info
         form.files_directory.data = brand.files_directory
+        form.discount.data = brand.discount
     return render_template('brands/create_brand.html', title='Редактироваие бренда', form=form, legend='Редактирование бренда')
 
 

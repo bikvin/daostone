@@ -3,6 +3,8 @@ import urllib
 
 from flask import (Blueprint, jsonify, redirect, render_template, request,
                    session, url_for)
+from jinja2 import contextfilter
+
 from sqlalchemy import and_
 
 from daosite import db
@@ -346,3 +348,25 @@ def context_processor():
                 uses=Use.query.all(),
                 colors=Color.query.all(),
                 rates=rates)
+
+@main.context_processor
+def utility_processor():
+    def get_m2_actual_price(product, price):
+        price = price
+        if product.price_unit == 'unit':
+            price = product.price / (product.width_mm * product.length_mm / 1000000)
+
+        # price = self.get_m2_price
+        return product.calculate_discount(price, product.discount)
+    return dict(get_m2_actual_price=get_m2_actual_price)
+
+@main.app_template_filter('currency_price')
+# @contextfilter
+def to_price(value, rates, currency = 'rur'):
+        if currency == 'rur':
+            return value
+        elif currency == 'usd':
+            return value * rates['usd']
+        elif currency == 'eur':
+            return value * rates['eur']
+            

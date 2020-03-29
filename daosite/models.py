@@ -153,6 +153,10 @@ class Product(db.Model):
     def get_price(self):
         return self.price
 
+    @property
+    def get_price_with_brand_discount(self):
+        return self.calculate_discount(self.price, self.brand.discount)
+    
     def calculate_discount(self, price, discount):
         if discount:
             return price - (price / 100 * discount)
@@ -246,6 +250,7 @@ class Brand(db.Model):
     header_title = db.Column(db.String(100), nullable=False)
     meta_description = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=True)
+    discount = db.Column(db.Float, nullable=True)
 
     files_directory = db.Column(db.String(50), nullable=False)
 
