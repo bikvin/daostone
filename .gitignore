@@ -124,7 +124,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-#project IPrudnikov
+#project daostone
 /migrations
 /_migrations
 .vscode
