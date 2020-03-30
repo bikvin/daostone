@@ -1,0 +1,248 @@
+/*--------------------------------------------------------------
+
+  Template Name: Subash Ecommerce Responsive Bootstrap Template
+  Description: This is html5 template
+  Author: codecarnival
+  Version: 1.0
+  Design and Developed by: codecarnival
+
+Note: This is the file where you can add your custom styles to change the look of the theme. But don't modify "style.css" file.
+
+---------------------------------------------------------------*/
+
+/* ----------------------------------------------------
+	You can put your custom css code here: 
+-------------------------------------------------------*/
+.brand-title {
+	font-weight: 900;
+}
+
+
+@media (min-width: 768px) {
+    .product-col-height {
+        height: 380px /* Or whatever */
+    }
+}
+
+.product_list_header{
+  margin-left:15px;
+  margin-right:15px;
+  margin-bottom: 30px;
+  border-bottom:1px solid #F6F6F6;
+  font-weight: 500;
+}
+
+
+.mosaic_sheets_label {
+  color: #575757;
+  line-height: 25px;
+  margin-bottom: 0;
+  text-transform: uppercase;
+  //width: 90px;
+}
+
+.mosaic_quantity_label{
+  line-height: 25px;
+}
+
+#add_to_cart_result{
+  color: #9AC69E;
+  font-weight: bold;
+}
+
+
+.table-content table, .table-content table th, .table-content table td {
+  border: 1px solid #eee;
+  border-collapse: collapse;
+  border-right-style: none;
+  border-left-style: none;
+}
+
+.product-title-2{
+  margin-top: 20px;
+}
+
+.cart-qty-box{
+  width:40px;
+}
+
+input.cart-qty-input{
+  width:100%;
+}
+
+p, li, .product-cat .treeview > li > ul > li > a, .single-mega-item li a, input, input[type="text"], label, textarea,textarea:focus, ::placeholder, h1, h2, h3, h4, h5, h6, .main-menu > li > a,.single-mega-item .menu-title, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a  {
+  color:#000;
+  
+
+
+}
+
+p, li, .product-cat .treeview > li > ul > li > a, .single-mega-item li a, input, input[type="text"], label, textarea,textarea:focus, ::placeholder,.main-menu > li > a,.single-mega-item .menu-title {
+  font-size: 14px;
+}
+
+ .product-cat .treeview > li > ul > li > a, .single-mega-item li a
+ {
+    line-height: 100%;
+    margin-bottom: 0.5em;
+ }
+
+.product-cat .treeview > li > ul > li > a
+{
+
+  display: inline-block;
+}
+
+.product-cat .treeview > li > ul > li > a:after {
+  content: '';
+  width: 0px;
+  height: 1px;
+  display: block;
+  background: #FF7F00;
+  transition: 700ms;
+}
+
+
+.product-cat .treeview > li > ul > li > a:hover:after
+{
+  /*color: green;*/
+  
+  width: 100%;
+}
+
+.product-cat .treeview > li > ul > li > a:hover
+{
+  color: #FF7F00;
+}
+
+.product-cat .treeview > li > ul > li > a.selected
+{
+  font-weight: bold;
+}
+
+/*
+p, li,input, input[type="text"], label,textarea,textarea:focus, .main-menu > li > a
+{
+  font-size: 14px;
+  
+}
+*/
+
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */ 
+    color:#303030; 
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */ 
+    color:#303030; 
+} 
+
+.contact-address{
+  min-height: 360px;
+}
+
+.google-map-section{
+  margin-top:50px;
+  text-align: center;
+}
+
+.product-item{
+  min-height: 350px;
+  
+}
+
+.color-title
+{
+  width: 95px;
+}
+
+.exchange_rates_link
+{
+  color: #777777;
+  font-size: 12px;
+  float:right;
+
+
+}
+
+.shop-photo
+{
+  
+  width:70%;
+  
+}
+
+.main-menu > li > a, .product-cat .treeview > li > a, .product-cat .treeview > li > ul > li > a  {
+  
+    text-transform: none;
+}
+
+.header-5{
+  font-weight: bold;
+}
+
+.header-3{
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.menu-title{
+  text-decoration: underline; 
+  font-weight: bold;
+}
+
+
+.interior-photo{
+  width: 90%;
+  
+  margin-bottom: 10px;
+}
+
+.interior-thumbnail-block{
+  border: 0px solid green;
+  display: block;
+  margin: 0;
+  margin-bottom: 10px;
+  padding:0;
+
+}
+
+.interior-thumbnail{
+  
+  height: 100px;
+  margin-right: 10px;
+
+}
+
+.interior-block{
+  padding-top:30px;
+  padding-bottom:30px;
+  border-top:1px solid #cccccc;
+}
+
+.previous-price-amount {
+  color: gray;
+}
+
+.previous-price {
+  color: black;
+  text-decoration: none;
+  position: relative;
+}
+
+.previous-price:before {
+  content: " ";
+  display: block;
+  width: 100%;
+  border-top: 2px solid black;
+  height: 12px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: rotate(-7deg);
+}
+
+.product-filter {
+  overflow-y: auto;
+  max-height: 200px;
+}

@@ -1,0 +1,86 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<section id="page-content" class="page-wrapper">
+
+            <!-- This is single section start-->
+            <div class="address-section mb-80">
+                <div class="container">
+                    
+                    <div class="row">
+                        <div class="col-md-9 col-xs-12">
+                        	<h1 class="mt-30">Контактная информация - Склад и шоурум</h1>
+                        	<br>
+                        	<div class="container">
+			                    <div class="row">
+			                        <div class="col-sm-3 col-xs-12">
+			                            <div class="contact-address box-shadow">
+			                                <i class="zmdi zmdi-pin"></i>
+			                                <p><strong>Адрес:</strong></p>
+			                                <p>ул. Крылатские холмы, д.7/2</p>
+			                                <p><strong>Время работы шоу-рума:</strong></p>
+			                                <p>Понедельник - Пятница с 10 до 18</p>
+			                                <p>Заказывать через сайт можно круглосуточно</p>
+			                            </div>
+			                        </div>
+			                        <div class="col-sm-3 col-xs-12">
+			                            <div class="contact-address box-shadow">
+			                                <i class="zmdi zmdi-phone"></i>
+			                                <h6><strong>+7 (985) 513-27-44</strong></h6>
+			                                <br>
+			                                
+
+			                            </div>
+			                        </div>
+			                        <div class="col-sm-3 col-xs-12">
+			                            <div class="contact-address box-shadow">
+			                                <i class="zmdi zmdi-email"></i>
+			                                <h6><strong>stone.dao@gmail.com</strong></h6>
+			                                
+			                            </div>
+			                        </div>
+			                    </div>
+			                </div>
+							<br>
+			                <p>Склад находится в цокольном этаже жилого дома. Над входом надпись "Паркет". В качестве ориентиров можно использовать рестораны "Бульон крутон" или "Hills".</p>
+							<!-- This is single section end-->
+				            <div class="google-map-section">
+				                <div class="container-fluid">
+				                	
+
+				                    <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A889ce6776632b4932633a83807fb426b343358b40bd018bf3540f64b7ecfcd79&amp;width=100%25&amp;height=479&amp;lang=ru_RU&amp;scroll=true"></script>
+				                </div>
+				            </div>
+	
+							<br>
+				            <p class='header-5'>Добраться на автомобиле</p>
+							<p>Если вы едете на машине двигайтесь по улице Крылатские холмы до дома 7/4. Заезд непосредственно с улицы (не со двора). Как ориентир можно использовать ресторан Hills. Рядом с ним небольшая парковка. Можно на нее заехать. Вход в стеклянную дверь справа.</p>
+
+							<img class='shop-photo' src="{{ url_for('static',filename='entrance.jpg') }}" alt='вход в магазин'>
+							<br>
+							<br>
+							<p class='header-5'>Добраться на метро</p>
+							<p>Если вы едете на метро, то вам нужна станция Крылатское, выход номер 6. После выхода развернитесь, дойдите до угла магазина "Азбука вкуса" и поверните налево в сторону улицы Крылатские холмы. До нее примерно 200м. Потом поверните направо и идите вдоль улицы до пересечения с Рубежным проездом (300м). Перейдите Рубежный проезд на светофоре и продолжайте путь по ул. Крылатские холмы. Еще примерно через 600м. вы увидите ресторан Hills. Мы находимся от него справа. Пройдите через небольшую парковку и заходите в стеклянную дверь справа. Всего идти от метро около 15 минут.</p>
+
+							<img class='shop-photo' src="{{ url_for('static',filename='walk-route.jpg') }}" alt='маршрут от метро'>
+
+
+                        	</div>
+                        <div class="col-md-3 col-xs-12">
+
+
+                            
+                          
+                    
+                        {% include 'side-menu.html' %}
+                            
+                        </div>
+                    </div>
+                 
+                </div>
+            </div>
+
+        </section>
+
+
+{% endblock content %}

@@ -1,0 +1,36 @@
+{% extends 'mosaic.html' %}
+
+{% block filter %}
+{% endblock filter %}
+
+{% block pagination %}
+    <ul class="shop-pagination box-shadow text-center ptblr-10-30">
+        {% for page_num in mosaics.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+            {% if page_num %}
+                {% if mosaics.page == page_num %}
+                    <li class='active'>
+                        <a href="">{{ page_num }}</a>
+                    </li>
+                {% else %}
+                    <li>
+                        {% if select_category and selection %}
+                            {% if page_num == 1 %}
+                                <a href="{{ url_for('main.mosaic_selected', select_category=select_category, selection=selection, q=request.args.get('q') ) }}">{{ page_num }}</a>
+                            {% else %}
+                                <a href="{{ url_for('main.mosaic_selected', select_category=select_category, selection=selection, page=page_num, q=request.args.get('q') ) }}">{{ page_num }}</a>
+                            {% endif %}
+                        {% else %}
+                            {% if page_num == 1 %}
+                                <a href="{{ url_for('main.search_products', q=request.args.get('q') ) }}">{{ page_num }}</a>
+                            {% else %}
+                                <a href="{{ url_for('main.search_products', page=page_num, q=request.args.get('q') ) }}">{{ page_num }}</a>
+                            {% endif %}
+                        {% endif %}
+                    </li>
+                {% endif %}
+            {% else %}
+                <li><a href="">...</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock pagination %}

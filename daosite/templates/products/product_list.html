@@ -1,0 +1,131 @@
+{% extends 'layout_admin.html' %}
+{% block content %}
+
+
+
+
+
+
+
+	<h1>Товары</h1>
+	
+
+	<table class="table table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">id</th>
+			  <th></th>
+		      <th scope="col">Категория</th>
+		      <th scope="col">Бренд</th>
+		      <th scope="col">Название</th>
+		      <th scope="col">Опубликовано</th>
+		      <th scope="col"></th>
+		      <th scope="col"></th>
+		      <th scope="col"></th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    
+		{% for product in products.items %}
+			
+			<tr>
+		      <th scope="row">{{ product.id }}</th>
+		      <td>
+		      {% if product.thumb50_1_file_path %}
+                        <div>
+                            <img class="rounded" src="{{ url_for('static', filename=product.thumb50_1_file_path) }}">
+                        </div>
+              {% endif %}
+          	  </td>
+		      <td>{{ product.category.name }}</td>
+		      <td>{{ product.brand.name }}</td>
+		      <td>{{ product.name }}</td>
+		      <td>{{ product.active }}</td>
+		      <td><a href="{{ url_for('products.edit_product', product_id=product.id) }}" class="badge badge-secondary">Изменить</a></td>
+		      <!--<td><a href="{{ url_for('products.copy_product', product_id=product.id) }}" class="badge badge-secondary">Создать копию</a></td>-->
+		      <td>
+		      	<form action="{{ url_for('products.copy_product', product_id=product.id) }}" method="post">
+    				
+    				 <button type="submit" class="badge badge-info">Создать копию</button>
+				</form>
+		      </td>
+		      {% if current_user.status == 'admin' %}
+			      <td>
+			      	<button type="button" class="badge badge-danger" data-toggle="modal" data-target="#deleteModal" data-product-id={{ product.id }}>Удалить</button>
+
+			      	
+			      </td>
+		      {% endif %}
+
+		    </tr>
+
+			
+
+		{% endfor %}
+		</tbody>
+	</table>
+
+	<div class="text-center">
+	
+	{% for page_num in products.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+      {% if page_num %}
+        {% if products.page == page_num %}
+          <a class="btn btn-info mb-4" href="{{ url_for('products.product_list', page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+          <a class="btn btn-outline-info mb-4" href="{{ url_for('products.product_list', page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+
+    </div>
+	
+	<a class="btn btn-primary" href="{{url_for('products.new_product')}}" role="button">Создать новый продукт</a>
+	
+
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="deleteModalLabel">Удалить мозаику? Точно?</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	   
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+	       
+	        	<form id="deleteForm" action="" method="POST">
+	        	<input class="btn btn-danger" type="submit" value="Удалить">
+	        </form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<script>
+		
+
+
+		//triggered when modal is about to be shown
+		$('#deleteModal').on('show.bs.modal', function(e) {
+			
+	    //get data-id attribute of the clicked element
+	    var productId = $(e.relatedTarget).data('product-id');
+	    
+
+	    $('#deleteForm').attr('action', '/product/'+productId+'/delete');
+
+		});
+
+	</script>
+	
+
+{% endblock content %}
+
+

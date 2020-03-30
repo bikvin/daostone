@@ -1,0 +1,109 @@
+
+////// IMPORTS AND PREPARATIONS /////
+
+from daosite import create_app
+app = create_app()
+app.app_context().push()
+
+from daosite import db
+from daosite.models import User, Post, Product, Brand, Color, Chipsize, Category, Use, Online_order
+from daosite import bcrypt
+
+/////// ADDING ADMIN USER //////
+
+hashed_password = bcrypt.generate_password_hash('123').decode('utf-8') 
+
+user = User(username='kukurua', email='kukurua.tuni@gmail.com', password=hashed_password, status='admin')
+
+db.session.add(user)
+
+db.session.commit()
+
+
+//////// DELETE ALL ENTRIES IN TABLE //////
+
+num_rows_deleted = db.session.query(Model).delete()
+
+db.session.commit()
+
+
+///// POSTGRES //////
+
+
+superuser pass: karramba
+
+
+
+////// MYSQL ////////////////////
+
+https://stackoverflow.com/questions/6383310/python-mysqldb-library-not-loaded-libmysqlclient-18-dylib
+
+// when library is not found you should create alias in another folder
+sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/local/lib/libmysqlclient.18.dylib
+
+
+login into command line interface
+mysql -u root -p
+pass -> ka--ba
+
+
+
+////////// MIGRATIONS ////////////////
+https://www.youtube.com/watch?v=_aDEn4n32uY&list=PLCoxyIoVypZ2_XB9GOMLdQskvZGmV7MVs&index=10&t=0s
+
+//initial migration
+
+python manage.py db init // create initial files and structure
+python manage.py db migrate // create first migration file
+python manage.py db upgrade // to database
+
+// secondary migration
+python manage.py db migrate -m 'comment for migration' // create migration file
+python manage.py db upgrade // to database
+
+
+
+//////////////////////////////////////////////////
+//////////// JOINS AND SELECTIONS
+
+q=db.session.query(Product, Brand).outerjoin(Brand,Brand.id==Product.brand_id).filter(Brand.name=="Bonaparte")
+
+ query = Product.query.join(Color, Product.colors).filter(Color.name=='Красный, розовый')
+
+
+ q=Product.query.filter(Product.brand_id==6)
+
+
+ brand=Brand.query.filter(Brand.name=='Bonaparte').first()
+ q=Product.query.filter(Product.brand_id==brand.id)
+
+
+
+ q=Product.query.filter(Product.brand_id==6).join(Color, Product.colors).filter(Color.name=='Синий, голубой')
+
+ q=Product.query.filter(Product.brand_id==6).filter(Product.active==True)
+
+
+ q=Product.query.filter(Product.brand_id==6).filter(Product.active==True).filter(Product.category_id==2)
+
+
+
+
+
+ ///////////////////// SERVER ////////////////
+
+ Supervisor restart
+ /etc/init.d/supervisor restart
+
+ in video
+ sudo supervisorctl reload 
+ or
+ sudo systemctl restart nginx
+
+
+ log file
+
+ /var/log/daosite/daosite.err.log
+
+ ssh bikvin@172.105.71.155
+

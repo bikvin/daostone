@@ -1,0 +1,484 @@
+{% extends 'layout.html' %}
+{% block content %}
+        <!-- custom basket -->
+        <link rel="stylesheet" href="{{ url_for('static',filename='subas/css/custom_basket.css') }}">
+
+        <!-- Start page content -->
+        <section id="page-content" class="page-wrapper">
+
+            <!-- SHOP SECTION START -->
+            <div class="shop-section mb-80">
+                <div class="container">
+                    <div class="row">
+                        <h1 class="product_list_header">{{title}}</h1>
+                       
+                        <div class="col-md-12 col-sm-12">
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <!-- shopping-cart start -->
+                                <div class="tab-pane active" id="shopping-cart">
+                                    <div class="shopping-cart-content">
+                                        <!--<form action="/order_received">-->
+                                        <form action="" method="POST">
+                                            
+                                            <!--<div class="culculate-shipping box-shadow p-30">-->
+                                                <div class="table-content table-responsive mb-50">
+                                                <table class="basket__table">
+                                                    <thead>
+                                                        {% if session['cart_items'] %}
+                                                        <tr class="basket__table-headers">
+                                                            <th><h5>фото</h5></th>
+                                                            <th><h5>товар</h5></th>
+                                                            <th><h5>цена</h5></th>
+                                                            <th><h5>количество</h5></th>
+                                                            <th><h5>стоимость</h5></th>
+                                                            <th><h5>удалить</h5></th>
+                                                        </tr>
+                                                        {% endif %}
+                                                    </thead>
+                                                    <tbody id='product-rows'>
+                                                        <!--<tr class="basket__table-item">
+                                                            <td class="basket__table-tdpic">
+                                                                <figure class="basket__table-figure">
+                                                                    <img src="pics/mozaika-DAO-533-15-4-p1.jpg" alt="">
+                                                                </figure>
+                                                            </td>
+                                                            <td class="basket__table-tdname">
+                                                                <div class="basket__table-tdname-wrapper">
+                                                                    <a class="backet__table-item-link" href="">Мозаика</a>
+                                                                    <a class="backet__table-item-link" href="">DAO-533-15-4</a>
+                                                                </div>
+                                                            </td>
+                                                            <td class="basket__table-tdnum">
+                                                                <div class="current-price"><span class="product-price">₽ 475 за шт.</span></div>
+                                                            </td>
+                                                            <td class="basket__table-tdprice">
+                                                                <div class="basket__count">
+                                                                    <div class="cart-plus-minus cart-qty-box f-left">
+                                                                      <input type="text" value="11" name="qtybutton" row="0" class="cart-plus-minus-box product-qty cart-qty-input">
+                                                                    </div>
+                                                                    <span class="cart-plus-minus-span">шт.</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="basket__table-tdbuy">
+                                                                <div class="product-subtotal">₽ <span class="item-total">5225</span></div>
+                                                            </td>
+                                                            <td class="basket__table-tddel">
+                                                                <div class="product-remove"><a href="http://localhost:5000/cart"><i class="zmdi zmdi-close delete-item" row="0"></i></a></div> 
+                                                            </td>
+                                                        </tr>-->
+                                                        
+                                                        
+                                                    </tbody>
+                                                    <tbody>
+                                                            <!--<tr  class="basket__table-item">
+                                                                
+                                                                <td class="basket__table-td-2r"></td>
+                                                                <td id="delivery-selection" class="basket__table-tdname_2r">
+                                                                    <div class="form-check">
+                                                                        <input checked="checked" class="form-check-input delivery_radio" id="mkad" name="delivery" type="radio" value="mkad">
+                                                                        <label class="form-check-label" for="delivery-0">Доставка в пределах МКАД (бесплатно при сумме заказа больше ₽ 30000)</label>
+                                                                    </div>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input delivery_radio" id="self_pick_up" name="delivery" type="radio" value="self">
+                                                                        <label class="form-check-label" for="delivery-1">Самовывоз из шоурума</label>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="basket__table-tdnum-2r">
+                                                                    <div class="current-price mobil_none"><span class="product-price">₽ <span id="delivery-price">1000</span></span></div>
+                                                                </td>
+                                                                
+                                                                <td class="basket__table-td-3r"></td>
+                                                                <td class="basket__table-tdbuy">
+                                                                    <div class="product-subtotal">₽ <span id="delivery-total">1000</span></div>
+                                                                </td>
+                                                                <td class="basket__table-td-3r"></td>
+
+                                                            </tr >
+                                                            <tr class="basket__table-item">
+                                                                <td class="basket__table-td-2r"></td>
+                                                                <td class="basket__table-tdname_3r"><div class="product-subtotal">Итого:</div></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td class="basket__table-tdbuy">
+                                                                    <div class="product-subtotal">₽ <span id="cart-total">20029</span></div>
+                                                                </td>
+                                                                <td></td>
+                                                            </tr>-->
+
+
+                                                            {% if session['cart_items'] %}
+                                                            
+                                                            <tr class="basket__table-item">
+                                                                   
+                                                                <td class="basket__table-td-2r"></td>
+
+                                                                <td id='delivery-selection' class="basket__table-tdname_2r">
+
+                                                                    {% for subfield in form.delivery %}
+                                                                        <div class="form-check">
+                                                                            
+                                                                            {% if subfield.id=='delivery-0' %}
+                                                                                {{ subfield(id='mkad', class='form-check-input delivery_radio', checked=true) }}
+                                                                            {% else %}
+                                                                                {{ subfield(id='self_pick_up',class='form-check-input delivery_radio') }}
+                                                                            {% endif %}
+
+                                                                            {{ subfield.label(class='form-check-label') }}
+                                                                        </div>
+                                                                        
+                                                                    {% endfor %}
+                                                                    
+                                                                </td>
+
+                                                                <td class="basket__table-tdnum-2r">
+                                                                    <div class="current-price mobil_none"><span class="product-price">₽ <span id="delivery-price">{{delivery_price}}</span></span></div>
+                                                                </td>
+                                                                
+                                                                <td class="basket__table-td-3r"></td>
+                                                                <td class="basket__table-tdbuy">
+                                                                    <div class="product-subtotal">₽ <span id="delivery-total">{{delivery_price}}</span></div>
+                                                                </td>
+                                                                <td class="basket__table-td-3r"></td>
+                                                                
+
+                                                                
+
+                                                            </tr>
+                                                            <tr class="basket__table-item">
+                                                                <td class="basket__table-td-2r"></td>
+                                                                <td class="basket__table-tdname_3r"><div class="product-subtotal">Итого:</div></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td class="basket__table-tdbuy">
+                                                                    <div class="product-subtotal">
+                                                                        <del class="previous-price">
+                                                                            <span class="previous-price-amount" id='cart-before-discount-total'></span>
+                                                                        </del>
+                                                                        ₽ <span id="cart-total"></span>
+                                                                    </div>
+                                                                </td>
+                                                                <td></td>
+                                                            </tr>
+                                                            
+
+                                                        {% else %}
+                                                            <tr>
+                                                                <td>Ваша корзина пуста</td>
+                                                            </tr>
+                                                        {% endif %}
+                                                        </tbody>
+                                                </table>
+                                                    
+                                                    
+                                                </div>
+                                                
+                                                {% if session['cart_items'] %}
+                                                <div class="row">
+                                                    {{ form.hidden_tag() }}
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <!--<input type="text" name="name" placeholder="Ваше имя*">-->
+                                                        <!--{{ form.name.label(class="form-control-label") }}-->
+                                                        {% if form.name.errors %}
+                                                            {{ form.name(class="form-control form-control-lg is-invalid") }}
+                                                            <div class="invalid-feedback">
+                                                                {% for error in form.name.errors %}
+                                                                    <span>{{ error }}</span>
+                                                                {% endfor %}
+                                                            </div>
+                                                        {% else %}
+                                                            {{ form.name(class="", placeholder="Ваше имя*") }}
+                                                        {% endif %}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <!--<input type="text" name="phone" placeholder="Телефон для связи*">-->
+                                                            {% if form.phone.errors %}
+                                                            {{ form.phone(class="form-control form-control-lg is-invalid") }}
+                                                            <div class="invalid-feedback">
+                                                                {% for error in form.phone.errors %}
+                                                                    <span>{{ error }}</span>
+                                                                {% endfor %}
+                                                            </div>
+                                                            {% else %}
+                                                                {{ form.phone(class="", placeholder="Телефон для связи*") }}
+                                                            {% endif %}
+                                                        </div>
+    
+                                                        <div class="col-md-6 offset-md-4">
+                                                            <!--<input type="text" name="email" placeholder="Электронная почта">-->
+                                                            {% if form.email.errors %}
+                                                            {{ form.email(class="form-control form-control-lg is-invalid") }}
+                                                            <div class="invalid-feedback">
+                                                                {% for error in form.email.errors %}
+                                                                    <span>{{ error }}</span>
+                                                                {% endfor %}
+                                                            </div>
+                                                            {% else %}
+                                                                {{ form.email(class="", placeholder="Электронная почта") }}
+                                                            {% endif %}
+
+                                                        </div>
+                                                        
+                                                        
+                                                        
+                                                        <div class="col-md-6">
+                                                            <!--<textarea class="custom-textarea" name="adress" placeholder="Адрес доставки"></textarea>-->
+                                                            {% if form.address.errors %}
+                                                            {{ form.address(class="form-control form-control-lg is-invalid") }}
+                                                            <div class="invalid-feedback">
+                                                                {% for error in form.address.errors %}
+                                                                    <span>{{ error }}</span>
+                                                                {% endfor %}
+                                                            </div>
+                                                            {% else %}
+                                                                {{ form.address(class="custom-textarea", placeholder="Адрес доставки") }}
+                                                            {% endif %}
+                                                            
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <!--<textarea class="custom-textarea" name="comment" placeholder="Комментарий"></textarea>-->
+                                                            {% if form.comment.errors %}
+                                                            {{ form.comment(class="form-control form-control-lg is-invalid") }}
+                                                            <div class="invalid-feedback">
+                                                                {% for error in form.comment.errors %}
+                                                                    <span>{{ error }}</span>
+                                                                {% endfor %}
+                                                            </div>
+                                                            {% else %}
+                                                                {{ form.comment(class="custom-textarea", placeholder="Комментарий") }}
+                                                            {% endif %}
+                                                            
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <!--<button class="submit-btn-1 mt-30 btn-hover-1" type="submit">оформить заказ</button>-->
+                                                            {{ form.submit(class="submit-btn-1 mt-30 btn-hover-1") }}
+                                                        </div>
+
+                                                        
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                            <!--</div>-->
+                                            
+                                            
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- shopping-cart end -->
+                               
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- SHOP SECTION END -->             
+
+        </section>
+
+        <script type=text/javascript>
+            var delivery_price = {{ delivery_price }} ;
+            var all_products_total=0;
+            $(function() {
+
+                
+
+                write_order_html();
+            
+                
+                $('input[type=radio].delivery_radio').change(function(e) {
+                    //change_delivery(this.id);
+                    update_delivery();
+                });
+
+                $('input[type=text].product-qty').change(function(e) {
+                    change_item_qty();
+                });
+
+                $(document).on('change','input[type=text].product-qty',function(e){
+                    //your code here
+                    //alert($(this).val());
+                    change_item_qty($(this));
+                });
+
+                $(document).on('click','i.delete-item',function(e){
+                    //your code here
+                    //alert($(this).val());
+                    e.preventDefault();
+                    delete_item($(this));
+                });
+
+                $(document).keydown(function (e) {/// preventing enter from submitting form
+                    if (e.keyCode == 13) {
+                    e.preventDefault();
+                    return false;
+                    }
+                });
+
+                
+                
+
+            });
+
+            function set_total(){
+                total = all_products_total + delivery_price;
+                before_discount_total = before_discount_all_products_total + delivery_price;
+                $('#cart-total').text(total);
+                if (before_discount_all_products_total){
+                    $('#cart-before-discount-total').text(before_discount_total);
+                }
+            }
+
+            
+            
+            function update_delivery(){
+                var radioValue = $("input[name='delivery']:checked").val();
+                if(radioValue == 'mkad' && all_products_total<{{free_delivery_threshold}}){
+                    delivery_price=parseInt({{delivery_price}});
+                }
+                else{
+                    delivery_price=0;
+                }
+                $('#delivery-total').text(delivery_price);
+                $('#delivery-price').text(delivery_price);
+                set_total();
+                //alert(radioValue);
+            }
+          
+
+            function change_item_qty(input)
+            {
+                new_qty=input.val();
+                row=input.attr("row");
+                //alert(row);
+                $.getJSON('/_change_qty_in_session', {
+                    quantity:new_qty,
+                    row:row
+                }, function(data){
+                    //alert('we-re here');
+                    write_order_html();
+
+
+                });
+            }
+
+            function delete_item(button)
+            {
+                //alert('delete_item');
+                row=button.attr("row");
+                $.getJSON('/_delete_item_in_session', {
+                    row:row
+                }, function(data){
+                    //alert('we-re here');
+                    write_order_html();
+
+                });
+            }
+
+            function write_order_html(){
+                $.getJSON('/_get_cart_session', {
+                  
+                  
+                }, function(data) {
+                    all_products_total = 0;
+                    before_discount_all_products_total = 0;
+                    row_number=0;
+                    show_discount = false;
+                    $('#product-rows').html('');
+                    $.each(data, function(k, v) {
+                        unit_total = v['unit_price'] * v['qty'];
+                        all_products_total = all_products_total + unit_total;
+                        let product_row = $(`
+                            <tr class="basket__table-item">
+                                <td class="basket__table-tdpic">
+                                    <figure class="basket__table-figure">
+                                        <img src='${v['thumb_path']}' alt="">
+                                    </figure>
+                                </td>
+                                <td class="basket__table-tdname">
+                                    <div class="basket__table-tdname-wrapper">
+                                        <a class="backet__table-item-link" href="">'${v['category']}'</a>
+                                        <a class="backet__table-item-link" href="">'${v['name']}'</a>
+                                    </div>
+                                </td>
+                                <td class="basket__table-tdnum">
+                                    <div class="current-price">
+                                        <span class="product-price">
+
+                                            ₽ ${v['unit_price']} за шт.
+                                        </span>
+                                    </div>
+                                </td>
+                                <td class="basket__table-tdprice">
+                                    <div class="basket__count">
+                                        <div class="cart-plus-minus cart-qty-box f-left">
+                                          <input type="text" value="${v['qty']}" name="qtybutton" row="${row_number}" class="cart-plus-minus-box product-qty cart-qty-input">
+                                        </div>
+                                        <span class="cart-plus-minus-span">шт.</span>
+                                    </div>
+                                </td>
+                                <td class="basket__table-tdbuy">
+                                    <div class="product-subtotal">
+
+                                        ₽ <span class="item-total">${unit_total}</span>
+                                    </div>
+                                </td>
+                                <td class="basket__table-tddel">
+                                    <div class="product-remove"><a href="http://localhost:5000/cart"><i class="zmdi zmdi-close delete-item" row="'${row_number}"></i></a></div>
+                                </td>
+                            </tr>
+                        `);
+                        if (v.discount) {
+                            let before_discount_unit_total = v['price_before_discount'] * v['qty'];
+                            before_discount_all_products_total = before_discount_all_products_total + before_discount_unit_total;
+                            $del_previous_price = $(`
+                                <del class="previous-price">
+                                    <span class="previous-price-amount">${v['price_before_discount']}</span>
+                                </del>
+                            `);
+                            $del_previous_price_total = $(`
+                                <del class="previous-price">
+                                    <span class="previous-price-amount">${before_discount_unit_total}</span>
+                                </del>
+                            `);
+                            product_row.find('.basket__table-tdnum .current-price').prepend($del_previous_price);
+                            product_row.find('.basket__table-tdbuy .product-subtotal').prepend($del_previous_price_total);
+                        }
+                        
+                        $('#product-rows').append(product_row);
+                        row_number=row_number+1;
+                    });
+                    
+                    // if (all_products_total>30000){
+                    //     delivery_price=0;
+                    //     $('#delivery-total').text(delivery_price);
+                    //     $('#delivery-total').append('Бесплатно');
+                    // }
+                    // else{
+
+                    // }
+                    //alert(all_products_total);
+                    update_delivery();
+                    set_total();
+                  
+                });
+                
+                    return false;
+            }
+
+
+
+        </script>
+        <!-- End page content -->
+
+{% endblock content %}

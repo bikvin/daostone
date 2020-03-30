@@ -1,0 +1,55 @@
+<aside class="widget widget-categories box-shadow mb-30">
+    <h6 class="widget-title border-left mb-20">Категории</h6>
+    <div id="cat-treeview" class="product-cat">
+        <ul>
+            <li class="closed"><a href="">Материалы мозаики</a>
+                <ul>
+                    {% for material in materials %}
+
+                        <li>
+                            <a href="{{url_for('main.mosaic_selected',select_category='material',selection=material.url_name)}}">{{material.name}}</a>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+            </li>
+                
+                
+            <li class="closed"><a href="">Производители мозаики</a>
+                <ul>
+                    {% for brand in brands %}
+
+                        <li>
+                            <a href="{{url_for('main.mosaic_selected',select_category='brand',selection=brand.url_name)}}">{{brand.name}}</a>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+            </li>
+            <li class="closed"><a href="">Применения мозаики</a>
+                <ul>
+                    {% for use in uses %}
+
+                        <li>
+                            <a href="{{url_for('main.mosaic_selected',select_category='use',selection=use.url_name)}}">{{use.name}}</a>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+            </li>
+            <li class="closed"><a href="">Цвета мозаики</a>
+                <ul>
+                    {% for color in colors %}
+
+                        <li>
+                            <a href="{{url_for('main.mosaic_selected',select_category='color',selection=color.url_name)}}">{{color.name}}</a>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+            </li>
+
+            
+        </ul>
+    </div>
+</aside>

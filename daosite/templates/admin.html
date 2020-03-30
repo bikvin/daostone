@@ -1,0 +1,102 @@
+
+{% extends 'layout_admin.html' %}
+{% block content %}
+	Admin
+	
+
+	
+
+	
+
+	  {% for order in orders %}
+		<div class="container admin_order">
+			<div class="row">
+				<div class="col col-sm-3 col-md-3 admin_order_cell">
+					№ {{ order.id }}
+				</div>
+				<div class="col col-sm-9 col-md-9 admin_order_cell">
+				</div>
+			</div>
+		  	  		
+		  	{% for item in order.ordered_items %}
+		  		<div class="row">
+		  			<div class="col col-sm-3 col-md-3 admin_order_cell">
+	      				<a href="{{url_for('main.single_mosaic', mosaic_id=item['product_id'])}}">{{ item.product_name }}</a>
+	    			</div>
+	    			<div class="col col-sm-3 col-md-3 admin_order_cell">
+	      				{{ item.quantity }} шт.
+	    			</div>
+	    			<div class="col col-sm-3 col-md-3 admin_order_cell">
+	      				{{ item.unit_price }} р. за шт.
+	    			</div>
+	    			<div class="col  col-sm-3 col-md-3 admin_order_cell">
+	    				
+	      				{{ item.unit_price*item.quantity }} р.
+	    				
+	    			</div>		  		
+		  		</div>
+		  	{% endfor %}
+			<div class="row">
+		      	<div class="col col-sm-3 col-md-3 admin_order_cell">
+		      		Доставка
+		    	</div>
+		    	<div class="col col-sm-3 col-md-3 admin_order_cell">	      		
+		    	</div>
+		    	<div class="col col-sm-3 col-md-3 admin_order_cell">	      		
+		    	</div>
+		    	<div class="col  col-sm-3 col-md-3 admin_order_cell">
+		    		
+		      		{{ order.delivery_price }} р.
+		    		
+		    	</div>
+	     	</div>
+	      	<div class="row">
+		      	<div class="col col-sm-3 col-md-3 admin_order_cell total_cell">
+		      		<b>Итого по заказу:</b>
+		    	</div>
+		    	<div class="col col-sm-3 col-md-3 admin_order_cell">
+		      		
+		    	</div>
+		    	<div class="col col-sm-3 col-md-3 admin_order_cell">
+		      		
+		    	</div>
+		    	<div class="col  col-sm-3 col-md-3 admin_order_cell total_cell">
+		      		<b>{{ order.order_total }} р.</b>
+		    	</div>
+	      	</div>     							
+			<div class="row">
+	    		<div class="col col-sm-2 col-md-2 admin_order_cell">
+	    			{% if order.name%}
+	      				{{ order.name }}
+	      			{% endif%}
+	    			
+	    			
+	    		</div>
+			    <div class="col col-sm-2 col-md-2 admin_order_cell">
+			      	{% if order.phone%}
+	      				{{ order.phone }}
+	      			{% endif%}
+			    </div>
+			    <div class="col col-sm-2 col-md-2 admin_order_cell">
+			      	{% if order.email%}
+	      				{{ order.email }}
+	      			{% endif%}
+			    </div>
+			    <div class="col col-sm-3 col-md-3 admin_order_cell">
+			      	{% if order.address%}
+	      				{{ order.address }}
+	      			{% endif%}
+			    </div>
+			    <div class="col col-sm-3 col-md-3 admin_order_cell">
+			      	{% if order.comment%}
+	      				{{ order.comment }}
+	      			{% endif%}
+			    </div>		    
+			</div>
+		 </div>
+		  {% endfor %}
+	  
+	
+
+
+{% endblock content %}

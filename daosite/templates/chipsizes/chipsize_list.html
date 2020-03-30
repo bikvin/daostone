@@ -1,0 +1,96 @@
+
+{% extends 'layout_admin.html' %}
+{% block content %}
+
+
+
+
+
+
+
+	<h1>Размеры чипов товаров</h1>
+	
+
+	<table class="table table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">id</th>
+		      <th scope="col">Размер чипа</th>
+		      <th scope="col">URL название</th>
+		      <th scope="col"></th>
+		      <th scope="col"></th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    
+		{% for chipsize in chipsizes %}
+			
+			<tr>
+		      <th scope="row">{{ chipsize.id }}</th>
+		      <td>{{ chipsize.name }}</td>
+		      <td>{{ chipsize.url_name }}</td>
+		     
+		      <td><a href="{{ url_for('chipsizes.edit_chipsize', chipsize_id=chipsize.id) }}" class="badge badge-secondary">Изменить</a></td>
+		      {% if current_user.status == 'admin' %}
+			      <td>
+			      	<button type="button" class="badge badge-danger" data-toggle="modal" data-target="#deleteModal" data-chipsize-id={{ chipsize.id }}>Удалить</button>
+
+			      	
+			      </td>
+		      {% endif %}
+
+		    </tr>
+
+			
+
+		{% endfor %}
+		</tbody>
+	</table>
+
+	
+	<a class="btn btn-primary" href="{{url_for('chipsizes.new_chipsize')}}" role="button">Создать размер</a>
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="deleteModalLabel">Удалить размер? Точно?</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	   
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+	       
+	        	<form id="deleteForm" action="" method="POST">
+	        	<input class="btn btn-danger" type="submit" value="Удалить">
+	        </form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<script>
+		
+
+
+		//triggered when modal is about to be shown
+		$('#deleteModal').on('show.bs.modal', function(e) {
+			
+	    //get data-id attribute of the clicked element
+	    var chipsizeId = $(e.relatedTarget).data('chipsize-id');
+	    
+
+	    $('#deleteForm').attr('action', '/chipsize/'+chipsizeId+'/delete');
+
+		});
+
+	</script>
+	
+
+{% endblock content %}
+
+
