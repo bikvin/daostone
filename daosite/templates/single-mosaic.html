@@ -132,39 +132,14 @@
                                     <!-- hr -->
 									<hr>
                                     <!-- single-product-price -->
-                                    {% if mosaic.price_currency == 'rur' %}
-                                        {% set price = mosaic.get_price %}
-                                        {% set actual_price = mosaic.get_actual_price %}
-                                        {% set unit_price = mosaic.get_unit_actual_price %}
-                                        {% set m2_price = mosaic.get_m2_actual_price %}
-                                    {% elif mosaic.price_currency == 'usd' %}
-                                        {% set price = mosaic.get_price * rates.usd %}
-                                        {% set actual_price = mosaic.get_actual_price * rates.usd %}
-                                        {% set unit_price = mosaic.get_unit_actual_price * rates.usd %}
-                                        {% set m2_price = mosaic.get_m2_actual_price * rates.usd %}
-                                    {% elif mosaic.price_currency == 'eur' %}
-                                        {% set price = mosaic.get_price * rates.eur %}
-                                        {% set actual_price = mosaic.get_actual_price * rates.eur %}
-                                        {% set unit_price = mosaic.get_unit_actual_price * rates.eur %}
-                                        {% set m2_price = mosaic.get_m2_actual_price * rates.eur %}
-                                    {% endif %}
-                                    
-                                    {% if price %}
-                                        <h3 class="pro-price">
-                                            Цена: 
-                                            {% if mosaic.discount %}
-                                                <del class='previous-price'>
-                                                    <span class='previous-price-amount'>
-                                                        {{"%.0f"|format(price)}} &#8381
-                                                    </span>
-                                                </del>
-                                            {% endif %}
-                                            {{"%.0f"|format(m2_price)}} &#8381 за м2
-                                        </h3>
-                                        <p>
-                                            {{"%.0f"|format(unit_price)}} &#8381 за 1 лист
-                                        </p>
-                                    {% endif %}
+
+                                    {% with 
+                                    product = mosaic, 
+                                    text = 'Цена: ',
+                                    is_show_util_price = true,
+                                    text_m2 = "₽ за м<sup>2<sup>" %}
+                                        {% include 'controls/price/_price.html' ignore missing %}
+                                    {% endwith %}
                                     
                                     <!--  hr -->
                                     <hr>

@@ -29,35 +29,12 @@
                                                         <h6 class="product-title">
                                                             <a href="{{url_for('main.single_mosaic', mosaic_id=mosaic.id)}}">Мозаика {{mosaic.name}} </a>
                                                         </h6>
-                                                        {% if mosaic.price_currency == 'rur' %}
-                                                            {% set price = mosaic.get_price %}
-                                                            {% set actual_price = mosaic.get_actual_price %}
-                                                            {% set unit_price = mosaic.get_unit_actual_price %}
-                                                            {% set m2_price = mosaic.get_m2_actual_price %}
-                                                        {% elif mosaic.price_currency == 'usd' %}
-                                                            {% set price = mosaic.get_price * rates.usd %}
-                                                            {% set actual_price = mosaic.get_actual_price * rates.usd %}
-                                                            {% set unit_price = mosaic.get_unit_actual_price * rates.usd %}
-                                                            {% set m2_price = mosaic.get_m2_actual_price * rates.usd %}
-                                                        {% elif mosaic.price_currency == 'eur' %}
-                                                            {% set price = mosaic.get_price * rates.eur %}
-                                                            {% set actual_price = mosaic.get_actual_price * rates.eur %}
-                                                            {% set unit_price = mosaic.get_unit_actual_price * rates.eur %}
-                                                            {% set m2_price = mosaic.get_m2_actual_price * rates.eur %}
-                                                        {% endif %}
-                                                        
-                                                        {% if price %}
-                                                            <h5 class="pro-price">
-                                                                {% if mosaic.discount %}
-                                                                    <del class='previous-price'>
-                                                                        <span class='previous-price-amount'>
-                                                                            {{"%.0f"|format(price)}} &#8381
-                                                                        </span>
-                                                                    </del>
-                                                                {% endif %}
-                                                                {{"%.0f"|format(m2_price)}} &#8381/м2
-                                                            </h5>
-                                                        {% endif %}
+
+                                                        {% with 
+                                                        product = mosaic,
+                                                        tag = 'h5' %}
+                                                            {% include 'controls/price/_price.html' ignore missing %}
+                                                        {% endwith %}
 
                                                     </div>
                                                 </div>

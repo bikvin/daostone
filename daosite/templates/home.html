@@ -78,7 +78,6 @@
                                                 </h6>
 
                                                 {% with 
-                                                price = product.get_price_with_brand_discount, 
                                                 product = product %}
                                                     {% include 'controls/price/_price.html' ignore missing %}
                                                 {% endwith %}
@@ -326,7 +325,6 @@
                                                 </h6>
 
                                                 {% with 
-                                                price = product.get_price_with_brand_discount, 
                                                 product = product %}
                                                     {% include 'controls/price/_price.html' ignore missing %}
                                                 {% endwith %}

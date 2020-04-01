@@ -349,16 +349,34 @@ def context_processor():
                 colors=Color.query.all(),
                 rates=rates)
 
-@main.context_processor
-def utility_processor():
-    def get_m2_actual_price(product, price):
-        price = price
-        if product.price_unit == 'unit':
-            price = product.price / (product.width_mm * product.length_mm / 1000000)
+# @main.context_processor
+# def utility_processor():
+#     def get_m2_actual_price(product, price=None):
+        
+#         price = product.price
 
-        # price = self.get_m2_price
-        return product.calculate_discount(price, product.discount)
-    return dict(get_m2_actual_price=get_m2_actual_price)
+#         if price != None:
+#             price = price
+        
+#         if product.price_unit == 'unit':
+#             price = product.price / (product.width_mm * product.length_mm / 1000000)
+
+#         # price = self.get_m2_price
+#         return product.calculate_discount(price, product.discount)
+
+#     def get_unit_actual_price(product, price=None):
+        
+#         price = product.price
+
+#         if price != None:
+#             price = price
+
+#         if product.price_unit == 'm2' and product.price and product.width_mm and product.length_mm:
+#             price = price * (product.width_mm * product.length_mm / 1000000)  
+
+#         return product.calculate_discount(price, product.discount)
+
+#     return dict(get_m2_actual_price=get_m2_actual_price, get_unit_actual_price=get_unit_actual_price)
 
 @main.app_template_filter('currency_price')
 # @contextfilter

@@ -148,14 +148,18 @@ class Product(db.Model):
 
     interior = db.relationship('Interior', secondary=interior_product, lazy='subquery',
                                backref=db.backref('interiors', lazy=True))
-
+    
     @property
-    def get_price(self):
+    def get_original_price(self):
         return self.price
 
     @property
+    def get_price(self):
+        return self.get_price_with_brand_discount
+
+    @property
     def get_price_with_brand_discount(self):
-        return self.calculate_discount(self.price, self.brand.discount)
+        return self.calculate_discount(self.get_original_price, self.brand.discount)
     
     def calculate_discount(self, price, discount):
         if discount:
