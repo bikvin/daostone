@@ -46,6 +46,7 @@
                   <li><a class="dropdown-item" href="{{ url_for('interiors.interior_list') }}">Интерьеры</a></li>
                   <li><a class="dropdown-item" href="{{ url_for('rates.rates_list') }}">Валюты</a></li>
                   <li><a class="dropdown-item" href="{{ url_for('slider.slider_list') }}">Слайдер</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('content.content_list') }}">Контент</a></li>
                 </ul>
               </div>
               {% if current_user.status == 'admin' %}

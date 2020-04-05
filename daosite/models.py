@@ -342,3 +342,16 @@ class Slider(db.Model):
     order_id = db.Column(db.Integer, nullable=False)
     image_file_path = db.Column(db.String(500), nullable=True)
     active = db.Column(db.Boolean, default=False, nullable=False)
+
+class Content(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=True)
+    value = db.Column(db.Text, nullable=True)
+    site_var = db.Column(db.String(100), nullable=True)
+    # site_variable_id = db.Column(db.Integer, db.ForeignKey('site_variable.id'), nullable=True)
+
+
+
+
+
+
