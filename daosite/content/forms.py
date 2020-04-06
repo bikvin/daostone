@@ -6,7 +6,8 @@ from wtforms.validators import DataRequired, Optional
 SITE_VARS = (
     ('0', 'None'),
     ('1', '@AboutContent'),
-    # ('2', '@AboutContent1')
+    ('2', '@ContactsContent'),
+    ('3','@DeliveryContent')
 )
 
 class ContentForm(FlaskForm):

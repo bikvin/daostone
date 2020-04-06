@@ -2,7 +2,7 @@ import re
 import urllib
 
 from flask import (Blueprint, jsonify, redirect, render_template, request,
-                   session, url_for)
+                   session, url_for, render_template_string)
 from jinja2 import contextfilter
 
 from sqlalchemy import and_
@@ -312,15 +312,31 @@ def order_received():
 
 @main.route("/delivery")
 def delivery():
+    #header_title = 'Доставка и самовывоз - Daostone.ru'
+    #return render_template('delivery.html', header_title=header_title)
     header_title = 'Доставка и самовывоз - Daostone.ru'
-    return render_template('delivery.html', header_title=header_title)
-
+    content = Content.query.filter(Content.site_var == '@DeliveryContent').first()
+    content_html = ''
+    if content != None and content.value != None and content.value != 'None' :
+        # content_html = content.value
+        content_html = render_template_string(content.value)
+        return render_template('dynamic_delivery.html', header_title=header_title, content_html=content_html)
+    else:
+        return render_template('delivery.html', header_title=header_title)
 
 @main.route("/contacts")
 def contacts():
+    #header_title = 'Контактная информация - Daostone.ru'
+    #return render_template('contacts.html', header_title=header_title)
     header_title = 'Контактная информация - Daostone.ru'
-    return render_template('contacts.html', header_title=header_title)
-
+    content = Content.query.filter(Content.site_var == '@ContactsContent').first()
+    content_html = ''
+    if content != None and content.value != None and content.value != 'None' :
+        # content_html = content.value
+        content_html = render_template_string(content.value)
+        return render_template('dynamic_contacts.html', header_title=header_title, content_html=content_html)
+    else:
+        return render_template('contacts.html', header_title=header_title)
 
 @main.route("/about")
 def about():
@@ -328,9 +344,11 @@ def about():
     content = Content.query.filter(Content.site_var == '@AboutContent').first()
     content_html = ''
     if content != None and content.value != None and content.value != 'None' :
-        content_html = content.value
-    return render_template('dynamic_about.html', header_title=header_title, content_html=content_html)
-    # return render_template('about.html', header_title=header_title)
+        content_html = render_template_string(content.value)
+        # content_html = content.value
+        return render_template('dynamic_about.html', header_title=header_title, content_html=content_html)
+    else:
+        return render_template('about.html', header_title=header_title)
 
 
 @main.route("/interiors")
