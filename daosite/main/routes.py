@@ -14,7 +14,7 @@ from daosite.main.forms import OrderForm, SearchForm
 from daosite.main.utils import (add_to_cart_session, get_rates,
                                 send_admin_email, send_user_email)
 from daosite.models import (Brand, Category, Color, Interior, Material,
-                            Online_order, Ordered_item, Product, Rate, Use, Slider, Content)
+                            Online_order, Ordered_item, Product, Rate, Use, Slider, Content, Flag)
 
 main = Blueprint('main', __name__)
 
