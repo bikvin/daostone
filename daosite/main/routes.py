@@ -349,6 +349,7 @@ def about():
         return render_template('dynamic_about.html', header_title=header_title, content_html=content_html)
     else:
         return render_template('about.html', header_title=header_title)
+    # return render_template('about.html', header_title=header_title)
 
 
 @main.route("/interiors")

@@ -350,6 +350,20 @@ class Content(db.Model):
     site_var = db.Column(db.String(100), nullable=True)
     # site_variable_id = db.Column(db.Integer, db.ForeignKey('site_variable.id'), nullable=True)
 
+class GroupFlag(db.Model):
+    # __tablename__ = "group_flag"
+    id = db.Column(db.Integer, primary_key=True)
+    name_var = db.Column(db.String(100), nullable=True)
+    value = db.Column(db.Text, nullable=True)
+    
+class Flag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    gruppa = db.Column(db.String(100), nullable=True)
+    name_var = db.Column(db.String(100), nullable=True)
+    value = db.Column(db.Text, nullable=True)
+    
+    
+    
 
 
 
