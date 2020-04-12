@@ -49,6 +49,8 @@ def create_app(config_class=Config):
     from daosite.admin.routes import admin
     from daosite.slider.routes import slider
     from daosite.content.routes import content
+    from daosite.groupflag.routes import groupflag
+    from daosite.flag.routes import flag
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(main)
@@ -66,5 +68,7 @@ def create_app(config_class=Config):
     app.register_blueprint(rates)
     app.register_blueprint(slider)
     app.register_blueprint(content)
+    app.register_blueprint(groupflag)
+    app.register_blueprint(flag)
 
     return app
