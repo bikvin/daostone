@@ -2,7 +2,7 @@ import re
 import urllib
 
 from flask import (Blueprint, jsonify, redirect, render_template, request,
-                   session, url_for)
+                   session, url_for, render_template_string)
 from jinja2 import contextfilter
 
 from sqlalchemy import and_
@@ -14,7 +14,7 @@ from daosite.main.forms import OrderForm, SearchForm
 from daosite.main.utils import (add_to_cart_session, get_rates,
                                 send_admin_email, send_user_email)
 from daosite.models import (Brand, Category, Color, Interior, Material,
-                            Online_order, Ordered_item, Product, Rate, Use, Slider, Content, Flag)
+                            Online_order, Ordered_item, Product, Rate, Use, Slider, Content)
 
 main = Blueprint('main', __name__)
 
@@ -318,8 +318,11 @@ def delivery():
     content = Content.query.filter(Content.site_var == '@DeliveryContent').first()
     content_html = ''
     if content != None and content.value != None and content.value != 'None' :
-        content_html = content.value
-    return render_template('dynamic_delivery.html', header_title=header_title, content_html=content_html)
+        # content_html = content.value
+        content_html = render_template_string(content.value)
+        return render_template('dynamic_delivery.html', header_title=header_title, content_html=content_html)
+    else:
+        return render_template('delivery.html', header_title=header_title)
 
 @main.route("/contacts")
 def contacts():
@@ -329,8 +332,11 @@ def contacts():
     content = Content.query.filter(Content.site_var == '@ContactsContent').first()
     content_html = ''
     if content != None and content.value != None and content.value != 'None' :
-        content_html = content.value
-    return render_template('dynamic_contacts.html', header_title=header_title, content_html=content_html)
+        # content_html = content.value
+        content_html = render_template_string(content.value)
+        return render_template('dynamic_contacts.html', header_title=header_title, content_html=content_html)
+    else:
+        return render_template('contacts.html', header_title=header_title)
 
 @main.route("/about")
 def about():
@@ -338,8 +344,11 @@ def about():
     content = Content.query.filter(Content.site_var == '@AboutContent').first()
     content_html = ''
     if content != None and content.value != None and content.value != 'None' :
-        content_html = content.value
-    return render_template('dynamic_about.html', header_title=header_title, content_html=content_html)
+        content_html = render_template_string(content.value)
+        # content_html = content.value
+        return render_template('dynamic_about.html', header_title=header_title, content_html=content_html)
+    else:
+        return render_template('about.html', header_title=header_title)
     # return render_template('about.html', header_title=header_title)
 
 

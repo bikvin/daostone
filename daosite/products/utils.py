@@ -120,8 +120,7 @@ def get_thumbnail_path(thumbnail_directory, picture_fn):
 
 
 def get_picture_directory_from_static(product):
-    # return os.path.join('product_pics', product.category.files_directory, product.brand.files_directory)
-    return '/'.join(['product_pics', product.category.files_directory, product.brand.files_directory])
+    return os.path.join('product_pics', product.category.files_directory, product.brand.files_directory)
 
 
 def get_picture_directory(product):
