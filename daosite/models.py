@@ -353,14 +353,25 @@ class Content(db.Model):
 class GroupFlag(db.Model):
     # __tablename__ = "group_flag"
     id = db.Column(db.Integer, primary_key=True)
-    name_var = db.Column(db.String(100), nullable=True)
-    value = db.Column(db.Text, nullable=True)
+    title = db.Column(db.Text, nullable=True)
+    order_id = db.Column(db.Integer, nullable=False)
+    active = db.Column(db.Boolean, default=False, nullable=False)
+    
+    flags = db.relationship('Flag', backref='group_flag', lazy=True)
     
 class Flag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    gruppa = db.Column(db.String(100), nullable=True)
-    name_var = db.Column(db.String(100), nullable=True)
-    value = db.Column(db.Text, nullable=True)
+    title = db.Column(db.Text, nullable=True)
+    order_id = db.Column(db.Integer, nullable=False)
+    active = db.Column(db.Boolean, default=False, nullable=False)
+    # is_menu_show = db.Column(db.Boolean, default=False, nullable=False)
+    # is_production_card_show = db.Column(db.Boolean, default=False, nullable=False)
+
+    group_flag_id = db.Column(db.Integer, db.ForeignKey('group_flag.id'), nullable=True)
+    
+    # gruppa = db.Column(db.String(100), nullable=True)
+    # name_var = db.Column(db.String(100), nullable=True)
+    # value = db.Column(db.Text, nullable=True)
     
     
     

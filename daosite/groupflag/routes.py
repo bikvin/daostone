@@ -15,7 +15,7 @@ groupflag = Blueprint('groupflag', __name__)
 def group_flag_list():
     if current_user.status != 'admin':
         abort(403)
-    flag_items = GroupFlag.query.order_by(GroupFlag.id.asc())
+    flag_items = GroupFlag.query.order_by(GroupFlag.order_id.asc())
     print(flag_items.all())
     return render_template('flag/group_flag_list.html', title='flag', flag_items=flag_items)
 
@@ -27,23 +27,17 @@ def groupflag_new():
     # form.site_var_id.choices = [(g.id, g.name) for g in site_vars]
     if form.validate_on_submit():
 
+        flag_item = GroupFlag(
+            title= form.title.data,
+            order_id=form.order_id.data,
+            active = form.active.data
+            )
 
-        name_var = form.get_var_name()
-        exist_flag_binding = GroupFlag.query.filter(GroupFlag.name_var == name_var)
-        if exist_flag_binding.count() and name_var != 'None':
-                flash('Контент для %s уже существует' % name_var, 'warning')
-        else:
-        
-            flag_item = GroupFlag(
-                name_var=name_var,
-                #title= form.title.data,
-                value = form.value.data)
+        db.session.add(flag_item)
+        db.session.commit()
 
-            db.session.add(flag_item)
-            db.session.commit()
-
-            flash('Группа для флагов создан', 'success')
-            return redirect(url_for('groupflag.group_flag_list'))
+        flash('Группа для флагов создан', 'success')
+        return redirect(url_for('groupflag.group_flag_list'))
 
     # elif request.method == 'GET':
     return render_template('flag/creategroup_flag_item.html', title='Создание группы флагов', legend='Новая группа флагов', form=form, flag=GroupFlag())
@@ -63,27 +57,23 @@ def groupflag_edit(item_id):
 
     if form.validate_on_submit():
         
-        name_var = form.get_var_name()
-        exist_flag_binding = GroupFlag.query.filter(GroupFlag.name_var == name_var)
-        if exist_flag_binding.count() and name_var != 'None':
-                flash('Контент для %s уже существует' % name_var, 'warning')
-        else:
-            # flag_item.title = form.title.data
-            flag_item.value = form.value.data
-            flag_item.name_var = name_var
-            db.session.commit()
+        flag_item.title = form.title.data
+        flag_item.order_id = form.order_id.data
+        flag_item.active = form.active.data
 
-            flash('Контент обновлен', 'success')
-            return redirect(url_for('groupflag.group_flag_list'))
+        db.session.commit()
+
+        flash('Группа флагов обновлена', 'success')
+        return redirect(url_for('groupflag.group_flag_list'))
 
     elif request.method == 'GET':
 
-        # form.title.data = flag_item.title
-        form.value.data = flag_item.value
-        get_var_key = form.get_var_key(flag_item.name_var)
-        form.name_var.data =  get_var_key
+        form.title.data = flag_item.title
+        form.order_id.data = flag_item.order_id
+        form.active.data = flag_item.active
+        
 
-    return render_template('flag/creategroup_flag_item.html', title='Редактирование редактирование', legend='Редактирование группа флагов #' + str(flag_item.id), form=form, flag_item=GroupFlag())
+    return render_template('flag/creategroup_flag_item.html', title='Редактирование группы флагов', legend='Редактирование группы флагов #' + str(flag_item.id), form=form, flag_item=GroupFlag())
     # return render_template('content/create_content_item.html', title='Редактирование редактирование', legend='Редактирование контента #' + str(content_item.id), form=form, content=Content())
 
     # return redirect(url_for('content.content_list'))
@@ -98,5 +88,11 @@ def deletegroup_flag_item(item_id):
 
     db.session.delete(flag)
     db.session.commit()
-    flash('Группа флагов удален из базы', 'success')
+    flash('Группа флагов удалена из базы', 'success')
     return redirect(url_for('groupflag.group_flag_list'))
+
+@groupflag.context_processor
+def utility_processor():
+    def category_count(flags_group_id):
+        return 0
+    return dict(category_count=category_count)

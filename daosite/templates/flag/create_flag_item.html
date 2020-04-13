@@ -31,33 +31,51 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            {{ form.group_flag_id.label(class="form-control-label") }}
+                            {% if form.group_flag_id.errors %}
+                                {{ form.group_flag_id(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.group_flag_id.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.group_flag_id(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group">
-                    {{ form.value.label(class="form-control-label") }}
-                    {% if form.value.errors %}
-                        {{ form.value(class="form-control form-control-lg is-invalid") }}
+                    {{ form.order_id.label(class="form-control-label") }}
+                    {% if form.order_id.errors %}
+                        {{ form.order_id(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
-                            {% for error in form.value.errors %}
+                            {% for error in form.order_id.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.value(class="form-control form-control-lg") }}
+                        {{ form.order_id(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
 
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            {{ form.name_var.label(class="form-control-label") }}
-                            {% if form.name_var.errors %}
-                                {{ form.name_var(class="form-control form-control-lg is-invalid") }}
+                            {{ form.active.label(class="form-control-label") }}
+                            {% if form.active.errors %}
+                                {{ form.active(class="form-control form-control-lg is-invalid") }}
                                 <div class="invalid-feedback">
-                                    {% for error in form.color_var.errors %}
+                                    {% for error in form.active.errors %}
                                         <span>{{ error }}</span>
                                     {% endfor %}
                                 </div>
                             {% else %}
-                                {{ form.name_var(class="form-control form-control-lg") }}
+                                {{ form.active(class="form-control form-control-lg") }}
                             {% endif %}
                         </div>
                     </div>
@@ -67,7 +85,7 @@
 
             <div class="form-group">
                 {{ form.submit(class="btn btn-primary") }}
-                <a class="btn btn-outline-info btn-sm" href="{{url_for('flag.flag_list')}}" role="button">Отменить</a>
+                <a class="btn btn-outline-info btn-sm" href="{{url_for('flag.flag_list',flag_group_id = form.group_flag_id.data)}}" role="button">Отменить</a>
             </div>
         </form>
 

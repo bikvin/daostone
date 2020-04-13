@@ -9,9 +9,13 @@
         <thead>
             <tr>
 				<th scope="col">id</th>
-				<th scope="col">Имя Группы</th>
                 <th scope="col">Имя флага</th>
-				<th scope="col">Значение</th>
+				<th scope="col">Имя группы</th>
+				<th scope="col">Порядковый номер</th>
+				<th scope="col">Опубликовано</th>
+				<th scope="col">Всего товаров</th>
+				<th scope="col">Список товаров</th>
+				<th scope="col"></th>
 				<th scope="col"></th>
             </tr>
         </thead>
@@ -20,9 +24,12 @@
                 
                 <tr>
 					<td scope="row">{{ item.id }}</td>
-					<td>{{ item.gruppa }}</td>
-                    <td>{{ item.value }}</td>
-					<td>{{ item.name_var }}</td>
+                    <td>{{ item.title }}</td>
+					<td>{{ item.group_flag.title }}</td>
+					<td>{{ item.order_id }}</td>
+					<td>{{ item.active }}</td>
+					<td>{{ item.title }}</td>
+					<td><a href="{{ url_for('flag.flag_list') }}" class="badge badge-secondary">Открыть</a></td>
                     <td><a href="{{ url_for('flag.edit', item_id=item.id) }}" class="badge badge-secondary">Изменить</a></td>
                     {% if current_user.status == 'admin' %}
                         <td>
@@ -38,7 +45,7 @@
             {% endfor %}
         </tbody>
     </table>
-    <a class="btn btn-primary" href="{{url_for('flag.new')}}" role="button">Создать новый флаг</a>
+    <a class="btn btn-primary" href="{{url_for('flag.new', flag_group_id = flag_group_id)}}" role="button">Создать новый флаг</a>
 
 	<!-- Modal -->
 	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
