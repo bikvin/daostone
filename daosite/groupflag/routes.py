@@ -106,7 +106,6 @@ def deletegroup_flag_item(item_id):
         abort(403)
     flag = GroupFlag.query.get_or_404(item_id)
 
-
     db.session.delete(flag)
     db.session.commit()
     flash('Группа флагов удалена из базы', 'success')

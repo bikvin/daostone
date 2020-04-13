@@ -14,7 +14,6 @@
 				<th scope="col">Порядковый номер</th>
 				<th scope="col">Опубликовано</th>
 				<th scope="col">Всего товаров</th>
-				<th scope="col">Список товаров</th>
 				<th scope="col"></th>
 				<th scope="col"></th>
             </tr>
@@ -28,8 +27,7 @@
 					<td>{{ item.group_flag.title }}</td>
 					<td>{{ item.order_id }}</td>
 					<td>{{ item.active }}</td>
-					<td>{{ item.title }}</td>
-					<td><a href="{{ url_for('flag.flag_list') }}" class="badge badge-secondary">Открыть</a></td>
+					<td>{{ item.products |length }}</td>
                     <td><a href="{{ url_for('flag.edit', item_id=item.id) }}" class="badge badge-secondary">Изменить</a></td>
                     {% if current_user.status == 'admin' %}
                         <td>

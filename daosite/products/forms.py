@@ -47,4 +47,7 @@ class ProductForm(FlaskForm):
 
     popular = BooleanField('Отображается как популярное')
     active = BooleanField('Опубликовано на сайте')
+
+    flags = MultiCheckboxField('Флаги', coerce=int)
+
     submit = SubmitField('Сохранить')

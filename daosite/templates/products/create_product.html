@@ -540,7 +540,19 @@
                 
                
     
-
+                <div class="form-group">
+                    {{ form.flags.label(class="form-control-label") }}
+                    {% if form.flags.errors %}
+                        {{ form.flags(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.flags.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.flags(class="") }}
+                    {% endif %}
+                </div>
 
 
 

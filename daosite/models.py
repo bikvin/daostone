@@ -273,9 +273,6 @@ class Category(db.Model):
     products = db.relationship('Product', backref='category', lazy=True)
     url_name = db.Column(db.String(100), nullable=False)
 
-    # group_flags = db.relationship('GroupFlag', secondary=group_flag_category, lazy='subquery',
-    #                          backref=db.backref('category', lazy=True))
-
 
 item_order = db.Table('item_order',
                       db.Column('ordered_item_id', db.Integer, db.ForeignKey('ordered_item.id'), primary_key=True),
@@ -366,11 +363,16 @@ class GroupFlag(db.Model):
     order_id = db.Column(db.Integer, nullable=False)
     active = db.Column(db.Boolean, default=False, nullable=False)
 
-    flags = db.relationship('Flag', backref='group_flag', lazy=True)
+    flags = db.relationship('Flag', backref='group_flag', lazy=True, cascade="all, delete-orphan")
 
     categories = db.relationship('Category', secondary=group_flag_category, lazy='subquery',
                              backref=db.backref('group_flag', lazy=True))
     
+flag_product = db.Table('flag_product',
+                         db.Column('flag_id', db.Integer, db.ForeignKey('flag.id'), primary_key=True),
+                         db.Column('product_id', db.Integer, db.ForeignKey('product.id'), primary_key=True)
+                         )
+
 class Flag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Text, nullable=True)
@@ -380,7 +382,10 @@ class Flag(db.Model):
     # is_production_card_show = db.Column(db.Boolean, default=False, nullable=False)
 
     group_flag_id = db.Column(db.Integer, db.ForeignKey('group_flag.id'), nullable=True)
-    
+
+    products = db.relationship('Product', secondary=flag_product, lazy='subquery',
+                             backref=db.backref('flag', lazy=True))
+
     # gruppa = db.Column(db.String(100), nullable=True)
     # name_var = db.Column(db.String(100), nullable=True)
     # value = db.Column(db.Text, nullable=True)

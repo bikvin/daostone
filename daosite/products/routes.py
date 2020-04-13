@@ -2,7 +2,7 @@ from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
 from daosite import db
-from daosite.models import Product, Brand, Category, Color, Use, Material, Chipsize, Surface
+from daosite.models import Product, Brand, Category, Color, Use, Material, Chipsize, Surface, Flag
 from daosite.products.forms import ProductForm
 from daosite.products.utils import save_product_picture, prepare_file_name, delete_product_picture
 
@@ -14,6 +14,7 @@ products_per_page = 30
 @products.route("/product/new", methods=['GET', 'POST'])
 @login_required
 def new_product():
+    flags = Flag.query.all()
     brands = Brand.query.all()
     categories = Category.query.all()
     colors = Color.query.all()
@@ -22,6 +23,7 @@ def new_product():
     surfaces = Surface.query.all()
     uses = Use.query.all()
     form = ProductForm()
+    form.flags.choices = [(g.id, g.title + " (" + g.group_flag.title + ")") for g in flags]
     form.brand_id.choices = [(g.id, g.name) for g in brands]
     form.category_id.choices = [(g.id, g.name) for g in categories]
     form.colors.choices = [(g.id, g.name) for g in colors]
@@ -79,6 +81,13 @@ def new_product():
             product.thumb50_5_file_path = paths['thumb50']
             product.thumb100_5_file_path = paths['thumb100']
             product.thumb270_5_file_path = paths['thumb270']
+
+        for flag in flags:
+            if flag.id in form.flags.data:
+                product.flag.append(flag)
+            else:
+                if flag in product.flag:
+                    product.flag.append(flag)
 
         for color in colors:
             if color.id in form.colors.data:
@@ -139,6 +148,7 @@ def product_list():
 @login_required
 def edit_product(product_id):
     product = Product.query.get_or_404(product_id)
+    flags = Flag.query.all()
     brands = Brand.query.all()
     categories = Category.query.all()
     colors = Color.query.all()
@@ -147,6 +157,7 @@ def edit_product(product_id):
     surfaces = Surface.query.all()
     uses = Use.query.all()
     form = ProductForm()
+    form.flags.choices = [(g.id, g.title + " (" + g.group_flag.title + ")") for g in flags]
     form.brand_id.choices = [(g.id, g.name) for g in brands]
     form.category_id.choices = [(g.id, g.name) for g in categories]
     form.colors.choices = [(g.id, g.name) for g in colors]
@@ -248,6 +259,13 @@ def edit_product(product_id):
 
         # print(form.colors.data)
 
+        for flag in flags:
+            if flag.id in form.flags.data:
+                product.flag.append(flag)
+            else:
+                if flag in product.flag:
+                    product.flag.append(flag)
+
         for color in colors:
             if color.id in form.colors.data:
                 product.colors.append(color)
@@ -307,6 +325,8 @@ def edit_product(product_id):
         form.weight_kg.data = product.weight_kg
         form.active.data = product.active
         form.popular.data = product.popular
+
+        form.flags.data = [flag.id for flag in product.flag]
 
         form.colors.data = [color.id for color in product.colors]
         form.materials.data = [material.id for material in product.materials]
