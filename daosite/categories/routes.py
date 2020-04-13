@@ -32,7 +32,7 @@ def new_category():
                 category.group_flags.append(group_flag)
             else:
                 if group_flag in category.group_flags:
-                    category.group_flags.append(group_flag)
+                    category.group_flags.remove(group_flag)
 
         db.session.add(category)
         db.session.commit()
@@ -74,7 +74,7 @@ def edit_category(category_id):
                 category.group_flag.append(group_flag)
             else:
                 if group_flag in category.group_flag:
-                    category.group_flag.append(group_flag)
+                    category.group_flag.remove(group_flag)
 
         db.session.commit()
         flash('Категория обновлена', 'success')

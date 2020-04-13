@@ -87,7 +87,7 @@ def new_product():
                 product.flag.append(flag)
             else:
                 if flag in product.flag:
-                    product.flag.append(flag)
+                    product.flag.remove(flag)
 
         for color in colors:
             if color.id in form.colors.data:
@@ -148,7 +148,10 @@ def product_list():
 @login_required
 def edit_product(product_id):
     product = Product.query.get_or_404(product_id)
-    flags = Flag.query.all()
+    # flags = Flag.query.filter( Flag.group_flag.any( Category.any( id =  product.category_id) ) ).all()
+    awailible_group_flag_ids = [item.id for item in product.category.group_flag]
+    flags = Flag.query.filter(Flag.group_flag_id.in_(awailible_group_flag_ids)).all()
+    # flags = Flag.query.all()
     brands = Brand.query.all()
     categories = Category.query.all()
     colors = Color.query.all()
@@ -264,7 +267,7 @@ def edit_product(product_id):
                 product.flag.append(flag)
             else:
                 if flag in product.flag:
-                    product.flag.append(flag)
+                    product.flag.remove(flag)
 
         for color in colors:
             if color.id in form.colors.data:
