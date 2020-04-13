@@ -11,7 +11,6 @@
 				<th scope="col">Опубликовано</th>
 				<th scope="col">Всего категорий</th>
 				<th scope="col">Всего флагов</th>
-				<th scope="col">Список категорий</th>
                 <th scope="col">Список флагов</th>
 				<th scope="col"></th>
 				<th scope="col"></th>
@@ -25,9 +24,8 @@
                     <td>{{ item.title }}</td>
 					<td>{{ item.order_id }}</td>
 					<td>{{ item.active }}</td>
-					<td>{{ category_count(item.id) }}</td>
+					<td>{{ item.categories |length }}</td>
 					<td>{{ item.flags |length }}</td>
-					<td><a href="{{ url_for('flag.flag_list') }}" class="badge badge-secondary">Открыть</a></td>
 					<td><a href="{{ url_for('flag.flag_list', flag_group_id=item.id) }}" class="badge badge-secondary">Открыть</a></td>
                     <td><a href="{{ url_for('groupflag.groupflag_edit', item_id=item.id) }}" class="badge badge-secondary">Изменить</a></td>
                     {% if current_user.status == 'admin' %}

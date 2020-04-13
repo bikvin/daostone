@@ -20,10 +20,10 @@ def flag_list(flag_group_id):
 
     flag_items = None;
 
-    if flag_group_id == None:
-        flag_items = Flag.query.order_by(Flag.id.asc())
-    else:
-        flag_items = Flag.query.filter(Flag.group_flag_id == flag_group_id).order_by(Flag.order_id.asc())
+    # if flag_group_id == None:
+    #     flag_items = Flag.query.order_by(Flag.id.asc())
+    # else:
+    flag_items = Flag.query.filter(Flag.group_flag_id == flag_group_id).order_by(Flag.order_id.asc())
 
     # flag_filter = Flag.query.filter(Flag.grouppa == item_value)
     # print(flag_filter.all())
@@ -108,4 +108,4 @@ def delete_flag_item(item_id):
     db.session.delete(flag)
     db.session.commit()
     flash('Флаг удален из базы', 'success')
-    return redirect(url_for('flag.flag_list'))
+    return redirect(url_for('flag.flag_list',flag_group_id = flag.group_flag_id))

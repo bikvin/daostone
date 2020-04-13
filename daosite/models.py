@@ -273,6 +273,9 @@ class Category(db.Model):
     products = db.relationship('Product', backref='category', lazy=True)
     url_name = db.Column(db.String(100), nullable=False)
 
+    # group_flags = db.relationship('GroupFlag', secondary=group_flag_category, lazy='subquery',
+    #                          backref=db.backref('category', lazy=True))
+
 
 item_order = db.Table('item_order',
                       db.Column('ordered_item_id', db.Integer, db.ForeignKey('ordered_item.id'), primary_key=True),
@@ -350,14 +353,23 @@ class Content(db.Model):
     site_var = db.Column(db.String(100), nullable=True)
     # site_variable_id = db.Column(db.Integer, db.ForeignKey('site_variable.id'), nullable=True)
 
+
+group_flag_category = db.Table('group_flag_category',
+                         db.Column('group_flag_id', db.Integer, db.ForeignKey('group_flag.id'), primary_key=True),
+                         db.Column('category_id', db.Integer, db.ForeignKey('category.id'), primary_key=True)
+                         )
+
 class GroupFlag(db.Model):
     # __tablename__ = "group_flag"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Text, nullable=True)
     order_id = db.Column(db.Integer, nullable=False)
     active = db.Column(db.Boolean, default=False, nullable=False)
-    
+
     flags = db.relationship('Flag', backref='group_flag', lazy=True)
+
+    categories = db.relationship('Category', secondary=group_flag_category, lazy='subquery',
+                             backref=db.backref('group_flag', lazy=True))
     
 class Flag(db.Model):
     id = db.Column(db.Integer, primary_key=True)

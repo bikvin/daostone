@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 from sqlalchemy import and_, or_
 
 from daosite import db
-from daosite.models import GroupFlag
+from daosite.models import GroupFlag, Category
 from daosite.groupflag.forms import FlagForm
 
 groupflag = Blueprint('groupflag', __name__)
@@ -23,7 +23,10 @@ def group_flag_list():
 @login_required
 def groupflag_new():
     # site_vars = SiteVariable.query()
+    categories = Category.query.all()
     form = FlagForm()
+
+    form.categories.choices = [(g.id, g.name) for g in categories]
     # form.site_var_id.choices = [(g.id, g.name) for g in site_vars]
     if form.validate_on_submit():
 
@@ -32,6 +35,13 @@ def groupflag_new():
             order_id=form.order_id.data,
             active = form.active.data
             )
+
+        for category in categories:
+            if category.id in form.categories.data:
+                flag_item.categories.append(category)
+            else:
+                if category in flag_item.categories:
+                    flag_item.categories.append(category)
 
         db.session.add(flag_item)
         db.session.commit()
@@ -49,10 +59,12 @@ def groupflag_new():
 @groupflag.route("/flag/group/edit/<int:item_id>", methods=['GET', 'POST'])
 @login_required
 def groupflag_edit(item_id):
-
+    categories = Category.query.all()
     # site_vars = SiteVariable.query
     form = FlagForm()
     # form.site_var_id.choices = [(g.id, g.name) for g in site_vars]
+    form.categories.choices = [(g.id, g.name) for g in categories]
+
     flag_item = GroupFlag.query.get_or_404(item_id)
 
     if form.validate_on_submit():
@@ -60,6 +72,13 @@ def groupflag_edit(item_id):
         flag_item.title = form.title.data
         flag_item.order_id = form.order_id.data
         flag_item.active = form.active.data
+
+        for category in categories:
+            if category.id in form.categories.data:
+                flag_item.categories.append(category)
+            else:
+                if category in flag_item.categories:
+                    flag_item.categories.append(category)
 
         db.session.commit()
 
@@ -71,6 +90,8 @@ def groupflag_edit(item_id):
         form.title.data = flag_item.title
         form.order_id.data = flag_item.order_id
         form.active.data = flag_item.active
+
+        form.categories.data = [category.id for category in flag_item.categories]
         
 
     return render_template('flag/creategroup_flag_item.html', title='Редактирование группы флагов', legend='Редактирование группы флагов #' + str(flag_item.id), form=form, flag_item=GroupFlag())
@@ -91,8 +112,8 @@ def deletegroup_flag_item(item_id):
     flash('Группа флагов удалена из базы', 'success')
     return redirect(url_for('groupflag.group_flag_list'))
 
-@groupflag.context_processor
-def utility_processor():
-    def category_count(flags_group_id):
-        return 0
-    return dict(category_count=category_count)
+# @groupflag.context_processor
+# def utility_processor():
+#     def category_count(flags_group_id):
+#         return 0
+#     return dict(category_count=category_count)
