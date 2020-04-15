@@ -29,10 +29,10 @@ def new_category():
 
         for group_flag in group_flags:
             if group_flag.id in form.group_flags.data:
-                category.group_flags.append(group_flag)
+                category.group_flag.append(group_flag)
             else:
-                if group_flag in category.group_flags:
-                    category.group_flags.remove(group_flag)
+                if group_flag in category.group_flag:
+                    category.group_flag.remove(group_flag)
 
         db.session.add(category)
         db.session.commit()
