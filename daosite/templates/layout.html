@@ -146,6 +146,23 @@
                             </div>
                         </div>
                     </li>
+                    
+                    {% for category in categories %}
+                    <li class="mega-parent"><a href="{{url_for('main.mosaic')}}">{{ category.name }}</a>
+                        <div class="mega-menu-area clearfix">
+                            <div class="mega-menu-link mega-menu-link-4  f-left">
+                                <ul class="single-mega-item">
+                                    <li class="menu-title">Описание</li>
+                                    ///
+                                        <li>
+                                            <a>{{ category.description }}</a>
+                                        </li>
+                                    ///
+                                </ul>
+                            </div>
+                        </div>
+                    {% endfor %}
+
                     <li>
                         <a href="{{url_for('main.mosaic_discount')}}">Акции</a>
                     </li>

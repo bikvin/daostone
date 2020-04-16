@@ -371,7 +371,8 @@ def context_processor():
                 brands=Brand.query.all(),
                 uses=Use.query.all(),
                 colors=Color.query.all(),
-                rates=rates)
+                rates=rates,
+                categories = Category.query.all())
 
 # @main.context_processor
 # def utility_processor():
