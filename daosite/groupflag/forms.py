@@ -21,6 +21,8 @@ class FlagForm(FlaskForm):
     active = BooleanField('Опубликовано на сайте')
 
     categories = MultiCheckboxField('Категории', coerce=int)
+    
+    is_topmenu_show = BooleanField('Отображать в верхнем меню')
 
     submit = SubmitField('Сохранить')
 

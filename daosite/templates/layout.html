@@ -153,7 +153,7 @@
                             <div class="mega-menu-link mega-menu-link-4  f-left">
 
                                 {% for gr_flag in category.group_flag %}
-                                {% if gr_flag.active == true %}
+                                {% if gr_flag.active == true and gr_flag.is_topmenu_show == true %}
                                 <ul class="single-mega-item">
                                     <li class="menu-title">{{ gr_flag.title }}</li>
                                         {% for flag in gr_flag.flags %}

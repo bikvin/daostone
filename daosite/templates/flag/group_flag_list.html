@@ -9,6 +9,7 @@
                 <th scope="col">Группа флагов</th>
 				<th scope="col">Порядковый номер</th>
 				<th scope="col">Опубликовано</th>
+				<th scope="col">Верхнее меню</th>
 				<th scope="col">Всего категорий</th>
 				<th scope="col">Всего флагов</th>
                 <th scope="col">Список флагов</th>
@@ -24,6 +25,7 @@
                     <td>{{ item.title }}</td>
 					<td>{{ item.order_id }}</td>
 					<td>{{ item.active }}</td>
+					<td>{{ item.is_topmenu_show }}</td>
 					<td>{{ item.categories |length }}</td>
 					<td>{{ item.flags |length }}</td>
 					<td><a href="{{ url_for('flag.flag_list', flag_group_id=item.id) }}" class="badge badge-secondary">Открыть</a></td>
