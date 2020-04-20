@@ -376,6 +376,7 @@ def copy_product(product_id):
     chipsizes = Chipsize.query.all()
     surfaces = Surface.query.all()
     uses = Use.query.all()
+    flags = Flag.query.all()
 
     print(old_product.colors)
 
@@ -414,6 +415,10 @@ def copy_product(product_id):
     for use in uses:
         if use in old_product.uses:
             new_product.uses.append(use)
+    
+    for flag in flags:
+        if flag in old_product.flag:
+            new_product.flag.append(flag)
 
     db.session.add(new_product)
     db.session.commit()
