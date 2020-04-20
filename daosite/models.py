@@ -367,6 +367,9 @@ class GroupFlag(db.Model):
 
     categories = db.relationship('Category', secondary=group_flag_category, lazy='subquery',
                              backref=db.backref('group_flag', lazy=True))
+
+    is_topmenu_show = db.Column(db.Boolean, default=False, nullable=False)
+    
     
 flag_product = db.Table('flag_product',
                          db.Column('flag_id', db.Integer, db.ForeignKey('flag.id'), primary_key=True),

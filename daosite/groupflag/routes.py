@@ -33,7 +33,8 @@ def groupflag_new():
         flag_item = GroupFlag(
             title= form.title.data,
             order_id=form.order_id.data,
-            active = form.active.data
+            active = form.active.data,
+            is_topmenu_show = form.is_topmenu_show.data
             )
 
         for category in categories:
@@ -72,6 +73,7 @@ def groupflag_edit(item_id):
         flag_item.title = form.title.data
         flag_item.order_id = form.order_id.data
         flag_item.active = form.active.data
+        flag_item.is_topmenu_show = form.is_topmenu_show.data
 
         for category in categories:
             if category.id in form.categories.data:
@@ -90,6 +92,7 @@ def groupflag_edit(item_id):
         form.title.data = flag_item.title
         form.order_id.data = flag_item.order_id
         form.active.data = flag_item.active
+        form.is_topmenu_show.data = flag_item.is_topmenu_show
 
         form.categories.data = [category.id for category in flag_item.categories]
         
