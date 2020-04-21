@@ -25,14 +25,4 @@ class FlagForm(FlaskForm):
     is_topmenu_show = BooleanField('Отображать в верхнем меню')
 
     submit = SubmitField('Сохранить')
-
-    # def get_var_name(self):
-    #     return dict(NAME_VARS).get(self.name_var.data)
-
-    # def get_var_key(self, value):
-    #     if value is None:
-    #         result = '0'
-    #     else:
-    #         result = list(dict(NAME_VARS).keys())[list(dict(NAME_VARS).values()).index(value)]
-    #     return result
         
