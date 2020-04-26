@@ -148,18 +148,20 @@
                     </li>
                     
                     {% for category in categories %}
-                    <li class="mega-parent"><a href="{{url_for('main.mosaic')}}">{{ category.name }}</a>
+                    <li class="mega-parent"><a href="{{url_for('main.products',categories=category.id)}}">{{ category.name }}</a>
                         <div class="mega-menu-area clearfix">
                             <div class="mega-menu-link mega-menu-link-4  f-left">
 
                                 {% for gr_flag in category.group_flag %}
                                 {% if gr_flag.active == true and gr_flag.is_topmenu_show == true %}
                                 <ul class="single-mega-item">
-                                    <li class="menu-title">{{ gr_flag.title }}</li>
+                                    <li class="menu-title">{{ gr_flag.name }}</li>
                                         {% for flag in gr_flag.flags %}
+                                        {% if flag.active == true %}
                                         <li>
-                                            <a>{{ flag.title }}</a>
+                                            <a href="{{url_for('main.products',categories=category.id, flgs=flag.id)}}" >{{ flag.name }}</a>
                                         </li>
+                                        {% endif %}
                                         {% endfor %}
                                 </ul>
                                 {% endif %}

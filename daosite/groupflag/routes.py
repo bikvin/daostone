@@ -31,7 +31,7 @@ def groupflag_new():
     if form.validate_on_submit():
 
         flag_item = GroupFlag(
-            title= form.title.data,
+            name= form.name.data,
             order_id=form.order_id.data,
             active = form.active.data,
             is_topmenu_show = form.is_topmenu_show.data
@@ -70,7 +70,7 @@ def groupflag_edit(item_id):
 
     if form.validate_on_submit():
         
-        flag_item.title = form.title.data
+        flag_item.name = form.name.data
         flag_item.order_id = form.order_id.data
         flag_item.active = form.active.data
         flag_item.is_topmenu_show = form.is_topmenu_show.data
@@ -89,7 +89,7 @@ def groupflag_edit(item_id):
 
     elif request.method == 'GET':
 
-        form.title.data = flag_item.title
+        form.name.data = flag_item.name
         form.order_id.data = flag_item.order_id
         form.active.data = flag_item.active
         form.is_topmenu_show.data = flag_item.is_topmenu_show

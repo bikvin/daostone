@@ -1,10 +1,10 @@
 from flask_wtf import FlaskForm
 from sqlalchemy import and_
-from wtforms import IntegerField, SelectMultipleField, widgets
+from wtforms import IntegerField, SelectMultipleField, widgets, FormField, FieldList
 
 from daosite import db
 from daosite.main.utils import get_rates
-from daosite.models import (Brand, Chipsize, Color, Material, Product, Rate,
+from daosite.models import (Category, GroupFlag, Flag, Brand, Chipsize, Color, Material, Product, Rate,
                             Surface, Use, chipsize_product, color_product,
                             material_product, surface_product, use_product)
 
@@ -14,8 +14,18 @@ class MultiCheckboxField(SelectMultipleField):
     option_widget = widgets.CheckboxInput()
 
 
+class FlagsGroupEntryForm(FlaskForm):
+    fields_data = {
+        'flags': Flag,
+    }
+
+    flags = MultiCheckboxField('Флаги', choices=[], coerce=int,)
+
 class FilterForm(FlaskForm):
     fields_data = {
+            'categories': Category,
+            # 'flags': Flag,
+            'flag_groups': GroupFlag,
             'materials': Material,
             'manufacturers': Brand,
             'applications': Use,
@@ -25,6 +35,9 @@ class FilterForm(FlaskForm):
     }
     price_min = IntegerField('Минимальная цена')
     price_max = IntegerField('Максимальная цена')
+    categories = MultiCheckboxField('Категории', choices=[], coerce=int,)
+    flag_groups = FieldList(FormField(FlagsGroupEntryForm),min_entries=1)
+    # flags = MultiCheckboxField('Флаги', choices=[], coerce=int,)
     materials = MultiCheckboxField('Материал', choices=[], coerce=int,)
     manufacturers = MultiCheckboxField('Производитель', choices=[], coerce=int,)
     applications = MultiCheckboxField('Применение', choices=[], coerce=int,)
@@ -96,6 +109,11 @@ class FilterForm(FlaskForm):
 
             all_ids = rur_m2_ids + usd_m2_ids + eur_m2_ids
             query = query.filter(Product.id.in_(all_ids))
+
+        if self.categories.data:
+            query = query.join(Category).filter(
+                Category.id.in_(self.categories.data)
+            )
 
         if self.materials.data:
             query = query.join(material_product).filter(

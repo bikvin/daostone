@@ -39,12 +39,12 @@ def new(flag_group_id):
     flag_groups = GroupFlag.query.all()
     form = FlagForm()
 
-    form.group_flag_id.choices = [(g.id, g.title) for g in flag_groups]
+    form.group_flag_id.choices = [(g.id, g.name) for g in flag_groups]
     # form.site_var_id.choices = [(g.id, g.name) for g in site_vars]
     if form.validate_on_submit():
 
         flag_item = Flag(
-            title= form.title.data,
+            name= form.name.data,
             order_id = form.order_id.data,
             active = form.active.data,            
             group_flag_id = form.group_flag_id.data)
@@ -71,12 +71,12 @@ def edit(item_id):
     # site_vars = SiteVariable.query
     form = FlagForm()
     # form.site_var_id.choices = [(g.id, g.name) for g in site_vars]
-    form.group_flag_id.choices = [(g.id, g.title) for g in flag_groups]
+    form.group_flag_id.choices = [(g.id, g.name) for g in flag_groups]
     flag_item = Flag.query.get_or_404(item_id)
 
     if form.validate_on_submit():
         
-        flag_item.title = form.title.data
+        flag_item.name = form.name.data
         flag_item.order_id = form.order_id.data
         flag_item.active = form.active.data
         flag_item.group_flag_id = form.group_flag_id.data
@@ -87,7 +87,7 @@ def edit(item_id):
 
     elif request.method == 'GET':
 
-        form.title.data = flag_item.title
+        form.name.data = flag_item.name
         form.order_id.data = flag_item.order_id
         form.active.data = flag_item.active
         form.group_flag_id.data = flag_item.group_flag_id

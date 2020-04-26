@@ -1,0 +1,32 @@
+<aside class="widget shop-filter box-shadow mb-30">
+    <form method="get" action="{{url_for('main.products')}}">
+        <div class='mb-20'>
+            <h6 class="widget-title border-left">Цена</h6>
+            <div class="price_filter">
+                <div class="price_slider_amount">
+                    <input type="text" id="price_min" name="price_min"  placeholder="Введите цену" value='{{ filter_form.price_min.data }}' />
+                    <input type="text" id="price_max" name="price_max"  placeholder="Введите цену" value='{{ filter_form.price_max.data }}' />
+                </div>
+                <div id="slider-range"></div>
+            </div>
+        </div>
+
+        <h6 class="widget-title border-left"><b>Категории</b></h6>
+        <div class="product-filter mb-20">
+            {{ filter_form.categories }}
+        </div>
+
+        {% for form in filter_form.flag_groups %}
+        {% if form.active.data == True and form.is_topmenu_show.data == True %}
+        <h6 class="widget-title border-left"><b>{{ form.name.data }}</b></h6>
+        <div class="product-filter mb-20">
+            {{ form.flgs }}
+        </div>
+        {% endif %}
+        {% endfor %}
+
+        <div class="mt-20">
+            <button class="submit-btn-1 mt-20 btn-hover-1" type="submit">Применить</button>
+        </div>
+    </form>
+</aside>

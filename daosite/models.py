@@ -359,7 +359,7 @@ group_flag_category = db.Table('group_flag_category',
 class GroupFlag(db.Model):
     # __tablename__ = "group_flag"
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.Text, nullable=True)
+    name = db.Column(db.Text, nullable=True)
     order_id = db.Column(db.Integer, nullable=False)
     active = db.Column(db.Boolean, default=False, nullable=False)
 
@@ -378,7 +378,7 @@ flag_product = db.Table('flag_product',
 
 class Flag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.Text, nullable=True)
+    name = db.Column(db.Text, nullable=True)
     order_id = db.Column(db.Integer, nullable=False)
     active = db.Column(db.Boolean, default=False, nullable=False)
     # is_menu_show = db.Column(db.Boolean, default=False, nullable=False)

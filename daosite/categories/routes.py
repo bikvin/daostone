@@ -18,7 +18,7 @@ def new_category():
 
     form = CategoryForm()
 
-    form.group_flags.choices = [(g.id, g.title) for g in group_flags]
+    form.group_flags.choices = [(g.id, g.name) for g in group_flags]
 
     if form.validate_on_submit():
 
@@ -61,7 +61,7 @@ def edit_category(category_id):
     category = Category.query.get_or_404(category_id)
     form = CategoryForm()
 
-    form.group_flags.choices = [(g.id, g.title) for g in group_flags]
+    form.group_flags.choices = [(g.id, g.name) for g in group_flags]
     
     if form.validate_on_submit():
         category.name = form.name.data

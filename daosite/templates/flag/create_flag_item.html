@@ -16,16 +16,16 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            {{ form.title.label(class="form-control-label") }}
-                            {% if form.title.errors %}
-                                {{ form.title(class="form-control form-control-lg is-invalid") }}
+                            {{ form.name.label(class="form-control-label") }}
+                            {% if form.name.errors %}
+                                {{ form.name(class="form-control form-control-lg is-invalid") }}
                                 <div class="invalid-feedback">
-                                    {% for error in form.title.errors %}
+                                    {% for error in form.name.errors %}
                                         <span>{{ error }}</span>
                                     {% endfor %}
                                 </div>
                             {% else %}
-                                {{ form.title(class="form-control form-control-lg") }}
+                                {{ form.name(class="form-control form-control-lg") }}
                             {% endif %}
                         </div>
                     </div>

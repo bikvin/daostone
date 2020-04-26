@@ -23,7 +23,7 @@ def new_product():
     surfaces = Surface.query.all()
     uses = Use.query.all()
     form = ProductForm()
-    form.flags.choices = [(g.id, g.title + " (" + g.group_flag.title + ")") for g in flags]
+    form.flags.choices = [(g.id, g.name + " (" + g.group_flag.name + ")") for g in flags]
     form.brand_id.choices = [(g.id, g.name) for g in brands]
     form.category_id.choices = [(g.id, g.name) for g in categories]
     form.colors.choices = [(g.id, g.name) for g in colors]
@@ -160,7 +160,7 @@ def edit_product(product_id):
     surfaces = Surface.query.all()
     uses = Use.query.all()
     form = ProductForm()
-    form.flags.choices = [(g.id, g.title + " (" + g.group_flag.title + ")") for g in flags]
+    form.flags.choices = [(g.id, g.name + " (" + g.group_flag.name + ")") for g in flags]
     form.brand_id.choices = [(g.id, g.name) for g in brands]
     form.category_id.choices = [(g.id, g.name) for g in categories]
     form.colors.choices = [(g.id, g.name) for g in colors]

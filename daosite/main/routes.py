@@ -9,12 +9,13 @@ from sqlalchemy import and_
 
 from daosite import db
 from daosite.filter.forms import FilterForm
+from daosite.dynamic_filter.forms import DynamicFilterForm
 from daosite.interiors.routes import interiors_per_page
 from daosite.main.forms import OrderForm, SearchForm
 from daosite.main.utils import (add_to_cart_session, get_rates,
                                 send_admin_email, send_user_email)
 from daosite.models import (Brand, Category, Color, Interior, Material,
-                            Online_order, Ordered_item, Product, Rate, Use, Slider, Content)
+                            Online_order, Ordered_item, Product, Rate, Use, Slider, Content, GroupFlag)
 
 main = Blueprint('main', __name__)
 
@@ -26,6 +27,34 @@ def home():
     discount_products = Product.query.filter(Product.discount > 0, Product.active == True).order_by(Product.id.desc()).limit(8)
     header_title = "Daostone.ru - магазин мозаики для отделки. Лучшая мозаика для вашего интерьера."
     return render_template('home.html', popular_products=popular_products, discount_products=discount_products, header_title=header_title, slider=slider)
+
+
+@main.route("/products")
+def products():
+    page = request.args.get('page', 1, type=int)
+    per_page = 18
+
+    page_title = "" # "Вся мозаика"
+    header_title = "" # 'Вся мозаика - Daostone.ru'
+    meta_description = "" # 'вся мозаика'
+    description = ''
+
+    products = Product.query.filter(Product.active == True)
+
+    filter_form = DynamicFilterForm(request.args, csrf_enabled=False)
+    if filter_form.validate():
+        products = filter_form.filter_query(Product.query.filter(Product.active == True))
+
+    items = products.order_by(Product.id.desc()).paginate(page=page, per_page=per_page)
+    ctx = {
+        'products': items,
+        'filter_form': filter_form,
+        'page_title': page_title,
+        'header_title': header_title,
+        'meta_description': meta_description,
+        'description': description,
+    }
+    return render_template('products.html', **ctx)
 
 
 @main.route("/mosaic")
@@ -372,7 +401,9 @@ def context_processor():
                 uses=Use.query.all(),
                 colors=Color.query.all(),
                 rates=rates,
-                categories = Category.query.all())
+                categories = Category.query.all(),
+                group_flags = GroupFlag.query.filter(GroupFlag.is_topmenu_show == True, GroupFlag.active == True).all()
+                )
 
 # @main.context_processor
 # def utility_processor():

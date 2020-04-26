@@ -1,0 +1,103 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <!-- Start page content -->
+    <section id="page-content" class="page-wrapper">
+        <!-- SHOP SECTION START -->
+        <div class="shop-section mb-80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9 col-xs-12">
+                        <div class="shop-content">
+                            <!-- Tab Content start -->
+                            <div class="tab-content">
+                                <!-- grid-view -->
+                                <div role="tabpanel" class="tab-pane active" id="grid-view">
+                                    <div class="row">
+                                    <h1 class='product_list_header'>{{page_title}}</h1>
+                                        <!-- product-item start -->
+                                        {% for item in products.items %}
+                                            <div class="col-md-4 col-sm-4 col-xs-12 product-col-height">
+                                                <div class="product-item ">
+                                                    {% if item.thumb270_1_file_path %}
+                                                        <div class="product-img">
+                                                            <a href="{{url_for('main.single_mosaic', mosaic_id=item.id)}}">
+                                                                <img src="{{url_for('static', filename=item.thumb270_1_file_path)}}" alt="{{ item.category.name}} {{ item.name}}"/>
+                                                            </a>
+                                                        </div>
+                                                    {% endif %}
+                                                    <div class="product-info">
+                                                        <h6 class="product-title">
+                                                            <a href="{{url_for('main.single_mosaic', mosaic_id=item.id)}}"> {{item.category.name}} {{item.name}} </a>
+                                                        </h6>
+
+                                                        {% with 
+                                                        product = item,
+                                                        tag = 'h5' %}
+                                                            {% include 'controls/price/_price.html' ignore missing %}
+                                                        {% endwith %}
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <h6 class="product-title text-center">Товаров по вашему запросу не найдено</h6>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Tab Content end -->
+                            <!-- shop-pagination start -->
+                            {% block pagination %}
+                                <ul class="shop-pagination box-shadow text-center ptblr-10-30">
+                                    {% for page_num in products.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                                        {% if page_num %}
+                                            {% if products.page == page_num %}
+                                                <li class='active'>
+                                                    <a href="">{{ page_num }}</a>
+                                                </li>
+                                            {% else %}
+                                                <li>
+                                                    {% if select_category and selection %}
+                                                        {% if page_num == 1 %}
+                                                            <a href="{{ url_for('main.mosaic_selected', select_category=select_category, selection=selection, **filter_form.data) }}">{{ page_num }}</a>
+                                                        {% else %}
+                                                            <a href="{{ url_for('main.mosaic_selected', select_category=select_category, selection=selection, page=page_num, **filter_form.data) }}">{{ page_num }}</a>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {% if page_num == 1 %}
+                                                            <a href="{{ url_for('main.mosaic', **filter_form.data) }}">{{ page_num }}</a>
+                                                        {% else %}
+                                                            <a href="{{ url_for('main.mosaic', page=page_num, **filter_form.data) }}">{{ page_num }}</a>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </li>
+                                            {% endif %}
+                                        {% else %}
+                                            <li><a href="">...</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            {% endblock pagination %}
+                        </div>
+                    {% if description %}
+                        <br><br>
+                        <p>
+                                {{ description | safe }}
+                        </p>
+                    {% endif %}                    
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                        
+                    {% block filter %}  
+                        {% include 'dynamic_filter.html' %}
+                    {% endblock filter %}
+                    {% include 'side-menu.html' %}
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- SHOP SECTION END -->             
+    </section>
+    <!-- End page content -->
+{% endblock content %}

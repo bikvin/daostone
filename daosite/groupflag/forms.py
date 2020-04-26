@@ -16,8 +16,8 @@ class MultiCheckboxField(SelectMultipleField):
 
 class FlagForm(FlaskForm):
     
-    title = StringField('Имя группы', validators=[DataRequired()])
-    order_id = IntegerField('Порядковый номер', validators=[Optional()])
+    name = StringField('Имя группы', validators=[DataRequired()])
+    order_id = IntegerField('Порядковый номер', validators=[DataRequired()])
     active = BooleanField('Опубликовано на сайте')
 
     categories = MultiCheckboxField('Категории', coerce=int)

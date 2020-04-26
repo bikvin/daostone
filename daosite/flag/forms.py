@@ -15,8 +15,8 @@ class FlagForm(FlaskForm):
     # title = StringField('Группа', validators=[DataRequired()])
     # value = TextAreaField('Значение')
     # name_var = SelectField('Имя флага', choices=NAME_VARS)
-    title = StringField('Имя флага', validators=[DataRequired()])
-    order_id = IntegerField('Порядковый номер', validators=[Optional()])
+    name = StringField('Имя флага', validators=[DataRequired()])
+    order_id = IntegerField('Порядковый номер', validators=[DataRequired()])
     active = BooleanField('Опубликовано на сайте')
 
     group_flag_id = SelectField('Группа', coerce=int)
