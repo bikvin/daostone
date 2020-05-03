@@ -162,7 +162,14 @@ def mosaic_selected(select_category, selection):
 @main.route("/single-mosaic/<int:mosaic_id>")
 def single_mosaic(mosaic_id):
     mosaic = Product.query.get_or_404(mosaic_id)
-
+    
+    groups = []
+    for  group in mosaic.category.group_flag:
+        for flag in mosaic.flag:
+            if flag.group_flag_id == group.id:
+                groups.append(group)
+                break
+        
     header_title = "Мозаика " + mosaic.name + ", Производитель - " + mosaic.brand.name + " - Daostone.ru"
 
     title = "Товар"
@@ -173,7 +180,8 @@ def single_mosaic(mosaic_id):
         'single-mosaic.html',
         mosaic=mosaic,
         title=title,
-        header_title=header_title
+        header_title=header_title,
+        groups = groups
     )
 
 

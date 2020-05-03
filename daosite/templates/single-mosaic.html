@@ -129,6 +129,19 @@
                                     	</h5>
                                     {% endif %}
 
+
+                                    {% if groups %}  
+                                    {% for group in groups %}
+                                    <h5> {{group.name}}:
+                                        {% for flag in mosaic.flag %}
+                                        {% if flag.group_flag_id == group.id  %}           
+                                             {{flag.name}},         
+                                        {% endif %}
+                                        {% endfor %}              
+                                    </h5>                                     
+                                    {% endfor %}
+                                   {% endif %}
+
                                     <!-- hr -->
 									<hr>
                                     <!-- single-product-price -->
