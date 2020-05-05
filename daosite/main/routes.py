@@ -33,7 +33,7 @@ def home():
 def products():
     page = request.args.get('page', 1, type=int)
     per_page = 18
-
+    discount = request.args.get('discount', False, type=bool)
     page_title = "" # "Вся мозаика"
     header_title = "" # 'Вся мозаика - Daostone.ru'
     meta_description = "" # 'вся мозаика'
@@ -44,6 +44,10 @@ def products():
     filter_form = DynamicFilterForm(request.args, csrf_enabled=False)
     if filter_form.validate():
         products = filter_form.filter_query(Product.query.filter(Product.active == True))
+
+    if discount:
+        products = products.filter(Product.discount > 0)
+        per_page = 50
 
     items = products.order_by(Product.id.desc()).paginate(page=page, per_page=per_page)
     ctx = {
@@ -162,7 +166,14 @@ def mosaic_selected(select_category, selection):
 @main.route("/single-mosaic/<int:mosaic_id>")
 def single_mosaic(mosaic_id):
     mosaic = Product.query.get_or_404(mosaic_id)
-
+    
+    groups = []
+    for  group in mosaic.category.group_flag:
+        for flag in mosaic.flag:
+            if flag.group_flag_id == group.id:
+                groups.append(group)
+                break
+        
     header_title = "Мозаика " + mosaic.name + ", Производитель - " + mosaic.brand.name + " - Daostone.ru"
 
     title = "Товар"
@@ -173,13 +184,14 @@ def single_mosaic(mosaic_id):
         'single-mosaic.html',
         mosaic=mosaic,
         title=title,
-        header_title=header_title
+        header_title=header_title,
+        groups = groups
     )
 
 
 @main.route("/mosaic/discounts")
 def mosaic_discount():
-    return redirect(url_for('main.mosaic', discount=True))
+    return redirect(url_for('main.products', discount=True))
 
 
 @main.route("/mosaic/search")
@@ -405,8 +417,11 @@ def context_processor():
                 group_flags = GroupFlag.query.filter(GroupFlag.is_topmenu_show == True, GroupFlag.active == True).all()
                 )
 
-# @main.context_processor
-# def utility_processor():
+@main.context_processor
+def utility_processor():
+    def flugs_name_by_group(product, group_id):
+        
+        return [flag.name for flag in product.flag if flag.group_flag_id == group_id ]
 #     def get_m2_actual_price(product, price=None):
         
 #         price = product.price
@@ -433,6 +448,7 @@ def context_processor():
 #         return product.calculate_discount(price, product.discount)
 
 #     return dict(get_m2_actual_price=get_m2_actual_price, get_unit_actual_price=get_unit_actual_price)
+    return dict(flugs_name_by_group=flugs_name_by_group)
 
 @main.app_template_filter('currency_price')
 # @contextfilter

@@ -9,6 +9,10 @@ from daosite.models import (Category, GroupFlag, Flag, Brand, Chipsize, Color, M
                             Surface, Use, chipsize_product, color_product,
                             material_product, surface_product, use_product,
                             flag_product)
+from sqlalchemy.sql.operators import exists
+from sqlalchemy import and_, or_, not_
+from sqlalchemy.orm.query import aliased
+
 
 
 class MultiCheckboxField(SelectMultipleField):
@@ -45,7 +49,9 @@ class FlagGroupForm(Form):
         choices = [(item['id'], item['name']) for item in field.data if item['active'] == True ]
         field2.choices = choices
         
-        field2.data = selectedIds
+        # field2.data = selectedIds
+        field2.data = [item['id'] for item in field.data if item['active'] == True and item['id'] in selectedIds ]
+
 
 class DynamicFilterForm(FlaskForm):
     fields_data = {
@@ -150,11 +156,35 @@ class DynamicFilterForm(FlaskForm):
                 Category.id.in_(self.categories.data)
             )
 
-        if self.flag_groups and self.flag_groups[0].flgs.data:
-            query = query.join(flag_product).filter(
-                flag_product.columns.flag_id.in_(self.flag_groups[0].flgs.data)
-            )
+        if self.flag_groups:
+            # subquery = ""
+            for flag_group in self.flag_groups:
+                if flag_group.flgs.data != []:
+                    # subquery = query.filter(and_((flag_product.columns.product_id == Product.id), (flag_product.columns.flag_id.in_(flag_group.flgs.data)) ) )
+                    f_p = aliased(flag_product)
+                    query = query.join(f_p).filter(
+                        f_p.columns.flag_id.in_(flag_group.flgs.data)
+                    )
 
+        # f_p = aliased(flag_product)
+        # query = query.join(f_p, f_p.columns.product_id == Product.id).filter(
+        #     flag_product.columns.flag_id.in_([4])
+        # )
+
+        # f_p1 = aliased(flag_product)
+        # query = query.join(f_p1).filter(
+        #     flag_product.columns.flag_id.in_([1,2,3,4])
+        # )
+
+        # f_p = aliased(color_product)
+        # query = query.join(f_p).filter(
+        #     f_p.columns.color_id.in_([1])
+        # )
+        # f_p1 = aliased(color_product)
+        # query = query.join(f_p1).filter(
+        #     color_product.columns.color_id.in_([2])
+        # )
+            # query = query.join(flag_product).filter(subquery)
         # if self.materials.data:
         #     query = query.join(material_product).filter(
         #         material_product.columns.material_id.in_(self.materials.data)

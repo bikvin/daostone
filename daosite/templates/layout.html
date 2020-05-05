@@ -62,25 +62,49 @@
       <div class="header-top-bar plr-185">
           <div class="container-fluid">
               <div class="row">
-                  <div class="col-md-3 col-sm-3 col-xs-12">
+                  <div class="col-md-2 col-sm-2 col-xs-12">
                       <div class="call-us text-center">
                           <p class=" mb-0 roboto">+7 (985) 513-27-44</p>
                          
                       </div>
 
                   </div>
-                  <div class="col-md-3 col-sm-3 col-xs-12">
+                  <div class="col-md-2 col-sm-2 col-xs-12">
                       <div class="call-us text-center">
                           
                           <p class=" mb-0 roboto">stone.dao@gmail.com</p>
                       </div>
 
                   </div>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
+                  <!--
+                  <div class="col-md-2 col-sm-2 col-xs-12">
                       <div class="call-us text-center">
                           <p class=" mb-0 roboto">Шоу-рум: г. Москва, ул. Крылатские холмы, д.7к2</p>
                       </div>
 
+                  </div>
+                  -->
+                  <div class="col-md-2 col-sm-2 col-xs-12"></div>
+                  <div class="col-md-3 col-sm-3 col-xs-12">
+                      <div class="main-menu text-center">
+                      <li style="padding: 0px;"> 
+                        <a href="{{url_for('main.delivery')}}" style="color: #cccccc; font-weight: 900; line-height: 40px; font-size: 16px;" >Доставка и самовывоз</a>
+                       </li>
+                      </div>
+                  </div>
+                  <div class="col-md-1 col-sm-1 col-xs-12">
+                      <div class="main-menu text-center">
+                      <li style="padding: 0px;"> 
+                        <a href="{{url_for('main.contacts')}}" style="color: #cccccc; font-weight: 900; line-height: 40px; font-size: 16px;" >Контакты</a>
+                      </li>
+                      </div>
+                  </div>
+                  <div class="col-md-2 col-sm-2 col-xs-12">
+                      <div class="main-menu text-center">
+                      <li style="padding: 0px;"> 
+                        <a href="{{url_for('main.about')}}" style="color: #cccccc; font-weight: 900; line-height: 40px; font-size: 16px;" >О нас</a>
+                      </li>
+                      </div>
                   </div>
 
               </div>
@@ -107,45 +131,7 @@
                 <nav id="primary-menu">
                   <ul class="main-menu text-center">
                    
-                    <li class="mega-parent"><a href="{{url_for('main.mosaic')}}">Мозаика{{key}}</a>
-                        <div class="mega-menu-area clearfix">
-                            <div class="mega-menu-link mega-menu-link-4  f-left">
-                                <ul class="single-mega-item">
-                                    <li class="menu-title">Материал</li>
-                                    {% for material in materials %}
-                                        <li>
-                                            <a href="{{url_for('main.mosaic_selected',select_category='material',selection=material.url_name)}}">{{material.name}}</a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                                <ul class="single-mega-item">
-                                    <li class="menu-title">Производитель</li>
-                                    {% for brand in brands %}
-                                        <li>
-                                            <a href="{{url_for('main.mosaic_selected',select_category='brand',selection=brand.url_name)}}">{{brand.name}}</a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                                <ul class="single-mega-item">
-                                    <li class="menu-title">Применение</li>
-                                    {% for use in uses %}
-                                        <li>
-                                            <a href="{{url_for('main.mosaic_selected',select_category='use',selection=use.url_name)}}">{{use.name}}</a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                                <ul class="single-mega-item">
-                                    <li class="menu-title">Цвет</li>
-                                    {% for color in colors %}
-                                        <li>
-                                            <a href="{{url_for('main.mosaic_selected',select_category='color',selection=color.url_name)}}">{{color.name}}</a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                                
-                            </div>
-                        </div>
-                    </li>
+                    
                     
                     {% for category in categories %}
                     <li class="mega-parent"><a href="{{url_for('main.products',categories=category.id)}}">{{ category.name }}</a>
@@ -176,15 +162,6 @@
                     </li>
                     <li>
                         <a href="{{url_for('main.interiors')}}">Интерьеры</a>
-                    </li>
-                    <li>
-                        <a href="{{url_for('main.delivery')}}">Доставка и самовывоз</a>
-                    </li>
-                    <li>
-                        <a href="{{url_for('main.contacts')}}">Контакты</a>
-                    </li>
-                    <li>
-                        <a href="{{url_for('main.about')}}">О нас</a>
                     </li>
                </ul>
               </nav>
@@ -291,7 +268,41 @@
                                     <li><a href="{{url_for('main.home')}}">Главная страница</a>
                                         
                                     </li>
-                                    
+
+                                    {% for category in categories %}
+
+                                    <li>
+
+                                        <a href="{{url_for('main.products',categories=category.id)}}">{{ category.name }}</a>
+                                        <ul>
+                                            {% for gr_flag in category.group_flag %}
+                                            {% if gr_flag.active == true and gr_flag.is_topmenu_show == true %}
+                                            <li>
+
+                                                    <a href="#">{{ gr_flag.name }}</a>
+                                                    
+                                                    <ul>
+                                                        {% for flag in gr_flag.flags %}
+                                                        {% if flag.active == true %}
+                                                        <li>
+                                                            
+                                                            <a href="{{url_for('main.products',categories=category.id, flgs=flag.id)}}" >{{ flag.name }}</a>
+                                                            
+                                                        </li>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                    
+                                                
+                                            </li>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+
+                                    {% endfor %}
+
+                                    <!--
                                     <li><a href="">Материалы мозаики</a>
                                         <ul>
                                             <li>
@@ -336,7 +347,8 @@
                                             
                                         </ul>
                                     </li>
-                                    
+                                    -->
+
                                     <li>
                                         <a href="{{url_for('main.delivery')}}">Доставка</a>
                                     </li>
