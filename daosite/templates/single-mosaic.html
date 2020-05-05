@@ -75,19 +75,6 @@
                                     {% endif %}</h6>
                                     <!--  hr -->
                                     <hr>
-                                    {% if mosaic.materials %}
-	                                    <h5>Материал:
-	                                    	{% for material in mosaic.materials[:-1]: %}
-	                                    		{{material.name}},
-	                                    	{% endfor %}
-	                                    	{{ mosaic.materials[-1].name }}
-	                                    </h5>
-                                    {% endif %}
-                                    {% if mosaic.brand %}
-                                    	<h5>Производитель:
-                                    		{{mosaic.brand.name}}
-                                    	</h5>
-                                    {% endif %}
                                     {% if mosaic.chipsizes %}
 	                                    <h5>Размер элементов:
 	                                    	{% for chipsize in mosaic.chipsizes[:-1]: %}
@@ -96,26 +83,6 @@
 	                                    	{{ mosaic.chipsizes[-1].name }}
 	                                    </h5>
                                     {% endif %}
-                                    
-
-                                    {% if mosaic.colors %}
-	                                    <h5>Цвет:
-	                                    	{% for color in mosaic.colors[:-1]: %}
-	                                    		{{color.name}},
-	                                    	{% endfor %}
-	                                    	{{ mosaic.colors[-1].name }}
-	                                    </h5>
-                                    {% endif %}
-
-                                    {% if mosaic.surfaces %}
-	                                    <h5>Поверхность:
-	                                    	{% for surface in mosaic.surfaces[:-1]: %}
-	                                    		{{surface.name}},
-	                                    	{% endfor %}
-	                                    	{{ mosaic.surfaces[-1].name }}
-	                                    </h5>
-                                    {% endif %}
-
                                     {% if mosaic.width_mm and mosaic.length_mm %}
                                     	<h5>Размеры листа (ДхШ):
                                     		{{mosaic.length_mm}}x{{mosaic.width_mm}}мм
@@ -128,16 +95,12 @@
                                     		{{mosaic.height_mm}}мм
                                     	</h5>
                                     {% endif %}
-
-
+                                    
                                     {% if groups %}  
                                     {% for group in groups %}
                                     <h5> {{group.name}}:
-                                        {% for flag in mosaic.flag %}
-                                        {% if flag.group_flag_id == group.id  %}           
-                                             {{flag.name}},         
-                                        {% endif %}
-                                        {% endfor %}              
+                                        {{ flugs_name_by_group(mosaic, group.id)|join(', ') }}
+            
                                     </h5>                                     
                                     {% endfor %}
                                    {% endif %}
@@ -205,7 +168,7 @@
                                     </ul>
                                     <div class="tab-content">
                                         <div role="tabpanel" class="tab-pane active" id="description">
-
+                                            {# 
                                         	{% if mosaic.surfaces %}
 			                                    <p>Применение мозаики:</p>
 			                                    <ul>
@@ -215,7 +178,7 @@
 			                                    </ul>			                                    				                                    
 		                                    {% endif %}
 		                                    <br>
-
+                                            #}
                                             {% if mosaic.description %}
 		                                    	<p>		                                    		{{mosaic.description|safe}}
 
@@ -238,7 +201,7 @@
                 <div class="col-md-3 col-xs-12">
                   
                     <!-- widget-categories -->
-                	{% include 'side-menu.html' %}
+                	{# {% include 'side-menu.html' %} #}
                    
                
                 </div>
