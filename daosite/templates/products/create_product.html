@@ -539,7 +539,7 @@
                 </div>
                 
                
-    
+                {#
                 <div class="form-group">
                     {{ form.flags.label(class="form-control-label") }}
                     {% if form.flags.errors %}
@@ -553,8 +553,24 @@
                         {{ form.flags(class="") }}
                     {% endif %}
                 </div>
+                #}
 
+                <div class="form-group">
+                    {% for flag_group in product.category.group_flag  %}
+                        <label class="form-control-label" for="flags-{{ loop.index }}">{{ flag_group.name }}</label>
+                        <ul id="flags-{{ loop.index }}" >
+                            {% for flag in flag_group.flags  %}
+                                
+                                <li>
+                                    <input id="flags-{{ loop.index }}" name="flags" type="checkbox" value="{{ flag.id }}" {% if flag.id in form.flags.data %}checked{% endif %}>
+                                    <label for="flags-{{ loop.index }}">{{ flag.name }}</label>
+                                </li>
 
+                            {% endfor %}
+                        </ul>
+                    {% endfor %}
+
+                </div>
 
         
             </fieldset>

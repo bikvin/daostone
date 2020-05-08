@@ -261,13 +261,19 @@ def edit_product(product_id):
             product.thumb270_5_file_path = None
 
         # print(form.colors.data)
-
         for flag in flags:
-            if flag.id in form.flags.data:
+            if str(flag.id) in request.form.getlist('flags'):
                 product.flag.append(flag)
             else:
                 if flag in product.flag:
                     product.flag.remove(flag)
+
+        # for flag in flags:
+        #     if flag.id in form.flags.data:
+        #         product.flag.append(flag)
+        #     else:
+        #         if flag in product.flag:
+        #             product.flag.remove(flag)
 
         for color in colors:
             if color.id in form.colors.data:
