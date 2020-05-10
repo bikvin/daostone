@@ -75,6 +75,11 @@
                                     {% endif %}</h6>
                                     <!--  hr -->
                                     <hr>
+                                    {% if mosaic.brand %}
+                                    	<h5>Производитель:
+                                    		{{mosaic.brand.name}}
+                                    	</h5>
+                                    {% endif %}
                                     {% if mosaic.chipsizes %}
 	                                    <h5>Размер элементов:
 	                                    	{% for chipsize in mosaic.chipsizes[:-1]: %}

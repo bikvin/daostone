@@ -59,7 +59,7 @@ class DynamicFilterForm(FlaskForm):
             # 'flags': Flag,
             # 'flag_groups': GroupFlag,
             # 'materials': Material,
-            # 'manufacturers': Brand,
+            'manufacturers': Brand,
             # 'applications': Use,
             # 'colors': Color,
             # 'sizes': Chipsize,
@@ -72,7 +72,7 @@ class DynamicFilterForm(FlaskForm):
     # flag_groups = FieldList(FormField(FlagsGroupEntryForm),min_entries=1)
     # # flags = MultiCheckboxField('Флаги', choices=[], coerce=int,)
     # materials = MultiCheckboxField('Материал', choices=[], coerce=int,)
-    # manufacturers = MultiCheckboxField('Производитель', choices=[], coerce=int,)
+    manufacturers = MultiCheckboxField('Производитель', choices=[], coerce=int,)
     # applications = MultiCheckboxField('Применение', choices=[], coerce=int,)
     # colors = MultiCheckboxField('Цвет', choices=[], coerce=int,)
     # sizes = MultiCheckboxField('Размер', choices=[], coerce=int,)
@@ -82,13 +82,14 @@ class DynamicFilterForm(FlaskForm):
         csrf = False
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super().__init__( *args, **kwargs)
         self.usd_rate = Rate.query.filter(Rate.name == 'usd').first().value
         self.eur_rate = Rate.query.filter(Rate.name == 'eur').first().value
         self._get_price_range()
         self.create_chloices()
         
         selectedIds = [ int(item) for item in args[0].getlist('flgs')]
+        # selectedIds = [ int(item) for item in args_dict[0]['flgs']]
         self.populate(selectedIds)
 
     def populate(self, selectedIds = []):
@@ -119,6 +120,7 @@ class DynamicFilterForm(FlaskForm):
         ]
         field = getattr(self, field_name)
         field.choices = choices
+        # field.data = args[0].getlist(field_name)
 
     def create_chloices(self):
         for field_name, model in self.fields_data.items():
@@ -154,6 +156,11 @@ class DynamicFilterForm(FlaskForm):
         if self.categories.data:
             query = query.join(Category).filter(
                 Category.id.in_(self.categories.data)
+            )
+            
+        if self.manufacturers.data:
+            query = query.join(Brand).filter(
+                Brand.id.in_(self.manufacturers.data)
             )
 
         if self.flag_groups:

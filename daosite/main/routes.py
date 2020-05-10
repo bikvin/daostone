@@ -1,6 +1,8 @@
 import re
 import urllib
 
+from werkzeug.datastructures import CombinedMultiDict, MultiDict
+
 from flask import (Blueprint, jsonify, redirect, render_template, request,
                    session, url_for, render_template_string)
 from jinja2 import contextfilter
@@ -30,7 +32,7 @@ def home():
 
 
 @main.route("/products")
-def products():
+def products(*add_dict_args):
     page = request.args.get('page', 1, type=int)
     per_page = 18
     discount = request.args.get('discount', False, type=bool)
@@ -40,8 +42,31 @@ def products():
     description = ''
 
     products = Product.query.filter(Product.active == True)
+    # for test
+    # args_dict = request.args.to_dict(flat=False)
+    # # args_dict['categories'].append('2')
+    # tmp = MultiDict([add_dict_args])
+    args = request.args
+    # data_dict = []
+    # if len(args) > 0:
+    #     categories = args.getlist('categories')
 
-    filter_form = DynamicFilterForm(request.args, csrf_enabled=False)
+    #     for category_name in categories:
+    #         if not category_name.isnumeric():
+    #             category = Category.query.filter(Category.url_name == category_name).first()
+
+    #             if category: 
+    #                 data_dict.append(('categories', str(category.id)) )
+
+    #                 # break
+
+    if not add_dict_args == () and len(add_dict_args) > 0:
+        args = CombinedMultiDict([request.args, MultiDict(add_dict_args[0]) ])
+
+    # if len(data_dict) > 0:
+    #     args = CombinedMultiDict([request.args, MultiDict([data_dict[0]]) ])
+
+    filter_form = DynamicFilterForm(args, csrf_enabled=False)
     if filter_form.validate():
         products = filter_form.filter_query(Product.query.filter(Product.active == True))
 
@@ -60,6 +85,36 @@ def products():
     }
     return render_template('products.html', **ctx)
 
+
+@main.route("/categories/<string:select_category>")
+@main.route("/categories/<string:select_category>/<string:selection>")
+@main.route("/products/categories/<string:select_category>")
+@main.route("/products/categories/<string:select_category>/<string:selection>")
+@main.route("/products/<string:select_category>")
+@main.route("/products/<string:select_category>/<string:selection>")
+# @main.route("/<string:select_category>")
+# @main.route("/<string:select_category>/<string:selection>")
+def products_selected(select_category, selection = ""):
+
+
+
+    
+    # args = request.args
+    # = category.id
+    data_dict = []
+    if select_category == 'brand' and not selection == "":
+        brand = Brand.query.filter(Brand.url_name == selection).first()
+        if brand:
+            data_dict = [('manufacturers', str(brand.id))]
+    else:    
+        category = Category.query.filter(Category.url_name == select_category).first()
+        if category:
+            data_dict = [('categories', str(category.id))]
+
+    # if not selection == "":
+    #     data_dict.append( ('flags', str(category.id)) )
+
+    return products( data_dict )
 
 @main.route("/mosaic")
 def mosaic():
@@ -98,6 +153,8 @@ def mosaic():
 
 @main.route("/mosaic/<string:select_category>/<string:selection>")
 def mosaic_selected(select_category, selection):
+
+    return products_selected(select_category, selection)
     page = request.args.get('page', 1, type=int)
 
     mosaic_category = Category.query.filter(Category.url_name == 'mosaic').first()
