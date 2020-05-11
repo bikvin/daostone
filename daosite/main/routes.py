@@ -134,7 +134,7 @@ def products_selected(select_category, selection = ""):
         if not selection == "":
             flag = Flag.query.filter(Flag.url_name == selection).first()
             if flag:
-                data_dict.append( ('flags', str(flag.id)) )
+                data_dict.append( ('flgs', str(flag.id)) )
 
     return products( data_dict )
 
