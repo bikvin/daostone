@@ -379,6 +379,7 @@ flag_product = db.Table('flag_product',
 class Flag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, nullable=True)
+    url_name = db.Column(db.String(100), nullable=False)
     order_id = db.Column(db.Integer, nullable=False)
     active = db.Column(db.Boolean, default=False, nullable=False)
     # is_menu_show = db.Column(db.Boolean, default=False, nullable=False)

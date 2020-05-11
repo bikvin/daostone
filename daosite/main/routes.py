@@ -17,7 +17,7 @@ from daosite.main.forms import OrderForm, SearchForm
 from daosite.main.utils import (add_to_cart_session, get_rates,
                                 send_admin_email, send_user_email)
 from daosite.models import (Brand, Category, Color, Interior, Material,
-                            Online_order, Ordered_item, Product, Rate, Use, Slider, Content, GroupFlag)
+                            Online_order, Ordered_item, Product, Rate, Use, Slider, Content, GroupFlag, Flag)
 
 main = Blueprint('main', __name__)
 
@@ -42,11 +42,26 @@ def products(*add_dict_args):
     description = ''
 
     products = Product.query.filter(Product.active == True)
+
+    # .order_by(Product.id.desc()).paginate(page=page, per_page=18)
     # for test
     # args_dict = request.args.to_dict(flat=False)
     # # args_dict['categories'].append('2')
     # tmp = MultiDict([add_dict_args])
     args = request.args
+
+    # categories = args.getlist('categories')
+    # if categories:
+    #     products = products.join(Category).filter(
+    #         Category.id.in_(categories)
+    #     )
+
+    # manufacturers = args.getlist('manufacturers')
+    # if manufacturers:
+    #     products = products.join(Brand).filter(
+    #         Brand.id.in_(manufacturers)
+    #     )
+        
     # data_dict = []
     # if len(args) > 0:
     #     categories = args.getlist('categories')
@@ -66,9 +81,9 @@ def products(*add_dict_args):
     # if len(data_dict) > 0:
     #     args = CombinedMultiDict([request.args, MultiDict([data_dict[0]]) ])
 
-    filter_form = DynamicFilterForm(args, csrf_enabled=False)
+    filter_form = DynamicFilterForm(args, query=products, csrf_enabled=False)
     if filter_form.validate():
-        products = filter_form.filter_query(Product.query.filter(Product.active == True))
+        products = filter_form.filter_query(products)
 
     if discount:
         products = products.filter(Product.discount > 0)
@@ -86,14 +101,17 @@ def products(*add_dict_args):
     return render_template('products.html', **ctx)
 
 
-@main.route("/categories/<string:select_category>")
+@main.route("/categories/<string:select_category>", defaults={'selection': None})
 @main.route("/categories/<string:select_category>/<string:selection>")
-@main.route("/products/categories/<string:select_category>")
+@main.route("/products/categories/<string:select_category>", defaults={'selection': None})
 @main.route("/products/categories/<string:select_category>/<string:selection>")
-@main.route("/products/<string:select_category>")
+@main.route("/products/<string:select_category>", defaults={'selection': None})
 @main.route("/products/<string:select_category>/<string:selection>")
-# @main.route("/<string:select_category>")
-# @main.route("/<string:select_category>/<string:selection>")
+def products_selected_additional(select_category, selection = ""):
+    return products_selected(select_category, selection)
+
+
+@main.route("/<string:select_category>/<string:selection>/filtered")
 def products_selected(select_category, selection = ""):
 
 
@@ -110,11 +128,19 @@ def products_selected(select_category, selection = ""):
         category = Category.query.filter(Category.url_name == select_category).first()
         if category:
             data_dict = [('categories', str(category.id))]
+        # else:
+        #     return None;
 
-    # if not selection == "":
-    #     data_dict.append( ('flags', str(category.id)) )
+        if not selection == "":
+            flag = Flag.query.filter(Flag.url_name == selection).first()
+            if flag:
+                data_dict.append( ('flags', str(flag.id)) )
 
     return products( data_dict )
+
+@main.route("/<string:select_category>/all")
+def products_category(select_category):
+    return products_selected(select_category)
 
 @main.route("/mosaic")
 def mosaic():
@@ -154,7 +180,7 @@ def mosaic():
 @main.route("/mosaic/<string:select_category>/<string:selection>")
 def mosaic_selected(select_category, selection):
 
-    return products_selected(select_category, selection)
+    return products_selected('mosaic', selection)
     page = request.args.get('page', 1, type=int)
 
     mosaic_category = Category.query.filter(Category.url_name == 'mosaic').first()

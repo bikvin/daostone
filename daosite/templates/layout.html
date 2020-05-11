@@ -134,18 +134,18 @@
                     
                     
                     {% for category in categories %}
-                    <li class="mega-parent"><a href="{{url_for('main.products',categories=category.id)}}">{{ category.name }}</a>
+                    <li class="mega-parent"><a href="{{url_for('main.products_category',select_category=category.url_name)}}">{{ category.name }}</a>
                         <div class="mega-menu-area clearfix">
                             <div class="mega-menu-link mega-menu-link-4  f-left">
 
                                 {% for gr_flag in category.group_flag %}
                                 {% if gr_flag.active == true and gr_flag.is_topmenu_show == true %}
-                                <ul class="single-mega-item">
+                                <ul class="single-mega-item" style="width: 20%;">
                                     <li class="menu-title">{{ gr_flag.name }}</li>
                                         {% for flag in gr_flag.flags %}
                                         {% if flag.active == true %}
                                         <li>
-                                            <a href="{{url_for('main.products',categories=category.id, flgs=flag.id)}}" >{{ flag.name }}</a>
+                                            <a href="{{url_for('main.products_selected',select_category=category.url_name, selection=flag.url_name)}}" >{{ flag.name }}</a>
                                         </li>
                                         {% endif %}
                                         {% endfor %}
@@ -275,7 +275,7 @@
 
                                     <li>
 
-                                        <a href="{{url_for('main.products',categories=category.id)}}">{{ category.name }}</a>
+                                        <a href="{{url_for('main.products_category',select_category=category.url_name)}}">{{ category.name }}</a>
                                         <ul>
                                             {% for gr_flag in category.group_flag %}
                                             {% if gr_flag.active == true and gr_flag.is_topmenu_show == true %}
@@ -288,7 +288,7 @@
                                                         {% if flag.active == true %}
                                                         <li>
                                                             
-                                                            <a href="{{url_for('main.products',categories=category.id, flgs=flag.id)}}" >{{ flag.name }}</a>
+                                                            <a href="{{url_for('main.products_selected',select_category=category.url_name, selection=flag.url_name)}}" >{{ flag.name }}</a>
                                                             
                                                         </li>
                                                         {% endif %}

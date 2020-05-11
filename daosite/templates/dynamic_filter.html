@@ -1,5 +1,11 @@
 <aside class="widget shop-filter box-shadow mb-30">
     <form method="get" action="{{url_for('main.products')}}">
+
+        <h6 class="widget-title border-left"><b>Категории</b></h6>
+        <div class="product-filter mb-20">
+            {{ filter_form.categories }}
+        </div>
+
         <div class='mb-20'>
             <h6 class="widget-title border-left">Цена</h6>
             <div class="price_filter">
@@ -16,10 +22,7 @@
             {{ filter_form.manufacturers }}
         </div>
 
-        <h6 class="widget-title border-left"><b>Категории</b></h6>
-        <div class="product-filter mb-20">
-            {{ filter_form.categories }}
-        </div>
+
 
         {% for form in filter_form.flag_groups %}
         {% if form.active.data == True and form.is_topmenu_show.data == True %}

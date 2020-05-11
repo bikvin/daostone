@@ -45,6 +45,7 @@ def new(flag_group_id):
 
         flag_item = Flag(
             name= form.name.data,
+            url_name= form.url_name.data,
             order_id = form.order_id.data,
             active = form.active.data,            
             group_flag_id = form.group_flag_id.data)
@@ -77,6 +78,7 @@ def edit(item_id):
     if form.validate_on_submit():
         
         flag_item.name = form.name.data
+        flag_item.url_name = form.url_name.data
         flag_item.order_id = form.order_id.data
         flag_item.active = form.active.data
         flag_item.group_flag_id = form.group_flag_id.data
@@ -88,6 +90,7 @@ def edit(item_id):
     elif request.method == 'GET':
 
         form.name.data = flag_item.name
+        form.url_name.data = flag_item.url_name
         form.order_id.data = flag_item.order_id
         form.active.data = flag_item.active
         form.group_flag_id.data = flag_item.group_flag_id
