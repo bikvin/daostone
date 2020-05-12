@@ -556,7 +556,10 @@
                 #}
 
                 <div class="form-group">
-                    {% for flag_group in product.category.group_flag  %}
+                    {% for flag_group_batched in product.category.group_flag |batch(2)  %}
+                        <div class="row">
+                        {% for flag_group in flag_group_batched  %}
+                        <div class="col">
                         <label class="form-control-label" for="flags-{{ loop.index }}">{{ flag_group.name }}</label>
                         <ul id="flags-{{ loop.index }}" >
                             {% for flag in flag_group.flags  %}
@@ -568,6 +571,9 @@
 
                             {% endfor %}
                         </ul>
+                        </div>
+                        {% endfor %}
+                        </div>
                     {% endfor %}
 
                 </div>

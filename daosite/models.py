@@ -363,9 +363,9 @@ class GroupFlag(db.Model):
     order_id = db.Column(db.Integer, nullable=False)
     active = db.Column(db.Boolean, default=False, nullable=False)
 
-    flags = db.relationship('Flag', backref='group_flag', lazy=True, cascade="all, delete-orphan")
+    flags = db.relationship('Flag', backref=db.backref('group_flag', lazy=True), lazy=True, cascade="all, delete-orphan")
 
-    categories = db.relationship('Category', secondary=group_flag_category, lazy='subquery',
+    categories = db.relationship('Category', secondary=group_flag_category, lazy=True,
                              backref=db.backref('group_flag', lazy=True))
 
     is_topmenu_show = db.Column(db.Boolean, default=False, nullable=False)
@@ -387,7 +387,7 @@ class Flag(db.Model):
 
     group_flag_id = db.Column(db.Integer, db.ForeignKey('group_flag.id'), nullable=True)
 
-    products = db.relationship('Product', secondary=flag_product, lazy='subquery',
+    products = db.relationship('Product', secondary=flag_product, lazy=True,
                              backref=db.backref('flag', lazy=True))
 
     # gruppa = db.Column(db.String(100), nullable=True)

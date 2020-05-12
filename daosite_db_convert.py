@@ -41,11 +41,14 @@ def add_new_flag_group(flag_group_name):
 
 def group_flag_to_categories(flag_group):
     
-    categories = Category.query.all()
+    # categories = Category.query.all()
 
-    for category in categories:
-        flag_group.categories.append(category)
+    # for category in categories:
+    #     flag_group.categories.append(category)
 
+    mosaic_category = Category.query.filter(Category.url_name == 'mosaic').first()
+
+    flag_group.categories.append(mosaic_category)
     # db.session.add(flag_group)
     # db.session.commit()
 

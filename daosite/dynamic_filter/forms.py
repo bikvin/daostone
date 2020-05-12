@@ -151,7 +151,7 @@ class DynamicFilterForm(FlaskForm):
             ]
 
             all_ids = rur_m2_ids + usd_m2_ids + eur_m2_ids
-            query = query.filter(Product.id.in_(all_ids[:100]))
+            query = query.filter(Product.id.in_(all_ids))
 
         if self.categories.data:
             query = query.join(Category).filter(
