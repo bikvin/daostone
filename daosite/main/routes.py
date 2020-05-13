@@ -111,6 +111,21 @@ def products_selected_additional(select_category, selection = ""):
     return products_selected(select_category, selection)
 
 
+@main.route("/<string:select_category>/brand/<string:selection>")
+def products_selected_brand_additional(select_category, selection = ""):
+    
+    data_dict = []
+    if not selection == "":
+        brand = Brand.query.filter(Brand.url_name == selection).first()
+        if brand:
+            data_dict = [('manufacturers', str(brand.id))]
+    if not select_category == "":   
+        category = Category.query.filter(Category.url_name == select_category).first()
+        if category:
+            data_dict.append( ('categories', str(category.id)) )
+
+    return products( data_dict )
+
 @main.route("/<string:select_category>/<string:selection>/filtered")
 def products_selected(select_category, selection = ""):
 
@@ -144,6 +159,7 @@ def products_category(select_category):
 
 @main.route("/mosaic")
 def mosaic():
+    return products_category('mosaic')
     page = request.args.get('page', 1, type=int)
     per_page = 18
     discount = request.args.get('discount', False, type=bool)
@@ -180,7 +196,12 @@ def mosaic():
 @main.route("/mosaic/<string:select_category>/<string:selection>")
 def mosaic_selected(select_category, selection):
 
-    return products_selected('mosaic', selection)
+    if select_category == 'brand':
+        return products_selected_brand_additional('mosaic', selection)
+    else:
+        return products_selected('mosaic', selection)
+
+
     page = request.args.get('page', 1, type=int)
 
     mosaic_category = Category.query.filter(Category.url_name == 'mosaic').first()
