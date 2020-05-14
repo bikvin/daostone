@@ -126,7 +126,7 @@ def products_selected_brand_additional(select_category, selection = ""):
 
     return products( data_dict )
 
-@main.route("/<string:select_category>/<string:selection>/filtered")
+@main.route("/<string:select_category>/filtered/<string:selection>")
 def products_selected(select_category, selection = ""):
 
 
