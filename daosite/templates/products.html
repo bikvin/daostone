@@ -59,15 +59,15 @@
                                                 <li>
                                                     {% if select_category and selection %}
                                                         {% if page_num == 1 %}
-                                                            <a href="{{ url_for('main.mosaic_selected', select_category=select_category, selection=selection, **filter_form.data) }}">{{ page_num }}</a>
+                                                            <a href="{{ url_for('main.products_selected', select_category=select_category, selection=selection, **filter_form.get_data() ) }}">{{ page_num }}</a>
                                                         {% else %}
-                                                            <a href="{{ url_for('main.mosaic_selected', select_category=select_category, selection=selection, page=page_num, **filter_form.data) }}">{{ page_num }}</a>
+                                                            <a href="{{ url_for('main.products_selected', select_category=select_category, selection=selection, page=page_num, **filter_form.get_data() ) }}">{{ page_num }}</a>
                                                         {% endif %}
                                                     {% else %}
                                                         {% if page_num == 1 %}
-                                                            <a href="{{ url_for('main.mosaic', **filter_form.data) }}">{{ page_num }}</a>
+                                                            <a href="{{ url_for('main.products', **filter_form.get_data() ) }}">{{ page_num }}</a>
                                                         {% else %}
-                                                            <a href="{{ url_for('main.mosaic', page=page_num, **filter_form.data) }}">{{ page_num }}</a>
+                                                            <a href="{{ url_for('main.products', page=page_num, **filter_form.get_data() ) }}">{{ page_num }}</a>
                                                         {% endif %}
                                                     {% endif %}
                                                 </li>

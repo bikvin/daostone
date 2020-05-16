@@ -152,6 +152,7 @@ class DynamicFilterForm(FlaskForm):
 
             all_ids = rur_m2_ids + usd_m2_ids + eur_m2_ids
             query = query.filter(Product.id.in_(all_ids))
+            # query.filter(Count_Data.number.between(26000, 52000))
 
         if self.categories.data:
             query = query.join(Category).filter(
@@ -217,3 +218,15 @@ class DynamicFilterForm(FlaskForm):
         #         surface_product.columns.surface_id.in_(self.surfaces.data)
         #     )
         return query
+
+    def get_data(self):
+        data_dict = dict()
+        data_dict.update(self.data)
+        if "flgs" not in data_dict:
+            data_dict.update( {"flgs": []} )
+
+        for item in self.flag_groups:
+            if len(item.flgs.data) > 0:
+                data_dict["flgs"] += item.flgs.data
+
+        return data_dict
