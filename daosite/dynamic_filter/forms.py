@@ -68,6 +68,10 @@ class DynamicFilterForm(FlaskForm):
     flag_groups = []
     price_min = IntegerField('Минимальная цена')
     price_max = IntegerField('Максимальная цена')
+
+    price_min_common = 0
+    price_max_common = 0
+
     categories = MultiCheckboxField('Категории', choices=[], coerce=int,)
     # flag_groups = FieldList(FormField(FlagsGroupEntryForm),min_entries=1)
     # # flags = MultiCheckboxField('Флаги', choices=[], coerce=int,)
@@ -99,19 +103,24 @@ class DynamicFilterForm(FlaskForm):
 
     def _get_price_range(self, *args):
         query = Product.query.filter(Product.active == True)
-        if not self.price_min.data and not self.price_max.data:
-            rur_prices = [
-                product.get_m2_actual_price for product in query.filter(Product.price_currency == 'rur')
-            ]
-            usd_prices = [
-                product.get_m2_actual_price * self.usd_rate for product in query.filter(Product.price_currency == 'usd')
-            ]
-            eur_prices = [
-                product.get_m2_actual_price * self.eur_rate for product in query.filter(Product.price_currency == 'eur')
-            ]
-            prices = rur_prices + usd_prices + eur_prices
-            self.price_min.data = int(min(prices))
-            self.price_max.data = int(max(prices)) + 100
+        # if not self.price_min.data and not self.price_max.data:
+        rur_prices = [
+            product.get_m2_actual_price for product in query.filter(Product.price_currency == 'rur')
+        ]
+        usd_prices = [
+            product.get_m2_actual_price * self.usd_rate for product in query.filter(Product.price_currency == 'usd')
+        ]
+        eur_prices = [
+            product.get_m2_actual_price * self.eur_rate for product in query.filter(Product.price_currency == 'eur')
+        ]
+        prices = rur_prices + usd_prices + eur_prices
+        self.price_min_common = int(min(prices))
+        self.price_max_common = int(max(prices)) + 100
+
+        if not self.price_min.data:
+            self.price_min.data = self.price_min_common
+        if not self.price_max.data:
+            self.price_max.data = self.price_max_common
 
     def create_choices_from_model(self, field_name, model):
         items = model.query.filter().all()
@@ -228,5 +237,11 @@ class DynamicFilterForm(FlaskForm):
         for item in self.flag_groups:
             if len(item.flgs.data) > 0:
                 data_dict["flgs"] += item.flgs.data
+
+        if data_dict.get("price_max", -1) == self.price_max_common:
+            data_dict["price_max"] = "MAX"
+
+        if data_dict.get("price_min", -1) == self.price_min_common:
+            data_dict["price_min"] = "MIN"
 
         return data_dict
