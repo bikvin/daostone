@@ -131,3 +131,7 @@ dmypy.json
 /daosite/static/product_pics
 /daosite/static/slider_pics
 /daosite/config.py
+
+
+#bikvin
+/daosite/.DS_Store
