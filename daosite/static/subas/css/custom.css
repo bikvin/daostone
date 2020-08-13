@@ -246,3 +246,11 @@ p, li,input, input[type="text"], label,textarea,textarea:focus, .main-menu > li 
   overflow-y: auto;
   max-height: 200px;
 }
+
+
+
+.product-item{
+  /*border: 1px solid green;*/
+  max-height: 180px;
+}
+
