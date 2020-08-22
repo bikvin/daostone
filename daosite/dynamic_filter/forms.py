@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm, Form
 from sqlalchemy import and_
-from wtforms import IntegerField, SelectMultipleField, widgets, FormField, FieldList, StringField, HiddenField, BooleanField
+from wtforms import IntegerField, SelectMultipleField, widgets, FormField, FieldList, StringField, HiddenField, BooleanField, validators
 from wtforms import Form as NoCsrfForm
 
 from daosite import db
@@ -66,8 +66,11 @@ class DynamicFilterForm(FlaskForm):
             # 'surfaces': Surface
     }
     flag_groups = []
-    price_min = IntegerField('Минимальная цена')
-    price_max = IntegerField('Максимальная цена')
+    price_min = StringField('Минимальная цена')
+    price_max = StringField('Максимальная цена')
+
+    # price_min = IntegerField('Минимальная цена', default=0)
+    # price_max = IntegerField('Максимальная цена', default=0)
 
     price_min_common = 0
     price_max_common = 0
@@ -86,15 +89,25 @@ class DynamicFilterForm(FlaskForm):
         csrf = False
 
     def __init__(self, *args, **kwargs):
+        
         super().__init__( *args, **kwargs)
         self.usd_rate = Rate.query.filter(Rate.name == 'usd').first().value
         self.eur_rate = Rate.query.filter(Rate.name == 'eur').first().value
         self._get_price_range()
+
+        # args_extra = args[0].to_dict(flat=False)
+        # args_extra[0]['price_min'] = self.data['price_min']
+        # args_extra[0]['price_max'] = self.data['price_max']
+        # super().__init__( *args_extra, **kwargs)
+
         self.create_chloices()
         
         selectedIds = [ int(item) for item in args[0].getlist('flgs')]
         # selectedIds = [ int(item) for item in args_dict[0]['flgs']]
         self.populate(selectedIds)
+        
+
+
 
     def populate(self, selectedIds = []):
         flag_groups = GroupFlag.query.all()
@@ -117,10 +130,19 @@ class DynamicFilterForm(FlaskForm):
         self.price_min_common = int(min(prices))
         self.price_max_common = int(max(prices)) + 100
 
-        if not self.price_min.data:
-            self.price_min.data = self.price_min_common
-        if not self.price_max.data:
-            self.price_max.data = self.price_max_common
+        if not self.price_min.data or self.price_min.data == 'MIN':
+            if not self.data['price_min'] or self.data['price_min'] == 'MIN':
+                self.price_min.data = self.price_min_common
+                self.data['price_min'] = self.price_min_common
+            else:
+                self.price_min.data = self.data['price_min']
+
+        if not self.price_max.data or self.price_max.data == 'MAX':
+            if not self.data['price_max'] or self.data['price_max'] == 'MAX':
+                self.price_max.data = self.price_max_common
+                self.data['price_max'] = self.price_max_common
+            else:
+                self.price_max.data = self.data['price_max']
 
     def create_choices_from_model(self, field_name, model):
         items = model.query.filter().all()
@@ -137,8 +159,8 @@ class DynamicFilterForm(FlaskForm):
 
     def filter_query(self, query):
         if self.price_min.data and self.price_max.data:
-            price_min = self.price_min.data
-            price_max = self.price_max.data
+            price_min = int(self.price_min.data)
+            price_max = int(self.price_max.data)
 
             rur_query = query.filter(Product.price_currency == 'rur')
             usd_query = query.filter(Product.price_currency == 'usd')
