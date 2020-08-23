@@ -205,7 +205,7 @@ class DynamicFilterForm(FlaskForm):
             ]
 
             all_ids = rur_m2_ids + usd_m2_ids + eur_m2_ids
-            query = query.filter(Product.id.in_(all_ids[0:100]))
+            query = query.filter(Product.id.in_(all_ids))
             # query.filter(Count_Data.number.between(26000, 52000))
 
         if self.categories.data:
