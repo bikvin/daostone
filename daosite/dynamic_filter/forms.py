@@ -117,15 +117,26 @@ class DynamicFilterForm(FlaskForm):
     def _get_price_range(self, *args):
         query = Product.query.filter(Product.active == True)
         # if not self.price_min.data and not self.price_max.data:
+        # rur_prices = [
+        #     product.get_m2_actual_price for product in query.filter(Product.price_currency == 'rur')
+        # ]
+        # usd_prices = [
+        #     product.get_m2_actual_price * self.usd_rate for product in query.filter(Product.price_currency == 'usd')
+        # ]
+        # eur_prices = [
+        #     product.get_m2_actual_price * self.eur_rate for product in query.filter(Product.price_currency == 'eur')
+        # ]
+
         rur_prices = [
-            product.get_m2_actual_price for product in query.filter(Product.price_currency == 'rur')
+            product.get_unit_actual_price for product in query.filter(Product.price_currency == 'rur')
         ]
         usd_prices = [
-            product.get_m2_actual_price * self.usd_rate for product in query.filter(Product.price_currency == 'usd')
+            product.get_unit_actual_price * self.usd_rate for product in query.filter(Product.price_currency == 'usd')
         ]
         eur_prices = [
-            product.get_m2_actual_price * self.eur_rate for product in query.filter(Product.price_currency == 'eur')
+            product.get_unit_actual_price * self.eur_rate for product in query.filter(Product.price_currency == 'eur')
         ]
+
         prices = rur_prices + usd_prices + eur_prices
         self.price_min_common = int(min(prices))
         self.price_max_common = int(max(prices)) + 100
@@ -169,20 +180,32 @@ class DynamicFilterForm(FlaskForm):
             usd_prices = [price_min / self.usd_rate, price_max / self.usd_rate]
             eur_prices = [price_min / self.eur_rate, price_max / self.eur_rate]
 
+            # rur_m2_ids = [
+            #     product.id for product in rur_query if price_min <= product.get_m2_actual_price <= price_max
+            # ]
+
+            # usd_m2_ids = [
+            #     product.id for product in usd_query if usd_prices[0] <= product.get_m2_actual_price <= usd_prices[1]
+            # ]
+
+            # eur_m2_ids = [
+            #     product.id for product in eur_query if eur_prices[0] <= product.get_m2_actual_price <= eur_prices[1]
+            # ]
+
             rur_m2_ids = [
-                product.id for product in rur_query if price_min <= product.get_m2_actual_price <= price_max
+                product.id for product in rur_query if price_min <= product.get_unit_actual_price <= price_max
             ]
 
             usd_m2_ids = [
-                product.id for product in usd_query if usd_prices[0] <= product.get_m2_actual_price <= usd_prices[1]
+                product.id for product in usd_query if usd_prices[0] <= product.get_unit_actual_price <= usd_prices[1]
             ]
 
             eur_m2_ids = [
-                product.id for product in eur_query if eur_prices[0] <= product.get_m2_actual_price <= eur_prices[1]
+                product.id for product in eur_query if eur_prices[0] <= product.get_unit_actual_price <= eur_prices[1]
             ]
 
             all_ids = rur_m2_ids + usd_m2_ids + eur_m2_ids
-            query = query.filter(Product.id.in_(all_ids))
+            query = query.filter(Product.id.in_(all_ids[0:100]))
             # query.filter(Count_Data.number.between(26000, 52000))
 
         if self.categories.data:
@@ -260,10 +283,10 @@ class DynamicFilterForm(FlaskForm):
             if len(item.flgs.data) > 0:
                 data_dict["flgs"] += item.flgs.data
 
-        if data_dict.get("price_max", -1) == self.price_max_common:
+        if int(data_dict.get("price_max", -1)) == self.price_max_common:
             data_dict["price_max"] = "MAX"
 
-        if data_dict.get("price_min", -1) == self.price_min_common:
+        if int(data_dict.get("price_min", -1)) == self.price_min_common:
             data_dict["price_min"] = "MIN"
 
         return data_dict

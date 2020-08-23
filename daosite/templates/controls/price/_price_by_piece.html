@@ -1,0 +1,29 @@
+{% from 'controls/price/_price_macros.html' import price_ctl as price_ctl  %}
+{% if product.get_price %}
+    {% if tag == 'h5' %}
+    <h5 class="pro-price">
+    {% else %}
+    <h3 class="pro-price">
+    {% endif %}
+        {% if text %} {{text}} {% endif %}
+        {% if product.discount %}
+            <del class='previous-price'>
+                <span class='previous-price-amount'>
+                    {{ price_ctl(product.get_unit_price, rates, product.price_currency) }} &#8381
+                </span>
+            </del>
+        {% endif %}
+        {{ price_ctl(product.get_unit_actual_price, rates, product.price_currency) }} {%if text_m2 %}{{ text_m2|safe }}{% else %}&#8381/шт.{% endif %}
+        <!-- &#8381/м<sup>2<sup> -->
+    {% if tag == 'h5' %}
+    </h5>
+    {% else %}
+    </h3>
+    {% endif %}
+
+    {% if is_show_util_price and product.show_in_m2==True %}
+    <p>
+        {{ price_ctl(product.get_m2_actual_price, rates, product.price_currency) }} &#8381 за 1 м<sup>2<sup>
+    </p>
+    {% endif %}
+{% endif %}

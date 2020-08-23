@@ -91,6 +91,7 @@ class Product(db.Model):
     price_unit = db.Column(db.String(10), nullable=True)
     price = db.Column(db.Float, nullable=True)
     discount = db.Column(db.Float, nullable=True)
+    show_in_m2 = db.Column(db.Boolean, default=False, nullable=True)
 
     active = db.Column(db.Boolean, default=False, nullable=False)
 

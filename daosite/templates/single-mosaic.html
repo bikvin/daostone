@@ -118,8 +118,10 @@
                                     product = mosaic, 
                                     text = 'Цена: ',
                                     is_show_util_price = true,
-                                    text_m2 = "₽ за м<sup>2<sup>" %}
-                                        {% include 'controls/price/_price.html' ignore missing %}
+                                    text_m2 = "₽ за шт."
+                                     %}
+                                     <!-- text_m2 = "₽ за м<sup>2<sup>" -->
+                                        {% include 'controls/price/_price_by_piece.html' ignore missing %}
                                     {% endwith %}
                                     
                                     <!--  hr -->

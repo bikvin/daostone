@@ -48,7 +48,8 @@ def new_product():
                           height_mm=form.height_mm.data,
                           weight_kg=form.weight_kg.data,
                           active=form.active.data,
-                          popular=form.popular.data)
+                          popular=form.popular.data,
+                          show_in_m2=form.show_in_m2)
 
         if form.image1.data:
             paths = save_product_picture(form.image1.data, product, 1)
@@ -149,8 +150,17 @@ def product_list():
 def edit_product(product_id):
     product = Product.query.get_or_404(product_id)
     # flags = Flag.query.filter( Flag.group_flag.any( Category.any( id =  product.category_id) ) ).all()
+    
+    
+    
     awailible_group_flag_ids = [item.id for item in product.category.group_flag]
     flags = Flag.query.filter(Flag.group_flag_id.in_(awailible_group_flag_ids)).all()
+    
+    # flags = []
+    # for item in product.category.group_flag:
+    #     flags += item.flags
+
+
     # flags = Flag.query.all()
     brands = Brand.query.all()
     categories = Category.query.all()
@@ -187,6 +197,7 @@ def edit_product(product_id):
 
         product.active = form.active.data
         product.popular = form.popular.data
+        product.show_in_m2 = form.show_in_m2.data
 
         if form.image1.data:
             paths = save_product_picture(form.image1.data, product, 1)
@@ -334,6 +345,7 @@ def edit_product(product_id):
         form.weight_kg.data = product.weight_kg
         form.active.data = product.active
         form.popular.data = product.popular
+        form.show_in_m2.data = product.show_in_m2
 
         form.flags.data = [flag.id for flag in product.flag]
 
@@ -400,7 +412,8 @@ def copy_product(product_id):
                           height_mm=old_product.height_mm,
                           weight_kg=old_product.weight_kg,
                           active=False,
-                          popular=False)
+                          popular=False,
+                          show_in_m2=False)
 
     for color in colors:
         if color in old_product.colors:

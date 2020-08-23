@@ -18,6 +18,7 @@ class ProductForm(FlaskForm):
     subname = StringField('Дополнительное название')
     price = DecimalField('Цена', validators=[DataRequired()])
     discount = DecimalField('Скидка в %')
+    show_in_m2 = BooleanField('Пересчитывать в м2')
     price_currency = SelectField('Валюта цены', choices=[('usd', 'доллар'), ('rur', 'рубль'), ('eur', 'евро')])
     price_unit = SelectField('Единица измерения', choices=[('m2', 'м2'), ('unit', 'штука')])
     description = TextAreaField('Описание')
