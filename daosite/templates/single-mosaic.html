@@ -124,6 +124,7 @@
                                         {% include 'controls/price/_price_by_piece.html' ignore missing %}
                                     {% endwith %}
                                     
+                                    {% if mosaic.show_in_m2==True %}
                                     <!--  hr -->
                                     <hr>
                                     <!-- plus-minus-pro-action -->
@@ -136,7 +137,7 @@
                                                 	<input type="text" value="" name="qtybutton" class="cart-plus-minus-box">
                                                 <div class="inc qtybutton">+</div>
                                             </div>
-                                            <p class="mosaic_sheets_label f-left">листов </p>
+                                            <p class="mosaic_sheets_label f-left">штук </p>
 
                                             <h5 class="mosaic_quantity_label pro-price f-left">&nbsp=&nbsp<b> </b>&nbspм2</h5>
  
@@ -145,7 +146,8 @@
                                     </div>
                                     <!-- plus-minus-pro-action end -->
                                     <!-- hr -->
-                                    
+                                    {% endif %}
+
                                     <hr>
                                     <div>
                                         <span id='buy_now_button_container'>
