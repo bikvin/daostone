@@ -175,7 +175,6 @@ p, li,input, input[type="text"], label,textarea,textarea:focus, .main-menu > li 
 .main-menu > li > a, .product-cat .treeview > li > a, .product-cat .treeview > li > ul > li > a  {
   
     text-transform: none;
-    color:red;
 }
 
 .header-5{
