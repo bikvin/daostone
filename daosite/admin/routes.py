@@ -11,6 +11,7 @@ admin = Blueprint('admin', __name__)
 @admin.route("/admin")
 @login_required
 def admin_dash():
-    orders = Online_order.query.all()
+    orders = Online_order.query.order_by(Online_order.id.desc())
+    
 
     return render_template('admin/admin.html', title='Orders', orders=orders)
